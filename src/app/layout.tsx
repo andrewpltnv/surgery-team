@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { geistSans, geistMono } from "./fonts";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
 	title: "Surgery Team",
@@ -23,6 +24,7 @@ export default function RootLayout({
 				{children}
 				<Footer />
 			</body>
+			<SpeedInsights />
 		</html>
 	);
 }
