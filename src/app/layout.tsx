@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { geistSans, geistMono } from "./fonts";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { GoogleTagManager } from "@next/third-parties/google";
 
 export const metadata: Metadata = {
 	title: "Surgery Team",
@@ -17,6 +18,8 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
+			<GoogleTagManager gtmId="GTM-WJ6VVHHV" />
+			<SpeedInsights />
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>
@@ -24,7 +27,6 @@ export default function RootLayout({
 				{children}
 				<Footer />
 			</body>
-			<SpeedInsights />
 		</html>
 	);
 }
