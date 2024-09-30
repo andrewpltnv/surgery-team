@@ -14,7 +14,7 @@ const EXPERTS = [
 	{
 		name: "Dr. Emily Chen",
 		pos: "Minimally Invasive Surgery Expert",
-		image: "/photo.jpg",
+		image: "/dmytroJ.jpg",
 	},
 ];
 
@@ -37,7 +37,7 @@ export default function Team() {
 									alt={name}
 									width={200}
 									height={200}
-									className="rounded-full mb-4"
+									className="rounded-full mb-4 size-52 object-cover"
 								/>
 								<h3 className="text-xl font-bold">{name}</h3>
 								<p className="text-gray-500">{pos}</p>

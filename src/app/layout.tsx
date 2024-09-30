@@ -18,7 +18,6 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<GoogleTagManager gtmId="GTM-WJ6VVHHV" />
 			<SpeedInsights />
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
@@ -26,6 +25,7 @@ export default function RootLayout({
 				<Header />
 				{children}
 				<Footer />
+				<GoogleTagManager gtmId="GTM-WJ6VVHHV" />
 			</body>
 		</html>
 	);
