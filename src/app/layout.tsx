@@ -8,28 +8,28 @@ import { GoogleTagManager } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
-	title: "Surgery Team",
-	description: "Surgery team Kyiv",
+  title: "103 Surgery",
+  description: "103 Surgery team Kyiv",
 };
 
 export default function RootLayout({
-	children,
+  children,
 }: Readonly<{
-	children: React.ReactNode;
+  children: React.ReactNode;
 }>) {
-	return (
-		<html lang="en">
-			<body
-				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-				suppressHydrationWarning
-			>
-				<Header />
-				{children}
-				<Footer />
-				<GoogleTagManager gtmId="GTM-WJ6VVHHV" />
-				<SpeedInsights />
-				<Analytics />
-			</body>
-		</html>
-	);
+  return (
+    <html lang="en">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased scroll-smooth min-h-screen flex flex-col justify-between`}
+        suppressHydrationWarning
+      >
+        <Header />
+        {children}
+        <GoogleTagManager gtmId="GTM-WJ6VVHHV" />
+        <SpeedInsights />
+        <Analytics />
+        <Footer />
+      </body>
+    </html>
+  );
 }
