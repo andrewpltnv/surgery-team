@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Microscope, HeartPulse, UserCircle, Phone } from "lucide-react";
 import Team from "@/components/Team";
 import WhyTeam from "@/components/Team/WhyTeam";
+import OurServices from "@/components/OurServices";
+import { Phone } from "lucide-react";
 
 export default function GeneralSurgery() {
 	return (
@@ -21,49 +21,15 @@ export default function GeneralSurgery() {
 								</p>
 							</div>
 							<div className="space-x-4">
-								<Button>Our Services</Button>
+								<Button asChild>
+									<a href="#services">Our Services</a>
+								</Button>
 								<Button variant="outline">Contact Us</Button>
 							</div>
 						</div>
 					</div>
 				</section>
-				<section className="w-full py-12 md:py-24 lg:py-32">
-					<div className="container px-4 md:px-6 mx-auto">
-						<h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-8 text-center">
-							Our Services
-						</h2>
-						<div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-							<Card>
-								<CardHeader>
-									<Microscope className="h-6 w-6 mb-2" />
-									<CardTitle>General Surgery</CardTitle>
-								</CardHeader>
-								<CardContent>
-									Comprehensive surgical procedures for a wide range of
-									conditions.
-								</CardContent>
-							</Card>
-							<Card>
-								<CardHeader>
-									<HeartPulse className="h-6 w-6 mb-2" />
-									<CardTitle>Emergency Surgery</CardTitle>
-								</CardHeader>
-								<CardContent>
-									24/7 emergency surgical care for critical conditions.
-								</CardContent>
-							</Card>
-							<Card>
-								<CardHeader>
-									<UserCircle className="h-6 w-6 mb-2" />
-									<CardTitle>Specialized Procedures</CardTitle>
-								</CardHeader>
-								<CardContent>
-									Advanced surgical techniques for complex cases.
-								</CardContent>
-							</Card>
-						</div>
-					</div>
-				</section>
+				<OurServices />
 				<WhyTeam />
 				<Team />
 				<section className="w-full py-12 md:py-24 lg:py-32 bg-muted">
