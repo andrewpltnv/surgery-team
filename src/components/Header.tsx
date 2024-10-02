@@ -1,40 +1,50 @@
-import { Stethoscope } from "lucide-react";
-import Link from "next/link";
-import { Button } from "./ui/button";
+import { Menu, Stethoscope } from "lucide-react"
+import Link from "next/link"
+import { Button } from "./ui/button"
+import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet"
+
+const ROUTES = [
+  { name: "Specialties", link: "specialties" },
+  { name: "About us", link: "about" },
+  { name: "Contacts", link: "contacts" },
+]
 
 export default function Header() {
   return (
-    <header className="px-4 lg:px-6 h-14 flex items-center">
-      <Link className="flex items-center justify-center" href="/#">
-        <Stethoscope className="h-6 w-6 mr-2" />
-        <span className="font-bold">SurgeryTeam</span>
-      </Link>
-      <nav className="ml-auto flex gap-4 sm:gap-6">
-        <Button asChild variant={"outline"}>
-          <Link
-            className="text-sm font-medium hover:underline underline-offset-4"
-            href="specialties"
-          >
-            Specialties
-          </Link>
-        </Button>
-        <Button asChild variant={"link"}>
-          <Link
-            className="text-sm font-medium hover:underline underline-offset-4"
-            href="#"
-          >
-            About Us
-          </Link>
-        </Button>
-        <Button asChild variant={"link"}>
-          <Link
-            className="text-sm font-medium hover:underline underline-offset-4"
-            href="#"
-          >
-            Contact
-          </Link>
-        </Button>
+    <header className="flex h-14 items-center justify-between px-4 shadow-md lg:px-6">
+      <Button variant={"ghost"}>
+        <Link className="flex items-center justify-center" href="/#">
+          <Stethoscope className="mr-2 h-6 w-6" />
+          <span className="font-bold">SurgeryTeam</span>
+        </Link>
+      </Button>
+      <nav className="ml-auto hidden gap-4 sm:gap-6 md:flex">
+        {ROUTES.map(({ name, link }, i) => (
+          <Button asChild variant={"outline"} key={i}>
+            <Link className="text-sm font-medium underline-offset-4 hover:underline" href={link}>
+              {name}
+            </Link>
+          </Button>
+        ))}
       </nav>
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button variant={"outline"} asChild>
+            <Menu className="block md:hidden" />
+          </Button>
+        </SheetTrigger>
+        <SheetContent side={"right"}>
+          <nav className="ml-auto flex flex-col gap-4 sm:gap-6">
+            {ROUTES.map(({ name, link }, i) => (
+              <Button asChild variant={"link"} key={i}>
+                <Link className="font-medium ~text-base/xl" href={link}>
+                  {name}
+                </Link>
+              </Button>
+            ))}
+          </nav>
+        </SheetContent>
+      </Sheet>
     </header>
-  );
+  )
 }

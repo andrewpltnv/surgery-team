@@ -1,16 +1,11 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Microscope,
-  Activity,
-  Scissors,
-  Stethoscope,
-  Utensils,
-  PocketKnife,
-} from "lucide-react";
-import Team from "@/components/Team";
-import WhyTeam from "@/components/Team/WhyTeam";
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Microscope, Activity, Scissors, Stethoscope, Utensils, PocketKnife } from "lucide-react"
+import Team from "@/components/Team"
+import WhyTeam from "@/components/Team/WhyTeam"
+
+export const revalidate = 0
 
 const specialties = [
   {
@@ -43,39 +38,35 @@ const specialties = [
     icon: Activity,
     description: "Expert cancer treatment and care",
   },
-];
+]
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-grow">
+    <div className="flex flex-grow flex-col">
       <main className="flex-1">
-        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-muted">
-          <div className="container px-4 md:px-6 m-auto">
+        <section className="w-full bg-muted py-12 md:py-24 lg:py-32 xl:py-48">
+          <div className="container m-auto px-4 md:px-6">
             <div className="flex flex-col items-center space-y-4 text-center">
               <div className="space-y-2">
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
                   Welcome to SurgeryTeam
                 </h1>
                 <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-                  Explore our specialized surgical services and find the expert
-                  care you need.
+                  Explore our specialized surgical services and find the expert care you need.
                 </p>
               </div>
             </div>
           </div>
         </section>
         <section className="w-full py-12 md:py-24 lg:py-32">
-          <div className="container px-4 md:px-6 m-auto">
-            <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl mb-8 text-center">
+          <div className="container m-auto px-4 md:px-6">
+            <h2 className="mb-8 text-center text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl">
               Our Surgical Specialties
             </h2>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {specialties.map((specialty, index) => (
-                <Link
-                  href={`/${specialty.name.toLowerCase().replace(" ", "-")}`}
-                  key={index}
-                >
-                  <Card className="flex flex-col h-full items-center transition-all hover:bg-accent">
+                <Link href={`/${specialty.name.toLowerCase().replace(" ", "-")}`} key={index}>
+                  <Card className="flex h-full flex-col items-center transition-all hover:bg-accent">
                     <CardHeader>
                       <CardTitle className="flex items-center space-x-2">
                         <specialty.icon className="h-6 w-6" />
@@ -83,9 +74,7 @@ export default function Home() {
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="flex-grow">
-                      <p className="text-muted-foreground line-clamp-1">
-                        {specialty.description}
-                      </p>
+                      <p className="line-clamp-1 text-muted-foreground">{specialty.description}</p>
                     </CardContent>
                   </Card>
                 </Link>
@@ -95,16 +84,13 @@ export default function Home() {
         </section>
         <WhyTeam />
         <Team />
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-muted">
-          <div className="container px-4 md:px-6 mx-auto">
+        <section className="w-full bg-muted py-12 md:py-24 lg:py-32">
+          <div className="container mx-auto px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                  Need Assistance?
-                </h2>
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Need Assistance?</h2>
                 <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Our team is here to help you find the right care for your
-                  needs.
+                  Our team is here to help you find the right care for your needs.
                 </p>
               </div>
               <Button size="lg">Contact Us</Button>
@@ -113,5 +99,5 @@ export default function Home() {
         </section>
       </main>
     </div>
-  );
+  )
 }
