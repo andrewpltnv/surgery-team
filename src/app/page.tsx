@@ -9,9 +9,9 @@ export default function Home() {
     <div className="flex flex-grow flex-col">
       <main className="flex-1">
         <CarouselHero />
-        <OurServicesLinks />
-        <WhyTeam />
         <Team />
+        <WhyTeam />
+        <OurServicesLinks />
         <ContactUs />
       </main>
     </div>

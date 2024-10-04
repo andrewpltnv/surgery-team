@@ -29,8 +29,8 @@ export default function Header() {
       </nav>
       <Sheet>
         <SheetTrigger asChild>
-          <Button variant={"outline"} asChild>
-            <Menu className="block md:hidden" />
+          <Button variant={"ghost"} className="inline-flex size-12 p-0 md:hidden">
+            <Menu />
           </Button>
         </SheetTrigger>
         <SheetContent side={"right"}>

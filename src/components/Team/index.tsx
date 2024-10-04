@@ -1,20 +1,26 @@
 import Image from "next/image"
+import Link from "next/link"
+import { Badge } from "../ui/badge"
 
-const EXPERTS = [
+type Expert = {
+  name: string
+  slug?: string
+  pos: string
+  image: string
+}
+
+export const EXPERTS: Expert[] = [
   {
-    name: "Dr. Jane Smith",
-    pos: "Chief of Surgery",
-    image: "/photo.png",
-  },
-  {
-    name: "Dr. John Doe",
-    pos: "Emergency Surgery Specialist",
-    image: "/photoSm.jpg",
-  },
-  {
-    name: "Dr. Emily Chen",
-    pos: "Minimally Invasive Surgery Expert",
+    name: "Жовніренко Дмитро Олександрович",
+    slug: "JovnirenkoDmitro",
+    pos: "Лікар-хірург, проктолог, ендоскопіст",
     image: "/dmytroJ.jpg",
+  },
+  {
+    name: "Посохов Дмитро Миколайович",
+    slug: "PosohovDmitro",
+    pos: "Лікар-хірург, проктолог, ендоскопіст",
+    image: "/photo.png",
   },
 ]
 
@@ -22,27 +28,28 @@ export default function Team() {
   return (
     <section id="team" className="w-full py-12 md:py-24 lg:py-32">
       <div className="container mx-auto px-4 md:px-6">
-        <h2 className="mb-16 text-center text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+        <h2 className="mb-12 text-center text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
           Our Expert Team
         </h2>
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-          {EXPERTS.map(({ name, pos, image }) => {
-            return (
-              <div className="flex flex-col items-center text-center" key={name}>
-                <Image
-                  src={image}
-                  alt={name}
-                  width={200}
-                  height={200}
-                  className="mb-4 size-52 rounded-full object-cover"
-                />
-                <h3 className="text-xl font-bold">{name}</h3>
-                <p className="text-gray-500">{pos}</p>
-              </div>
-            )
-          })}
+        <div className="flex flex-col items-center justify-evenly gap-8 md:flex-row">
+          {EXPERTS.map(({ name, pos, image, slug }) => (
+            <Member image={image} name={name} pos={pos} slug={slug} key={slug} />
+          ))}
         </div>
       </div>
     </section>
+  )
+}
+
+export function Member({ name, slug, pos, image }: Expert) {
+  return (
+    <div className="container relative flex w-96 flex-col items-center overflow-hidden rounded-lg border-2 text-center shadow-md transition-shadow hover:shadow-xl">
+      {slug !== undefined && <Link href={`/experts/${slug}`} className="absolute inset-0"></Link>}
+      <Image src={image} alt={name} width={384} height={384} className="aspect-square object-cover md:size-96" />
+      <h3 className="m-4 text-2xl font-semibold leading-8 tracking-wide">{name}</h3>
+      <Badge variant={"outline"} className="mb-4">
+        <p className="text-pretty text-gray-500">{pos}</p>
+      </Badge>
+    </div>
   )
 }
