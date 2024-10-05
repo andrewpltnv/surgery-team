@@ -1,28 +1,8 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Badge } from "../ui/badge"
-
-type Expert = {
-  name: string
-  slug?: string
-  pos: string
-  image: string
-}
-
-export const EXPERTS: Expert[] = [
-  {
-    name: "Жовніренко Дмитро Олександрович",
-    slug: "JovnirenkoDmitro",
-    pos: "Лікар-хірург, проктолог, ендоскопіст",
-    image: "/dmytroJ.jpg",
-  },
-  {
-    name: "Посохов Дмитро Миколайович",
-    slug: "PosohovDmitro",
-    pos: "Лікар-хірург, проктолог, ендоскопіст",
-    image: "/photo.png",
-  },
-]
+import { EXPERTS } from "@/app/experts/constants"
+import type { Expert } from "@/app/experts/constants"
 
 export default function Team() {
   return (
@@ -41,7 +21,7 @@ export default function Team() {
   )
 }
 
-export function Member({ name, slug, pos, image }: Expert) {
+export function Member({ name, slug, pos, image }: Pick<Expert, "name" | "slug" | "pos" | "image">) {
   return (
     <div className="container relative flex w-96 flex-col items-center overflow-hidden rounded-lg border-2 text-center shadow-md transition-shadow hover:shadow-xl">
       {slug !== undefined && <Link href={`/experts/${slug}`} className="absolute inset-0"></Link>}

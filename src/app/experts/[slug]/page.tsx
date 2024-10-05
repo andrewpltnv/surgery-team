@@ -1,21 +1,23 @@
 import Image from "next/image"
-import { MapPin, Briefcase, GraduationCap, Stethoscope } from "lucide-react"
-import { EXPERTS } from "@/components/Team"
+import { Briefcase, GraduationCap, Stethoscope } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { EXPERTS } from "../constants"
+import type { Expert } from "../constants"
+
+const experts = new Map<string, Expert>()
+EXPERTS.forEach(({ slug, ...rest }) => experts.set(slug || "x", rest))
 
 export async function generateStaticParams() {
   return EXPERTS.map(({ slug }) => ({ slug }))
 }
 
-const experts = new Map()
-EXPERTS.forEach(({ name, pos, image, slug }) => experts.set(slug, { name, pos, image }))
-
 export default function ExpertPage({ params: { slug } }: { params: { slug: string } }) {
-  const { image, name, pos } = experts.get(slug)
-  if (!image) {
+  const expert = experts.get(slug)
+  if (!expert) {
     throw new Error("Image not found")
   }
+  const { image, name, pos, experience, activity, areasOfActivity, education } = expert
 
   return (
     <div className="flex-grow bg-slate-200">
@@ -40,17 +42,17 @@ export default function ExpertPage({ params: { slug } }: { params: { slug: strin
             </CardHeader>
             <CardContent className="prose">
               <p>
-                <strong>Рік початку практики:</strong> 2008
+                <strong>Рік початку практики:</strong> {experience[0]}
               </p>
               <p>
-                <strong>Досвід роботи:</strong> 16 років
+                <strong>Досвід роботи:</strong> {experience[1]} років
               </p>
               <p className="mt-2">
-                <strong>Активність:</strong> Лікар виконав понад 10 000 хірургічних втручань
+                <strong>Активність:</strong> {activity}
               </p>
             </CardContent>
 
-            <CardHeader>
+            {/* <CardHeader>
               <CardTitle className="flex items-center">
                 <MapPin className="mr-2 h-5 w-5" />
                 Де приймає лікар
@@ -61,7 +63,7 @@ export default function ExpertPage({ params: { slug } }: { params: { slug: strin
                 <li>Філія на Печерську | ст. м. «Либідська»</li>
                 <li>Філія на Чернігівській | ст. м. «Чернігівська»</li>
               </ul>
-            </CardContent>
+            </CardContent> */}
           </Card>
         </div>
 
@@ -75,17 +77,9 @@ export default function ExpertPage({ params: { slug } }: { params: { slug: strin
             </CardHeader>
             <CardContent>
               <ul className="prose list-disc space-y-2 pl-5">
-                <li>Грижі, зокрема стравохідного отвору діафрагми</li>
-                <li>
-                  Холецистит, гострий та хронічний; апендицит, прободна виразка, кишкова непрохідність, будь-яка гостра
-                  та хронічна патологія органів черевної порожнини
-                </li>
-                <li>Всі сучасні методи лікування геморою, нориць, тріщин, екх, у тому числі лазер, лігація</li>
-                <li>
-                  Гастроскопія, колоноскопія; рання діагностика захворювань шлунка та кишечника, у тому числі онкології;
-                  видалення поліпів, пухлин
-                </li>
-                <li>Аугментаційна мамопластика, редукційна мамопластика, «підтяжка» грудей; блефаропластика</li>
+                {areasOfActivity.map((area, i) => (
+                  <li key={i}>{area}</li>
+                ))}
               </ul>
             </CardContent>
           </Card>
@@ -98,8 +92,9 @@ export default function ExpertPage({ params: { slug } }: { params: { slug: strin
             </CardHeader>
             <CardContent className="prose">
               <ul className="list-disc space-y-2 pl-5">
-                <li>Харківський Національний медичний університет, спеціальність «Лікувальна справа», 2008 р.</li>
-                <li>Сімферопольський медичний університет, спеціальність «Хірургія», 2011 р.</li>
+                {education.map((edu, i) => (
+                  <li key={i}>{edu}</li>
+                ))}
               </ul>
             </CardContent>
           </Card>
