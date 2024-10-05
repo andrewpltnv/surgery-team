@@ -1,5 +1,4 @@
 export type Expert = {
-  slug?: string
   name: string
   pos: string
   image: string
@@ -10,9 +9,8 @@ export type Expert = {
   directions: string[]
 }
 
-export const EXPERTS: Expert[] = [
-  {
-    slug: "ZhovnirenkoDmitro",
+export const EXPERTS: { [key: string]: Expert } = {
+  ZhovnirenkoDmitro: {
     name: "Жовніренко Дмитро Олександрович",
     pos: "Лікар-хірург, проктолог, ендоскопіст",
     image: "/dmytroJ.jpg",
@@ -53,8 +51,7 @@ export const EXPERTS: Expert[] = [
       "Проктологія",
     ],
   },
-  {
-    slug: "PosohovDmitro",
+  PosohovDmitro: {
     name: "Посохов Дмитро Миколайович",
     pos: "Лікар-хірург, проктолог, ендоскопіст",
     image: "/photo.png",
@@ -85,4 +82,4 @@ export const EXPERTS: Expert[] = [
       "Проктологія]",
     ],
   },
-]
+}

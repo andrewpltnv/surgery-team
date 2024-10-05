@@ -3,17 +3,33 @@ import { Briefcase, GraduationCap, Stethoscope } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { EXPERTS } from "../constants"
-import type { Expert } from "../constants"
-
-const experts = new Map<string, Expert>()
-EXPERTS.forEach(({ slug, ...rest }) => experts.set(slug || "x", rest))
+import { Metadata } from "next"
 
 export async function generateStaticParams() {
-  return EXPERTS.map(({ slug }) => ({ slug }))
+  return Object.keys(EXPERTS)
+}
+
+export async function generateMetadata({ params: { slug } }: { params: { slug: string } }): Promise<Metadata> {
+  const expert = EXPERTS[slug]
+  if (!expert) {
+    throw new Error("Image not found")
+  }
+
+  const { name, activity, pos } = expert
+
+  return {
+    title: name,
+    description: [name, pos, activity].join(" | "),
+    openGraph: {
+      title: name,
+      description: [name, pos, activity].join(" | "),
+      url: `/experts/${slug}`,
+    },
+  }
 }
 
 export default function ExpertPage({ params: { slug } }: { params: { slug: string } }) {
-  const expert = experts.get(slug)
+  const expert = EXPERTS[slug]
   if (!expert) {
     throw new Error("Image not found")
   }

@@ -12,7 +12,7 @@ export default function Team() {
           Our Expert Team
         </h2>
         <div className="flex flex-col items-center justify-evenly gap-8 md:flex-row">
-          {EXPERTS.map(({ name, pos, image, slug }) => (
+          {Object.entries(EXPERTS).map(([slug, { name, pos, image }]) => (
             <Member image={image} name={name} pos={pos} slug={slug} key={slug} />
           ))}
         </div>
@@ -21,7 +21,7 @@ export default function Team() {
   )
 }
 
-export function Member({ name, slug, pos, image }: Pick<Expert, "name" | "slug" | "pos" | "image">) {
+export function Member({ name, slug, pos, image }: Pick<Expert, "name" | "pos" | "image"> & { slug: string }) {
   return (
     <div className="container relative flex w-96 flex-col items-center overflow-hidden rounded-lg border-2 text-center shadow-md transition-shadow hover:shadow-xl">
       {slug !== undefined && <Link href={`/experts/${slug}`} className="absolute inset-0"></Link>}
