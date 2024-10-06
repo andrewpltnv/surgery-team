@@ -1,24 +1,19 @@
 "use client"
 import React from "react"
-import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel"
+import { Carousel } from "../ui/carousel"
 import Autoplay from "embla-carousel-autoplay"
-import { slides } from "./Slides"
 
-export default function CarouselHero() {
-  const plugin = React.useRef(Autoplay({ delay: 2500, stopOnInteraction: true }))
+export default function AutoplayCarousel({ content, delay }: { content: JSX.Element; delay: number }) {
+  const plugin = React.useRef(Autoplay({ delay, stopOnInteraction: false }))
 
   return (
     <Carousel
       plugins={[plugin.current]}
-      opts={{ loop: true }}
-      onMouseEnter={plugin.current.stop}
-      onMouseLeave={() => plugin.current.play()}
+      opts={{ loop: true, align: "center" }}
+      // onMouseEnter={plugin.current.stop}
+      // onMouseLeave={plugin.current.reset}
     >
-      <CarouselContent>
-        {slides.map((slide, i) => (
-          <CarouselItem key={i}>{slide}</CarouselItem>
-        ))}
-      </CarouselContent>
+      {content}
     </Carousel>
   )
 }

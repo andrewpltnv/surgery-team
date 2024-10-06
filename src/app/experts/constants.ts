@@ -1,3 +1,6 @@
+import { TESTIMONIALS_Posohov, TESTIMONIALS_Zhovnirenko } from "@/components/Testimonials/testimonials"
+import type { Testimonial } from "@/components/Testimonials/testimonials"
+
 export type Expert = {
   name: string
   pos: string
@@ -7,6 +10,7 @@ export type Expert = {
   areasOfActivity: string[]
   education: string[]
   directions: string[]
+  testimonials: Testimonial[]
 }
 
 export const EXPERTS: { [key: string]: Expert } = {
@@ -50,6 +54,7 @@ export const EXPERTS: { [key: string]: Expert } = {
       "Колоноскопія",
       "Проктологія",
     ],
+    testimonials: TESTIMONIALS_Zhovnirenko,
   },
   PosohovDmitro: {
     name: "Посохов Дмитро Миколайович",
@@ -81,5 +86,6 @@ export const EXPERTS: { [key: string]: Expert } = {
       "Колоноскопія",
       "Проктологія]",
     ],
+    testimonials: TESTIMONIALS_Posohov,
   },
 }
