@@ -1,13 +1,14 @@
 import Link from "next/link"
 import { Button } from "../ui/button"
 import { LucideNotebookText } from "lucide-react"
+import { CategoryType } from "./constants"
 
 export default function CategoryArticles({
   category,
   procedures,
 }: {
   category: [string, string]
-  procedures: string[][]
+  procedures: CategoryType["procedures"]
 }) {
   return (
     <div className="container m-auto max-w-[50rem] px-4 pb-0 pt-6">
@@ -15,10 +16,10 @@ export default function CategoryArticles({
         Статті на тему {category[1]}
       </h3>
       <div className="flex flex-col space-y-4">
-        {procedures.map(([id, procedure], index) => (
+        {Object.entries(procedures).map(([id, { title }], index) => (
           <Button variant={"link"} className="w-fit hyphens-auto text-pretty" key={index} asChild>
             <Link href={`${category[0]}/${id}`} className="inline-flex gap-2 text-start align-bottom text-base">
-              <LucideNotebookText /> {procedure}
+              <LucideNotebookText /> {title}
             </Link>
           </Button>
         ))}

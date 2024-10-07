@@ -15,7 +15,7 @@ export default function Page({ params: { category } }: { params: { category: str
   return (
     <div className="flex min-h-screen flex-col">
       <main className="flex-1">
-        <CategoryBanner category={name} description={description} />
+        <CategoryBanner title={name} description={description} />
         <CategoryArticles category={[slug, name]} procedures={procedures} />
         <Team />
       </main>
