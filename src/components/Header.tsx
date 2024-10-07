@@ -4,8 +4,8 @@ import { Button } from "./ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet"
 
 const ROUTES = [
-  { name: "About us", link: "about" },
-  { name: "Contacts", link: "contacts" },
+  { name: "About us", link: "/about" },
+  { name: "Contacts", link: "/contacts" },
 ]
 
 export default function Header() {
