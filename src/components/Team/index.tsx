@@ -6,7 +6,7 @@ import type { Expert } from "@/app/experts/constants"
 
 export default function Team() {
   return (
-    <section id="team" className="w-full py-12 md:py-24 lg:py-32">
+    <section id="team" className="w-full ~py-12/24">
       <div className="container mx-auto px-4 md:px-6">
         <h2 className="mb-12 text-center text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
           Our Expert Team
