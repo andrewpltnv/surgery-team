@@ -1,15 +1,7 @@
-import {
-  Microscope,
-  HeartPulse,
-  UserCircle,
-  Activity,
-  PocketKnife,
-  Scissors,
-  Stethoscope,
-  Utensils,
-} from "lucide-react"
+import { Microscope, HeartPulse, UserCircle } from "lucide-react"
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card"
 import Link from "next/link"
+import { categories } from "../Category/constants"
 
 export default function OurServices() {
   return (
@@ -44,39 +36,6 @@ export default function OurServices() {
   )
 }
 
-const specialties = [
-  {
-    name: "General Surgery",
-    icon: PocketKnife,
-    description: "General and urgent surgury",
-  },
-  {
-    name: "Proctology",
-    icon: Microscope,
-    description: "Care for colorectal health",
-  },
-  {
-    name: "Endoscopy",
-    icon: Stethoscope,
-    description: "Advanced diagnostic procedures",
-  },
-  {
-    name: "Bariatrics",
-    icon: Utensils,
-    description: "Comprehensive weight loss solutions",
-  },
-  {
-    name: "Plastic Surgery",
-    icon: Scissors,
-    description: "Aesthetic and reconstructive procedures",
-  },
-  {
-    name: "Oncological Surgery",
-    icon: Activity,
-    description: "Expert cancer treatment and care",
-  },
-]
-
 export function OurServicesLinks() {
   return (
     <section className="w-full py-12 md:py-24 lg:py-32">
@@ -85,8 +44,8 @@ export function OurServicesLinks() {
           Our Surgical Specialties
         </h2>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {specialties.map((specialty, index) => (
-            <Link href={`/${specialty.name.toLowerCase().replace(" ", "-")}`} key={index}>
+          {categories.map((specialty, index) => (
+            <Link href={`/speciality/${specialty.slug}`} key={index}>
               <Card className="flex h-full flex-col items-center transition-all hover:bg-accent">
                 <CardHeader>
                   <CardTitle className="flex items-center space-x-2">

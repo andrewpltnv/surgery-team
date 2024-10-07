@@ -4,7 +4,6 @@ import { Button } from "./ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet"
 
 const ROUTES = [
-  { name: "Specialties", link: "specialties" },
   { name: "About us", link: "about" },
   { name: "Contacts", link: "contacts" },
 ]
