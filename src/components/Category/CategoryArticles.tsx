@@ -18,8 +18,8 @@ export default function CategoryArticles({
       <div className="flex flex-col space-y-4">
         {Object.entries(procedures).map(([id, { title }], index) => (
           <Button variant={"link"} className="w-fit hyphens-auto text-pretty" key={index} asChild>
-            <Link href={`${category[0]}/${id}`} className="inline-flex gap-2 text-start align-bottom text-base">
-              <LucideNotebookText /> {title}
+            <Link href={`${category[0]}/${id}`} className="inline-flex h-fit gap-2 text-start align-bottom text-base">
+              <LucideNotebookText className="h-6 w-6 shrink-0" /> {title}
             </Link>
           </Button>
         ))}
