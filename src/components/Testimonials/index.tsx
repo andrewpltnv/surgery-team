@@ -18,7 +18,7 @@ export default function Testimonials({ testimonials }: { testimonials: Testimoni
   )
 
   return (
-    <div className="flex w-full flex-col bg-slate-50">
+    <div className="flex w-full flex-col bg-slate-500/[.06]">
       <AutoplayCarousel content={content} delay={3000} />
     </div>
   )

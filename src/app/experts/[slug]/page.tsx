@@ -33,7 +33,7 @@ export default function ExpertPage({ params: { slug } }: { params: { slug: strin
   }
 
   return (
-    <div className="flex-grow bg-slate-200">
+    <div className="flex-grow">
       <Profile expert={expert} />
       <Testimonials testimonials={expert.testimonials} />
     </div>

@@ -38,7 +38,7 @@ export default function OurServices() {
 
 export function OurServicesLinks() {
   return (
-    <section className="w-full bg-muted ~py-12/24">
+    <section className="w-full bg-slate-500/[.07] ~py-12/24">
       <div className="container m-auto ~px-4/6">
         <h2 className="mb-12 text-center font-bold tracking-tighter ~text-2xl/4xl">Our Surgical Specialties</h2>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">

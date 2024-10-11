@@ -21,7 +21,7 @@ export default function Team() {
 
 export function Member({ name, slug, pos, image }: Pick<Expert, "name" | "pos" | "image"> & { slug: string }) {
   return (
-    <div className="container relative flex max-w-96 flex-col items-center overflow-hidden rounded-lg border-2 text-center shadow-md transition-shadow hover:shadow-xl">
+    <div className="container relative flex max-w-96 flex-col items-center overflow-hidden rounded-lg border-2 bg-background text-center shadow-md transition-shadow hover:shadow-xl">
       {slug !== undefined && <Link href={`/experts/${slug}`} className="absolute inset-0" />}
       <Image src={image} alt={name} width={384} height={384} className="aspect-square w-full object-cover md:size-96" />
       <h3 className="m-4 text-2xl font-semibold leading-8 tracking-wide">{name}</h3>
