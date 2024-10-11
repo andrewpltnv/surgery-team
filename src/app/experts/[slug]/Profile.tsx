@@ -8,7 +8,7 @@ export default function Profile({ expert }: { expert: Expert }) {
   const { image, name, pos, experience, activity, areasOfActivity, education } = expert
 
   return (
-    <div className="container mx-auto grid grid-cols-1 gap-8 px-4 py-8 lg:grid-cols-3">
+    <div className="container mx-auto grid grid-cols-1 gap-8 p-4 lg:grid-cols-3">
       <div className="lg:col-span-1">
         <Card>
           <div className="flex flex-col items-center overflow-hidden rounded-lg text-center">
