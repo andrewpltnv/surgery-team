@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="ua">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} flex min-h-screen flex-col justify-between scroll-smooth antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} flex min-h-screen flex-col justify-between scroll-smooth font-sans antialiased`}
         suppressHydrationWarning
       >
         <Header />
