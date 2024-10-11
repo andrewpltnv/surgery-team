@@ -38,7 +38,7 @@ export default function OurServices() {
 
 export function OurServicesLinks() {
   return (
-    <section className="w-full py-12 md:py-24 lg:py-32">
+    <section className="w-full bg-muted py-12 md:py-24 lg:py-32">
       <div className="container m-auto px-4 md:px-6">
         <h2 className="mb-12 text-center text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl">
           Our Surgical Specialties
