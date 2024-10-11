@@ -38,15 +38,13 @@ export default function OurServices() {
 
 export function OurServicesLinks() {
   return (
-    <section className="w-full bg-muted py-12 md:py-24 lg:py-32">
-      <div className="container m-auto px-4 md:px-6">
-        <h2 className="mb-12 text-center text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl">
-          Our Surgical Specialties
-        </h2>
+    <section className="w-full bg-muted ~py-12/24">
+      <div className="container m-auto ~px-4/6">
+        <h2 className="mb-12 text-center font-bold tracking-tighter ~text-2xl/4xl">Our Surgical Specialties</h2>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {categories.map((specialty, index) => (
             <Link href={`/speciality/${specialty.slug}`} key={index}>
-              <Card className="flex h-full flex-col items-center transition-all hover:bg-accent">
+              <Card className="flex h-full flex-col items-center font-sans transition-all hover:bg-accent">
                 <CardHeader>
                   <CardTitle className="flex items-center space-x-2">
                     <specialty.icon className="h-6 w-6" />

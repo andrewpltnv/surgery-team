@@ -11,12 +11,12 @@ const ROUTES = [
 export default function Header() {
   return (
     <header className="flex h-14 items-center justify-between px-4 shadow-md lg:px-6">
-      <Button variant={"ghost"}>
-        <Link className="flex items-center justify-center" href="/#">
+      <Link className="flex items-center justify-center" href="/#">
+        <Button variant={"ghost"}>
           <Stethoscope className="mr-2 h-6 w-6" />
           <span className="font-bold">SurgeryTeam</span>
-        </Link>
-      </Button>
+        </Button>
+      </Link>
       <nav className="ml-auto hidden gap-4 sm:gap-6 md:flex">
         {ROUTES.map(({ name, link }, i) => (
           <Button asChild variant={"outline"} key={i}>
@@ -32,7 +32,7 @@ export default function Header() {
             <Menu />
           </Button>
         </SheetTrigger>
-        <SheetContent side={"right"}>
+        <SheetContent side={"top"}>
           <nav className="ml-auto flex flex-col gap-4 sm:gap-6">
             {ROUTES.map(({ name, link }, i) => (
               <Button asChild variant={"link"} key={i}>

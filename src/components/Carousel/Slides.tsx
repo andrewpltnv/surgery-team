@@ -22,8 +22,8 @@ function SlideOne() {
 function SlideTwo() {
   return (
     <CarouselItem className="my-auto">
-      <section className="container w-full bg-teal-100 py-12 md:py-24 lg:py-32 xl:py-48">
-        <div className="flex flex-col items-center space-y-4 text-center">
+      <section className="w-full bg-teal-100 py-12 md:py-24 lg:py-32 xl:py-48">
+        <div className="container m-auto flex flex-col items-center space-y-4 text-center">
           <div className="space-y-2">
             <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
               Second Slide

@@ -8,9 +8,7 @@ export default function Team() {
   return (
     <section id="team" className="w-full ~py-12/24">
       <div className="container mx-auto px-4 md:px-6">
-        <h2 className="mb-12 text-center text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-          Our Expert Team
-        </h2>
+        <h2 className="mb-12 text-center font-bold tracking-tighter ~text-3xl/5xl">Our Expert Team</h2>
         <div className="flex flex-col items-center justify-evenly gap-8 md:flex-row">
           {Object.entries(EXPERTS).map(([slug, { name, pos, image }]) => (
             <Member image={image} name={name} pos={pos} slug={slug} key={slug} />
@@ -24,7 +22,7 @@ export default function Team() {
 export function Member({ name, slug, pos, image }: Pick<Expert, "name" | "pos" | "image"> & { slug: string }) {
   return (
     <div className="container relative flex max-w-96 flex-col items-center overflow-hidden rounded-lg border-2 text-center shadow-md transition-shadow hover:shadow-xl">
-      {slug !== undefined && <Link href={`/experts/${slug}`} className="absolute inset-0"></Link>}
+      {slug !== undefined && <Link href={`/experts/${slug}`} className="absolute inset-0" />}
       <Image src={image} alt={name} width={384} height={384} className="aspect-square w-full object-cover md:size-96" />
       <h3 className="m-4 text-2xl font-semibold leading-8 tracking-wide">{name}</h3>
       <Badge variant={"outline"} className="mb-4">
