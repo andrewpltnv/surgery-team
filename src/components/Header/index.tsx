@@ -18,7 +18,7 @@ import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet"
 
 export default function Header() {
   return (
-    <header className="flex h-14 items-center justify-between bg-background shadow-md ~/lg:~px-0/6">
+    <header role="navigation" className="flex h-14 items-center justify-between bg-background shadow-md ~/lg:~px-2/6">
       <Link className="flex items-center justify-center" href="/#">
         <Button variant={"ghost"}>
           <Stethoscope className="mr-2 h-6 w-6" />
