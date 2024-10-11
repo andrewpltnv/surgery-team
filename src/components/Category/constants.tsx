@@ -1,4 +1,5 @@
 import { Activity, Apple, LucideIcon, Microscope, Scissors, Stethoscope, Syringe } from "lucide-react"
+import Hemorrhoid from "@/markdown/hemorrhoid.mdx"
 import Bronchoscopy from "@/markdown/bronchoscopy.mdx"
 
 export type CategoryType = {
@@ -36,7 +37,7 @@ export const categories: CategoryType[] = [
     icon: Microscope,
     description: "Care for colorectal health",
     procedures: {
-      ge: { title: "Геморой - лазерне та Ligasure видалення", page: () => <></> },
+      hemorrhoid: { title: "Геморой - лазерне та Ligasure видалення", page: Hemorrhoid as () => JSX.Element },
       an: { title: "Анальна тріщина", page: () => <></> },
       go: { title: "Гострокінцеві кондиломи", page: () => <></> },
       jo: { title: "Гострий парапроктит", page: () => <></> },

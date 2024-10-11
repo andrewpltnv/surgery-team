@@ -26,7 +26,7 @@ export default function Page({ params: { category, article } }: { params: { cate
 
   return (
     <>
-      <div className="container mx-auto flex flex-auto flex-col p-4">
+      <div className="container mx-auto flex max-w-fit flex-auto flex-col p-4">
         <Breadcrumb className="my-2 pb-2 text-lg">
           <BreadcrumbList className="flex-nowrap overflow-x-hidden">
             <BreadcrumbSeparator />
