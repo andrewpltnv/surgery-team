@@ -42,7 +42,7 @@ const Testimonial = ({ testimonial, isOpen }: { testimonial: Testimonial; isOpen
             <DialogTrigger asChild>
               <Button variant={"link"}>Читати повністю {">>>"}</Button>
             </DialogTrigger>
-            <DialogContent className="max-h-screen overflow-scroll p-0">
+            <DialogContent className="max-h-screen overflow-auto p-0">
               <Card className="flex flex-col">
                 <CardHeader className="pb-2">
                   <CardTitle>
