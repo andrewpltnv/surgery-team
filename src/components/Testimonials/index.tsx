@@ -36,11 +36,13 @@ const Testimonial = ({ testimonial, isOpen }: { testimonial: Testimonial; isOpen
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <p className={clsx({ "line-clamp-[8]": !isOpen }, "select-none hyphens-auto")}>{testimonial.text}</p>
+        <p className={clsx({ "line-clamp-[10]": !isOpen }, "select-none hyphens-auto text-sm")}>{testimonial.text}</p>
         {testimonial.text.length > 290 && (
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant={"link"}>Читати повністю {">>>"}</Button>
+              <Button variant={"link"} className="underline underline-offset-2 hover:bg-muted">
+                Читати повністю {">>>"}
+              </Button>
             </DialogTrigger>
             <DialogContent className="max-h-screen overflow-auto p-0">
               <Card className="flex flex-col">
