@@ -10,7 +10,7 @@ export default function Testimonials({ testimonials }: { testimonials: Testimoni
   const content = (
     <CarouselContent className="cursor-grab p-6">
       {testimonials.map((t, i) => (
-        <CarouselItem key={i} className="h-96 basis-96">
+        <CarouselItem key={i} className="h-96 basis-80">
           <Testimonial testimonial={t} isOpen={false} />
         </CarouselItem>
       ))}
@@ -18,7 +18,7 @@ export default function Testimonials({ testimonials }: { testimonials: Testimoni
   )
 
   return (
-    <div className="flex w-full flex-col bg-slate-500/[.06]">
+    <div className="flex w-full flex-col bg-slate-400/[.04]">
       <AutoplayCarousel content={content} delay={3000} />
     </div>
   )
@@ -28,10 +28,10 @@ const Testimonial = ({ testimonial, isOpen }: { testimonial: Testimonial; isOpen
   return (
     <Card className="relative flex h-96 flex-col">
       <CardHeader className="pb-2">
-        <CardTitle>
+        <CardTitle className="text-xl">
           {testimonial.name}
           <CardDescription>
-            <span>{testimonial.date}</span>
+            <span className="text-xs">{testimonial.date}</span>
           </CardDescription>
         </CardTitle>
       </CardHeader>
@@ -45,10 +45,10 @@ const Testimonial = ({ testimonial, isOpen }: { testimonial: Testimonial; isOpen
             <DialogContent className="max-h-screen overflow-auto p-0">
               <Card className="flex flex-col">
                 <CardHeader className="pb-2">
-                  <CardTitle>
+                  <CardTitle className="text-xl">
                     {testimonial.name}
                     <CardDescription>
-                      <span>{testimonial.date}</span>
+                      <span className="text-xs">{testimonial.date}</span>
                     </CardDescription>
                   </CardTitle>
                 </CardHeader>
