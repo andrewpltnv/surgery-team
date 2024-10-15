@@ -7,9 +7,17 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 import { GoogleTagManager } from "@next/third-parties/google"
 import { Analytics } from "@vercel/analytics/next"
 
-export const metadata: Metadata = {
-  title: "103 Surgery",
-  description: "103 Surgery team Kyiv",
+export function generateMetadata(): Metadata {
+  return {
+    title: "103 Surgery",
+    description: "103 Surgery team Kyiv",
+    openGraph: {
+      images: [{ url: "/api/og" }],
+    },
+    twitter: {
+      images: [{ url: "/app/og", type: "image/png", width: 1200, height: 630 }],
+    },
+  }
 }
 
 export default function RootLayout({

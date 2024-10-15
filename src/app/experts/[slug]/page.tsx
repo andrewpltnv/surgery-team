@@ -23,6 +23,18 @@ export async function generateMetadata({ params: { slug } }: { params: { slug: s
       title: name,
       description: [name, pos, activity].join(" | "),
       url: `/experts/${slug}`,
+      images: [
+        {
+          url: "api/og",
+        },
+      ],
+    },
+    twitter: {
+      images: [
+        {
+          url: "api/og",
+        },
+      ],
     },
   }
 }
