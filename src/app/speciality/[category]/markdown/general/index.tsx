@@ -1,4 +1,4 @@
-import SharpApendix from "./sharp-apendix.mdx"
+import SharpApendix from "./sharp_apendix.mdx"
 
 export const generalArticles = {
   ku: { title: "Кили передньої черевної стінки", page: () => <div></div> },
