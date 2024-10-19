@@ -50,7 +50,7 @@ function NavMenu() {
         <NavigationMenuItem>
           <NavigationMenuTrigger>Напрями</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid items-stretch gap-3 p-6 sm:grid-cols-[1fr_1fr] md:w-[400px] lg:w-[500px]">
+            <ul className="grid items-stretch gap-3 ~p-2/6 sm:grid-cols-[1fr_1fr] md:w-[400px] lg:w-[500px]">
               {categories.map(({ name, slug, icon: Icon }) => (
                 <ListItem key={slug} href={`/speciality/${slug}`}>
                   <Icon className="mr-2 h-6 w-6" />

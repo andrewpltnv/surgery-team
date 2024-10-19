@@ -6,20 +6,14 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { X } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import { useState } from "react"
 import { usePathname } from "next/navigation"
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
 
 const Sheet = ({ children }: { children: React.ReactNode }) => {
-  const [open, toggle] = useState(false)
   const path = usePathname()
 
-  React.useEffect(() => {
-    toggle(false)
-  }, [path])
-
   return (
-    <SheetPrimitive.Root open={open} onOpenChange={() => toggle(true)} modal={false}>
+    <SheetPrimitive.Root key={path} modal={false}>
       {children}
     </SheetPrimitive.Root>
   )
