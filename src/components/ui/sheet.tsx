@@ -19,7 +19,7 @@ const Sheet = ({ children }: { children: React.ReactNode }) => {
   }, [path])
 
   return (
-    <SheetPrimitive.Root open={open} onOpenChange={() => toggle(true)}>
+    <SheetPrimitive.Root open={open} onOpenChange={() => toggle(true)} modal={false}>
       {children}
     </SheetPrimitive.Root>
   )
