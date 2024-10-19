@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { Button } from "../ui/button"
 import { LucideNotebookText } from "lucide-react"
-import { CategoryType } from "./constants"
+import { CategoryType } from "../../app/speciality/[category]/constants"
 
 export default function CategoryArticles({
   category,
@@ -11,7 +11,7 @@ export default function CategoryArticles({
   procedures: CategoryType["procedures"]
 }) {
   return (
-    <div className="container m-auto max-w-[50rem] px-4 pb-0 pt-6">
+    <div className="container m-auto max-w-prose px-4 pb-0 pt-6">
       <h3 className="m-auto text-center font-semibold tracking-wide ~text-xl/3xl ~p-4/8">
         Статті на тему {category[1]}
       </h3>

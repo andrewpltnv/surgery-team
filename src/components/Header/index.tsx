@@ -12,7 +12,7 @@ import {
 } from "../ui/navigation-menu"
 import React from "react"
 import { cn } from "@/lib/utils"
-import { categories } from "../Category/constants"
+import { categories } from "../../app/speciality/[category]/constants"
 import { EXPERTS } from "@/app/experts/constants"
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet"
 
@@ -25,6 +25,7 @@ export default function Header() {
           <span className="font-bold">SurgeryTeam</span>
         </Button>
       </Link>
+
       <div className="hidden md:block">
         <NavMenu />
       </div>

@@ -1,4 +1,4 @@
-import { categories } from "@/components/Category/constants"
+import { categories } from "@/app/speciality/[category]/constants"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -26,7 +26,7 @@ export default function Page({ params: { category, article } }: { params: { cate
 
   return (
     <>
-      <div className="container mx-auto flex max-w-fit flex-auto flex-col p-4">
+      <div className="container mx-auto flex max-w-prose flex-auto flex-col p-4">
         <Breadcrumb className="my-2 pb-2 text-lg">
           <BreadcrumbList className="flex-nowrap overflow-x-hidden">
             <BreadcrumbSeparator />
