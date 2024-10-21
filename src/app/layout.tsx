@@ -33,12 +33,10 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} flex min-h-screen flex-col justify-between scroll-smooth font-sans antialiased`}
         suppressHydrationWarning
       >
-        <Header />
         {children}
         <GoogleTagManager gtmId="GTM-WJ6VVHHV" />
         <SpeedInsights />
         <Analytics />
-        <Footer />
       </body>
     </html>
   )

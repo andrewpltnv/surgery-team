@@ -1,4 +1,4 @@
-import { categories } from "@/app/speciality/[category]/constants"
+import { categories } from "@/app/(main)/speciality/[category]/constants"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -7,7 +7,10 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import { client } from "@/sanity/lib/client"
+import { defineQuery, PortableText } from "next-sanity"
 import Link from "next/link"
+import { Post } from "../../../../../../sanity.types"
 
 export async function generateStaticParams() {
   return categories.flatMap((category) =>
@@ -15,10 +18,20 @@ export async function generateStaticParams() {
   )
 }
 
+const data = await client.fetch<Post>(
+  defineQuery(`
+  *[_type=="post"][0]{
+    title,
+    categories[0]->,
+    body[]
+  }`)
+)
 export default function Page({ params: { category, article } }: { params: { category: string; article: string } }) {
   const categoryInfo = categories.find((categoryInfo) => categoryInfo.slug === category)
   const procedure = categoryInfo?.procedures[article]
   const Component = procedure?.page
+
+  console.log(data.body)
 
   if (!Component) {
     throw new Error("Component not found")
@@ -44,6 +57,7 @@ export default function Page({ params: { category, article } }: { params: { cate
         <div className="prose">
           <Component />
         </div>
+        <div className="prose">{data.body && <PortableText value={data.body} />}</div>
       </div>
     </>
   )

@@ -1,8 +1,8 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Badge } from "../ui/badge"
-import { EXPERTS } from "@/app/experts/constants"
-import type { Expert } from "@/app/experts/constants"
+import { EXPERTS } from "@/app/(main)/experts/constants"
+import type { Expert } from "@/app/(main)/experts/constants"
 
 export default function Team() {
   return (
