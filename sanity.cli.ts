@@ -9,4 +9,4 @@ import { defineCliConfig } from "sanity/cli"
 const projectId = process.env.SANITY_STUDIO_PROJECT_ID || "lu5enl2l"
 // const dataset = process.env.SANITY_STUDIO_API_DATASET || "production"
 
-export default defineCliConfig({ api: { projectId } })
+export default defineCliConfig({ api: { projectId }, studioHost: "surgery-lu5enl2l" })

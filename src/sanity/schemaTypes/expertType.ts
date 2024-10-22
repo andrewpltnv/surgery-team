@@ -42,9 +42,14 @@ export const expertType = defineType({
       title: "Reviews",
       of: [
         {
-          type: "reference",
-          to: [{ type: "review" }],
-          title: "Reviews",
+          type: "object",
+          name: "review",
+          fields: [
+            defineField({ name: "name", type: "string" }),
+            defineField({ name: "review", type: "text" }),
+            defineField({ name: "date", type: "string", title: "date" }),
+            defineField({ name: "source", title: "Source", type: "string" }),
+          ],
         },
       ],
     }),

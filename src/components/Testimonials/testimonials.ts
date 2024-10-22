@@ -1,5 +1,3 @@
-import { client } from "@/sanity/lib/client"
-
 export type Testimonial = {
   name: string
   date: string

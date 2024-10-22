@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { Button } from "../ui/button"
 import { LucideNotebookText } from "lucide-react"
-import { CategoryType } from "../../app/speciality/[category]/constants"
+import { CategoryType } from "../../app/(main)/speciality/[category]/constants"
 
 export default function CategoryArticles({
   category,

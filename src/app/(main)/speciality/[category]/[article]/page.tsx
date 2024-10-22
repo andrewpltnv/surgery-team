@@ -8,7 +8,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { client } from "@/sanity/lib/client"
-import { defineQuery, PortableText } from "next-sanity"
+import { defineQuery, PortableText, groq } from "next-sanity"
 import Link from "next/link"
 import { Post } from "../../../../../../sanity.types"
 
@@ -19,7 +19,7 @@ export async function generateStaticParams() {
 }
 
 const data = await client.fetch<Post>(
-  defineQuery(`
+  defineQuery(groq`
   *[_type=="post"][0]{
     title,
     categories[0]->,
@@ -30,8 +30,6 @@ export default function Page({ params: { category, article } }: { params: { cate
   const categoryInfo = categories.find((categoryInfo) => categoryInfo.slug === category)
   const procedure = categoryInfo?.procedures[article]
   const Component = procedure?.page
-
-  console.log(data.body)
 
   if (!Component) {
     throw new Error("Component not found")

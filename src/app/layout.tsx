@@ -1,7 +1,5 @@
 import type { Metadata } from "next"
 import "./globals.css"
-import Header from "@/components/Header"
-import Footer from "@/components/Footer"
 import { geistSans, geistMono } from "../fonts"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { GoogleTagManager } from "@next/third-parties/google"

@@ -17,9 +17,7 @@ export default defineConfig({
   basePath: "/studio",
   projectId,
   dataset,
-  token:
-    "sk8qjg93Dm6wCNfMqzNw9LaFh1t9seMfEq08fa8jnBYNQjXG24UPA4r9LAnH1pFMQeJJU1R1fRiX0bDLxo6FEsuPMKERcGzFb3ht0d5quoVnmyMze8XB0G2uPSd73BOK5D26IY7SNQUWLeIEv4asW2cyxu8r2PFdOS3JxtJMKdMuxf6QjOcq",
-  // Add and edit the content schema in the './sanity/schemaTypes' folder
+  token: process.env.NEXT_PUBLIC_SANITY_USER_ADDER_TOKEN,
   schema,
   plugins: [
     structureTool({ structure }),

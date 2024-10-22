@@ -1,7 +1,5 @@
 import { createClient } from "next-sanity"
-
 import { apiVersion, dataset, projectId } from "../env"
-import { TESTIMONIALS_Posohov } from "@/components/Testimonials/testimonials"
 
 export const client = createClient({
   projectId,
@@ -9,6 +7,5 @@ export const client = createClient({
   token: process.env.NEXT_PUBLIC_SANITY_USER_ADDER_TOKEN,
   apiVersion,
   withCredentials: true,
-
   useCdn: false, // Set to false if statically generating pages, using ISR or tag-based revalidation
 })
