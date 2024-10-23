@@ -6,52 +6,71 @@ export const expertType = defineType({
   title: "Expert",
   type: "document",
   icon: UserIcon,
+  groups: [
+    { name: "bio", title: "Bio" },
+    { name: "seo", title: "SEO" },
+    { name: "assets", title: "Photos & ..." },
+  ],
   fields: [
     defineField({
       name: "name",
       type: "string",
+      group: "bio",
     }),
     defineField({
       name: "slug",
       type: "slug",
-      options: {
-        source: "name",
-      },
+      group: "seo",
+      options: { source: "name" },
     }),
     defineField({
       name: "image",
       type: "image",
-      options: {
-        hotspot: true,
-      },
+      group: "assets",
+      options: { hotspot: true },
     }),
+    // defineField({
+    //   name: "bio",
+    //   type: "array",
+    //   group: "bio",
+    //   of: [defineArrayMember({ type: "block", styles: [{ title: "Normal", value: "normal" }], lists: [] })],
+    // }),
     defineField({
-      name: "bio",
       type: "array",
+      name: "areasOfExpertise",
+      title: "Areas Of Expertise",
+      group: "bio",
       of: [
         defineArrayMember({
-          type: "block",
-          styles: [{ title: "Normal", value: "normal" }],
-          lists: [],
+          type: "object",
+          name: "area",
+          title: "Area",
+          fields: [
+            { type: "string", name: "name" },
+            { type: "reference", name: "relatedPost", to: { type: "post" } },
+          ],
         }),
       ],
     }),
     defineField({
       type: "array",
+      name: "experience",
+      title: "Expirience",
+      group: "bio",
+      of: [defineArrayMember({ type: "string" })],
+    }),
+    defineField({
+      type: "array",
+      name: "education",
+      title: "Education",
+      group: "bio",
+      of: [defineArrayMember({ type: "string" })],
+    }),
+    defineField({
       name: "reviews",
+      type: "reference",
       title: "Reviews",
-      of: [
-        {
-          type: "object",
-          name: "review",
-          fields: [
-            defineField({ name: "name", type: "string" }),
-            defineField({ name: "review", type: "text" }),
-            defineField({ name: "date", type: "string", title: "date" }),
-            defineField({ name: "source", title: "Source", type: "string" }),
-          ],
-        },
-      ],
+      to: { type: "reviews" },
     }),
   ],
   preview: {
