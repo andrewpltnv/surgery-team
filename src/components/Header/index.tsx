@@ -12,8 +12,8 @@ import {
 } from "../ui/navigation-menu"
 import React from "react"
 import { cn } from "@/lib/utils"
-import { categories } from "../../app/speciality/[category]/constants"
-import { EXPERTS } from "@/app/experts/constants"
+import { categories } from "../../app/(main)/speciality/[category]/constants"
+import { EXPERTS } from "@/app/(main)/experts/constants"
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet"
 
 export default function Header() {

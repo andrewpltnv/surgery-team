@@ -1,6 +1,6 @@
 import CategoryBanner from "@/components/Category/CategoryBanner"
 import CategoryArticles from "@/components/Category/CategoryArticles"
-import { categories } from "@/app/speciality/[category]/constants"
+import { categories } from "@/app/(main)/speciality/[category]/constants"
 import Team from "@/components/Team"
 import { Metadata } from "next"
 

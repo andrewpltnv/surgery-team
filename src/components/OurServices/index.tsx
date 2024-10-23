@@ -1,7 +1,7 @@
 import { Microscope, HeartPulse, UserCircle } from "lucide-react"
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card"
 import Link from "next/link"
-import { categories } from "../../app/speciality/[category]/constants"
+import { categories } from "../../app/(main)/speciality/[category]/constants"
 
 export default function OurServices() {
   return (
