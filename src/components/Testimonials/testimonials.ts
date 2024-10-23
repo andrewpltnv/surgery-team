@@ -1,7 +1,8 @@
 export type Testimonial = {
   name: string
   date: string
-  text: string
+  text?: string
+  review?: string
   source: string
 }
 

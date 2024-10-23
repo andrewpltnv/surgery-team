@@ -5,8 +5,20 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import clsx from "clsx"
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog"
 import { Button } from "../ui/button"
+import { Reviews } from "@root/sanity.types"
 
-export default function Testimonials({ testimonials }: { testimonials: Testimonial[] }) {
+export default function Testimonials({ reviews }: { reviews: Reviews }) {
+  if (!reviews.reviewsArray) return null
+
+  const testimonials = reviews?.reviewsArray?.map((r) => {
+    return {
+      name: r.name ?? "",
+      date: r.date ?? "",
+      review: r.review ?? "",
+      source: r.source ?? "",
+    }
+  })
+
   const content = (
     <CarouselContent className="cursor-grab p-6">
       {testimonials.map((t, i) => (
@@ -25,6 +37,8 @@ export default function Testimonials({ testimonials }: { testimonials: Testimoni
 }
 
 const Testimonial = ({ testimonial, isOpen }: { testimonial: Testimonial; isOpen: boolean }) => {
+  if (!testimonial || !testimonial.review) return null
+
   return (
     <Card className="relative flex h-96 flex-col">
       <CardHeader className="pb-2">
@@ -36,8 +50,8 @@ const Testimonial = ({ testimonial, isOpen }: { testimonial: Testimonial; isOpen
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <p className={clsx({ "line-clamp-[10]": !isOpen }, "select-none hyphens-auto text-sm")}>{testimonial.text}</p>
-        {testimonial.text.length > 290 && (
+        <p className={clsx({ "line-clamp-[10]": !isOpen }, "select-none hyphens-auto text-sm")}>{testimonial.review}</p>
+        {testimonial?.review.length > 290 && (
           <Dialog>
             <DialogTrigger asChild>
               <Button variant={"link"} className="underline underline-offset-2 hover:bg-muted">
@@ -55,7 +69,7 @@ const Testimonial = ({ testimonial, isOpen }: { testimonial: Testimonial; isOpen
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className={clsx("hyphens-auto")}>{testimonial.text}</p>
+                  <p className={clsx("hyphens-auto")}>{testimonial.review}</p>
                 </CardContent>
                 <CardFooter className="prose bottom-0 text-xs">
                   <blockquote className="line-clamp-3 leading-none">{testimonial.source}</blockquote>

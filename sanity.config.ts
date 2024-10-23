@@ -20,4 +20,12 @@ export default defineConfig({
   token: process.env.NEXT_PUBLIC_SANITY_USER_ADDER_TOKEN,
   schema,
   plugins: [structureTool({ structure }), visionTool({ defaultApiVersion: apiVersion }), media()],
+  graphql: [
+    {
+      playground: false,
+      tag: "experiment",
+      workspace: "staging",
+      id: "schema-experiment",
+    },
+  ],
 })

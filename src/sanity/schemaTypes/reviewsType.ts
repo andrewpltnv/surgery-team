@@ -1,4 +1,4 @@
-import { defineField, defineType } from "sanity"
+import { defineArrayMember, defineField, defineType } from "sanity"
 
 export const reviewsType = defineType({
   name: "reviews",
@@ -17,16 +17,9 @@ export const reviewsType = defineType({
       title: "Reviews",
       options: { modal: { type: "dialog" } },
       of: [
-        {
-          type: "object",
-          name: "review",
-          fields: [
-            defineField({ name: "name", type: "string" }),
-            defineField({ name: "review", type: "text" }),
-            defineField({ name: "date", type: "string", title: "date" }),
-            defineField({ name: "source", title: "Source", type: "string" }),
-          ],
-        },
+        defineArrayMember({
+          type: "review",
+        }),
       ],
     }),
   ],

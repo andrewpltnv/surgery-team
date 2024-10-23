@@ -887,6 +887,36 @@
         },
         "optional": true
       },
+      "position": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "experience": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "start": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "number"
+              },
+              "optional": true
+            },
+            "activity": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string"
+              },
+              "optional": true
+            }
+          }
+        },
+        "optional": true
+      },
       "areasOfExpertise": {
         "type": "objectAttribute",
         "value": {
@@ -950,16 +980,6 @@
                 }
               }
             }
-          }
-        },
-        "optional": true
-      },
-      "experience": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "array",
-          "of": {
-            "type": "string"
           }
         },
         "optional": true

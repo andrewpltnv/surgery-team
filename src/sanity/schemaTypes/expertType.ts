@@ -29,35 +29,24 @@ export const expertType = defineType({
       group: "assets",
       options: { hotspot: true },
     }),
-    // defineField({
-    //   name: "bio",
-    //   type: "array",
-    //   group: "bio",
-    //   of: [defineArrayMember({ type: "block", styles: [{ title: "Normal", value: "normal" }], lists: [] })],
-    // }),
+    defineField({
+      name: "position",
+      type: "string",
+      title: "Position",
+      group: "bio",
+    }),
+    {
+      type: "experience",
+      name: "experience",
+      title: "Experience",
+      group: "bio",
+    },
     defineField({
       type: "array",
       name: "areasOfExpertise",
       title: "Areas Of Expertise",
       group: "bio",
-      of: [
-        defineArrayMember({
-          type: "object",
-          name: "area",
-          title: "Area",
-          fields: [
-            { type: "string", name: "name" },
-            { type: "reference", name: "relatedPost", to: { type: "post" } },
-          ],
-        }),
-      ],
-    }),
-    defineField({
-      type: "array",
-      name: "experience",
-      title: "Expirience",
-      group: "bio",
-      of: [defineArrayMember({ type: "string" })],
+      of: [defineArrayMember({ type: "area" })],
     }),
     defineField({
       type: "array",

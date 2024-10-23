@@ -76,11 +76,11 @@ export type Post = {
   _rev: string
   title?: string
   slug?: Slug
-  author?: {
+  expert?: {
     _ref: string
     _type: "reference"
     _weak?: boolean
-    [internalGroqTypeReferenceTo]?: "author"
+    [internalGroqTypeReferenceTo]?: "expert"
   }
   mainImage?: {
     asset?: {
@@ -137,9 +137,9 @@ export type Post = {
   >
 }
 
-export type Author = {
+export type Expert = {
   _id: string
-  _type: "author"
+  _type: "expert"
   _createdAt: string
   _updatedAt: string
   _rev: string
@@ -156,22 +156,49 @@ export type Author = {
     crop?: SanityImageCrop
     _type: "image"
   }
-  bio?: Array<{
-    children?: Array<{
-      marks?: Array<string>
-      text?: string
-      _type: "span"
-      _key: string
-    }>
-    style?: "normal"
-    listItem?: never
-    markDefs?: Array<{
-      href?: string
-      _type: "link"
-      _key: string
-    }>
-    level?: number
-    _type: "block"
+  position?: string
+  experience?: {
+    start?: number
+    activity?: string
+  }
+  areasOfExpertise?: Array<{
+    name?: string
+    relatedPost?: {
+      _ref: string
+      _type: "reference"
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: "post"
+    }
+    _type: "area"
+    _key: string
+  }>
+  education?: Array<string>
+  reviews?: {
+    _ref: string
+    _type: "reference"
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: "reviews"
+  }
+}
+
+export type Reviews = {
+  _id: string
+  _type: "reviews"
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  expert?: {
+    _ref: string
+    _type: "reference"
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: "expert"
+  }
+  reviewsArray?: Array<{
+    name?: string
+    review?: string
+    date?: string
+    source?: string
+    _type: "review"
     _key: string
   }>
 }
@@ -185,12 +212,6 @@ export type Category = {
   title?: string
   slug?: Slug
   description?: string
-}
-
-export type Slug = {
-  _type: "slug"
-  current?: string
-  source?: string
 }
 
 export type BlockContent = Array<
@@ -284,6 +305,21 @@ export type SanityImageMetadata = {
   isOpaque?: boolean
 }
 
+export type MediaTag = {
+  _id: string
+  _type: "media.tag"
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  name?: Slug
+}
+
+export type Slug = {
+  _type: "slug"
+  current?: string
+  source?: string
+}
+
 export type AllSanitySchemaTypes =
   | SanityImagePaletteSwatch
   | SanityImagePalette
@@ -291,13 +327,86 @@ export type AllSanitySchemaTypes =
   | SanityFileAsset
   | Geopoint
   | Post
-  | Author
+  | Expert
+  | Reviews
   | Category
-  | Slug
   | BlockContent
   | SanityImageCrop
   | SanityImageHotspot
   | SanityImageAsset
   | SanityAssetSourceData
   | SanityImageMetadata
+  | MediaTag
+  | Slug
 export declare const internalGroqTypeReferenceTo: unique symbol
+// Source: ./src/app/(main)/experts/[slug]/page.tsx
+// Variable: expertBySlugQuery
+// Query: *[_type=="expert" && slug.current == $slug][0]{    _id,    name,    slug,    image,    experience,    position,    education,    areasOfExpertise,       reviews->  }
+export type ExpertBySlugQueryResult = {
+  _id: string
+  name: string | null
+  slug: Slug | null
+  image: {
+    asset?: {
+      _ref: string
+      _type: "reference"
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+    }
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: "image"
+  } | null
+  experience: {
+    start?: number
+    activity?: string
+  } | null
+  position: string | null
+  education: Array<string> | null
+  areasOfExpertise: Array<{
+    name?: string
+    relatedPost?: {
+      _ref: string
+      _type: "reference"
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: "post"
+    }
+    _type: "area"
+    _key: string
+  }> | null
+  reviews: {
+    _id: string
+    _type: "reviews"
+    _createdAt: string
+    _updatedAt: string
+    _rev: string
+    expert?: {
+      _ref: string
+      _type: "reference"
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: "expert"
+    }
+    reviewsArray?: Array<{
+      name?: string
+      review?: string
+      date?: string
+      source?: string
+      _type: "review"
+      _key: string
+    }>
+  } | null
+} | null
+// Variable: slugsQuery
+// Query: *[_type=="expert"].slug{current}
+export type SlugsQueryResult = Array<{
+  current: string | null
+} | null>
+
+// Query TypeMap
+import "@sanity/client"
+declare module "@sanity/client" {
+  interface SanityQueries {
+    '*[_type=="expert" && slug.current == $slug][0]{\n    _id,\n    name,\n    slug,\n    image,\n    experience,\n    position,\n    education,\n    areasOfExpertise,   \n    reviews->\n  }': ExpertBySlugQueryResult
+    '*[_type=="expert"].slug{current}': SlugsQueryResult
+  }
+}
