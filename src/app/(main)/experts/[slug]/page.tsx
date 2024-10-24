@@ -3,22 +3,10 @@ import Profile from "./Profile";
 import Testimonials from "@/components/Testimonials";
 import { sanityFetch } from "@/sanity/lib/client";
 import type { Expert, Reviews } from "@root/sanity.types";
-import { groq } from "next-sanity";
+import { expertBySlugQuery, slugsQuery } from "@/sanity/lib/queries";
 // import Instagram from "./Instagram"
 
 const getExpert = async (slug: string) => {
-	const expertBySlugQuery = groq`*[_type=="expert" && slug.current == $slug][0]{
-    _id,
-    name,
-    slug,
-    image,
-    experience,
-    position,
-    education,
-    areasOfExpertise,   
-    reviews->
-  }`;
-
 	const expert = await sanityFetch<Expert>({
 		query: expertBySlugQuery,
 		qParams: { slug },
@@ -29,7 +17,6 @@ const getExpert = async (slug: string) => {
 };
 
 export async function generateStaticParams() {
-	const slugsQuery = groq`*[_type=="expert"].slug{current}`;
 	const slugs = await sanityFetch<{ current: string }[]>({
 		query: slugsQuery,
 		tags: ["expert"],
@@ -58,21 +45,14 @@ export async function generateMetadata(props: {
 			title: name,
 			description: [name, position, experience?.activity].join(" | "),
 			url: `/experts/${slug}`,
-			images: [
-				{
-					url: "api/og",
-				},
-			],
+			images: [{ url: "api/og" }],
 		},
 		twitter: {
-			images: [
-				{
-					url: "api/og",
-				},
-			],
+			images: [{ url: "api/og" }],
 		},
 	};
 }
+export const revalidate = 60;
 
 export default async function ExpertPage(props: {
 	params: Promise<{ slug: string }>;
