@@ -12,6 +12,7 @@ import { apiVersion, dataset, projectId } from "./src/sanity/env"
 import { schema } from "./src/sanity/schemaTypes"
 import { structure } from "./src/sanity/structure"
 import { media } from "sanity-plugin-media"
+import { assist } from "@sanity/assist"
 
 export default defineConfig({
   basePath: "/studio",
@@ -19,7 +20,7 @@ export default defineConfig({
   dataset,
   token: process.env.NEXT_PUBLIC_SANITY_USER_ADDER_TOKEN,
   schema,
-  plugins: [structureTool({ structure }), visionTool({ defaultApiVersion: apiVersion }), media()],
+  plugins: [structureTool({ structure }), visionTool({ defaultApiVersion: apiVersion }), media(), assist()],
   graphql: [
     {
       playground: false,
