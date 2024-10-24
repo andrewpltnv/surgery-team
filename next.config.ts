@@ -1,10 +1,8 @@
 import createMDX from "@next/mdx"
+import type { NextConfig } from "next"
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  // Configure `pageExtensions` to include markdown and MDX files
+const nextConfig: NextConfig = {
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
-  // Optionally, add any other Next.js config below
   images: {
     remotePatterns: [{ hostname: "cdn.sanity.io" }],
     // loader: "custom",

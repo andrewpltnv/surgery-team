@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Profile from "./Profile";
 import Testimonials from "@/components/Testimonials";
-import { client, sanityFetch } from "@/sanity/lib/client";
+import { sanityFetch } from "@/sanity/lib/client";
 import type { Expert, Reviews } from "@root/sanity.types";
 import { groq } from "next-sanity";
 // import Instagram from "./Instagram"
@@ -18,7 +18,12 @@ const getExpert = async (slug: string) => {
     areasOfExpertise,   
     reviews->
   }`;
-	const expert = await client.fetch<Expert>(expertBySlugQuery, { slug });
+
+	const expert = await sanityFetch<Expert>({
+		query: expertBySlugQuery,
+		qParams: { slug },
+		tags: ["expert"],
+	});
 
 	return expert;
 };
@@ -33,22 +38,20 @@ export async function generateStaticParams() {
 	return slugs.map(({ current: slug }) => ({ slug }));
 }
 
-export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-    const params = await props.params;
+export async function generateMetadata(props: {
+	params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+	const params = await props.params;
+	const { slug } = params;
+	const expert = await getExpert(slug);
 
-    const {
-        slug
-    } = params;
-
-    const expert = await getExpert(slug);
-
-    if (!expert) {
+	if (!expert) {
 		throw new Error("Image not found");
 	}
 
-    const { name, experience, position } = expert;
+	const { name, experience, position } = expert;
 
-    return {
+	return {
 		title: name,
 		description: [name, position, experience?.activity].join(" | "),
 		openGraph: {
@@ -71,20 +74,20 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
 	};
 }
 
-export default async function ExpertPage(props: { params: Promise<{ slug: string }> }) {
-    const params = await props.params;
+export default async function ExpertPage(props: {
+	params: Promise<{ slug: string }>;
+}) {
+	const params = await props.params;
 
-    const {
-        slug
-    } = params;
+	const { slug } = params;
 
-    const expert = await getExpert(slug);
+	const expert = await getExpert(slug);
 
-    if (!expert || !expert.reviews) {
+	if (!expert || !expert.reviews) {
 		throw new Error("Image not found");
 	}
 
-    return (
+	return (
 		<div className="flex-grow">
 			<Profile expert={expert} />
 			<Testimonials reviews={expert.reviews as unknown as Reviews} />

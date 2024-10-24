@@ -7,10 +7,10 @@ import {
 	BreadcrumbPage,
 	BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { sanityFetch } from "@/sanity/lib/client";
-import { defineQuery, PortableText, groq } from "next-sanity";
+// import { sanityFetch } from "@/sanity/lib/client";
+// import { defineQuery, PortableText, groq } from "next-sanity";
 import Link from "next/link";
-import type { Post } from "@root/sanity.types";
+// import type { Post } from "@root/sanity.types";
 
 export async function generateStaticParams() {
 	return categories.flatMap((category) =>
@@ -21,37 +21,36 @@ export async function generateStaticParams() {
 	);
 }
 
-const data = await sanityFetch<Post>({
-	query: defineQuery(
-		groq`
-    *[_type=="post"][0]{
-      title,
-      categories[0]->,
-      body[]
-    }`,
-	),
-	tags: ["post"],
-});
+// const data = await sanityFetch<Post>({
+// 	query: defineQuery(
+// 		groq`
+//     *[_type=="post"][0]{
+//       title,
+//       categories[0]->,
+//       body[]
+//     }`,
+// 	),
+// 	tags: ["post"],
+// });
 
-export default async function Page(props: { params: Promise<{ category: string; article: string }> }) {
-    const params = await props.params;
+export default async function Page(props: {
+	params: Promise<{ category: string; article: string }>;
+}) {
+	const params = await props.params;
 
-    const {
-        category,
-        article
-    } = params;
+	const { category, article } = params;
 
-    const categoryInfo = categories.find(
+	const categoryInfo = categories.find(
 		(categoryInfo) => categoryInfo.slug === category,
 	);
-    const procedure = categoryInfo?.procedures[article];
-    const Component = procedure?.page;
+	const procedure = categoryInfo?.procedures[article];
+	const Component = procedure?.page;
 
-    if (!Component) {
+	if (!Component) {
 		throw new Error("Component not found");
 	}
 
-    return (
+	return (
 		<>
 			<div className="container mx-auto flex max-w-prose flex-auto flex-col p-4">
 				<Breadcrumb className="my-2 pb-2 text-lg">
@@ -75,9 +74,9 @@ export default async function Page(props: { params: Promise<{ category: string; 
 				<div className="prose">
 					<Component />
 				</div>
-				<div className="prose">
+				{/* <div className="prose">
 					{data.body && <PortableText value={data.body} />}
-				</div>
+				</div> */}
 			</div>
 		</>
 	);
