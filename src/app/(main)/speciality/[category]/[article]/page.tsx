@@ -33,20 +33,25 @@ const data = await sanityFetch<Post>({
 	tags: ["post"],
 });
 
-export default function Page({
-	params: { category, article },
-}: { params: { category: string; article: string } }) {
-	const categoryInfo = categories.find(
+export default async function Page(props: { params: Promise<{ category: string; article: string }> }) {
+    const params = await props.params;
+
+    const {
+        category,
+        article
+    } = params;
+
+    const categoryInfo = categories.find(
 		(categoryInfo) => categoryInfo.slug === category,
 	);
-	const procedure = categoryInfo?.procedures[article];
-	const Component = procedure?.page;
+    const procedure = categoryInfo?.procedures[article];
+    const Component = procedure?.page;
 
-	if (!Component) {
+    if (!Component) {
 		throw new Error("Component not found");
 	}
 
-	return (
+    return (
 		<>
 			<div className="container mx-auto flex max-w-prose flex-auto flex-col p-4">
 				<Breadcrumb className="my-2 pb-2 text-lg">

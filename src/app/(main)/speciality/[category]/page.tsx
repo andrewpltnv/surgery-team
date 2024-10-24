@@ -8,7 +8,13 @@ export async function generateStaticParams() {
   return categories.map(({ slug }) => ({ category: slug }))
 }
 
-export async function generateMetadata({ params: { category } }: { params: { category: string } }): Promise<Metadata> {
+export async function generateMetadata(props: { params: Promise<{ category: string }> }): Promise<Metadata> {
+  const params = await props.params;
+
+  const {
+    category
+  } = params;
+
   const categoryInfo = categories.find((categoryInfo) => categoryInfo.slug === category)
 
   if (!categoryInfo) {
@@ -28,7 +34,13 @@ export async function generateMetadata({ params: { category } }: { params: { cat
   }
 }
 
-export default function Page({ params: { category } }: { params: { category: string } }) {
+export default async function Page(props: { params: Promise<{ category: string }> }) {
+  const params = await props.params;
+
+  const {
+    category
+  } = params;
+
   const categoryInfo = categories.find((categoryInfo) => categoryInfo.slug === category)
 
   if (!categoryInfo) {

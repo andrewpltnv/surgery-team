@@ -33,18 +33,22 @@ export async function generateStaticParams() {
 	return slugs.map(({ current: slug }) => ({ slug }));
 }
 
-export async function generateMetadata({
-	params: { slug },
-}: { params: { slug: string } }): Promise<Metadata> {
-	const expert = await getExpert(slug);
+export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+    const params = await props.params;
 
-	if (!expert) {
+    const {
+        slug
+    } = params;
+
+    const expert = await getExpert(slug);
+
+    if (!expert) {
 		throw new Error("Image not found");
 	}
 
-	const { name, experience, position } = expert;
+    const { name, experience, position } = expert;
 
-	return {
+    return {
 		title: name,
 		description: [name, position, experience?.activity].join(" | "),
 		openGraph: {
@@ -67,16 +71,20 @@ export async function generateMetadata({
 	};
 }
 
-export default async function ExpertPage({
-	params: { slug },
-}: { params: { slug: string } }) {
-	const expert = await getExpert(slug);
+export default async function ExpertPage(props: { params: Promise<{ slug: string }> }) {
+    const params = await props.params;
 
-	if (!expert || !expert.reviews) {
+    const {
+        slug
+    } = params;
+
+    const expert = await getExpert(slug);
+
+    if (!expert || !expert.reviews) {
 		throw new Error("Image not found");
 	}
 
-	return (
+    return (
 		<div className="flex-grow">
 			<Profile expert={expert} />
 			<Testimonials reviews={expert.reviews as unknown as Reviews} />
