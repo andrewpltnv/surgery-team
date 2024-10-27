@@ -44,7 +44,11 @@ export function Member({
 			className="container relative flex max-w-96 flex-col items-center overflow-hidden rounded-lg border-2 bg-background text-center shadow-md transition-shadow hover:shadow-xl"
 		>
 			{slug !== undefined && (
-				<Link href={`/experts/${slug}`} className="absolute inset-0" />
+				<Link
+					aria-label={`${name} profile`}
+					href={`/experts/${slug}`}
+					className="absolute inset-0"
+				/>
 			)}
 			<Image
 				src={image}
@@ -59,7 +63,7 @@ export function Member({
 			>
 				{name}
 			</h3>
-			<Badge variant={"outline"} className="mb-4">
+			<Badge variant={"outline"} className="mb-4" itemProp="jobTitle">
 				<p className="text-pretty text-gray-500">{pos}</p>
 			</Badge>
 		</div>

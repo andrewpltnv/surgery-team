@@ -54,11 +54,19 @@ export default async function Page(props: {
 		<>
 			<div className="container mx-auto flex max-w-prose flex-auto flex-col p-4">
 				<Breadcrumb className="my-2 pb-2 text-lg">
-					<BreadcrumbList className="flex-nowrap overflow-x-hidden">
+					<BreadcrumbList
+						className="flex-nowrap overflow-x-hidden"
+						itemType="https://schema.org/BreadcrumbList"
+						itemScope
+					>
 						<BreadcrumbSeparator />
-						<BreadcrumbItem>
+						<BreadcrumbItem
+							itemType="https://schema.org/ListItem"
+							itemProp="itemListElement"
+							itemScope
+						>
 							<BreadcrumbLink asChild>
-								<Link href={`/speciality/${category}`}>
+								<Link href={`/speciality/${category}`} itemProp="item">
 									{categoryInfo?.name}
 								</Link>
 							</BreadcrumbLink>
