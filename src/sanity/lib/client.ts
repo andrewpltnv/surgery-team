@@ -21,6 +21,6 @@ export async function sanityFetch<QueryResponse>({
 }): Promise<QueryResponse> {
   return client.fetch<QueryResponse>(query, qParams, {
     cache: process.env.NODE_ENV === "development" ? "no-store" : "force-cache",
-    next: { tags, revalidate: 60 },
+    next: { tags, revalidate: process.env.NODE_ENV === "development" ? false : 60 },
   })
 }
