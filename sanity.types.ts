@@ -341,12 +341,10 @@ export type AllSanitySchemaTypes =
 export declare const internalGroqTypeReferenceTo: unique symbol
 // Source: ./src/sanity/lib/queries.ts
 // Variable: slugsQuery
-// Query: *[_type=="expert"].slug{current}
-export type SlugsQueryResult = Array<{
-  current: string | null
-} | null>
+// Query: *[_type=="expert"].slug.current
+export type SlugsQueryResult = Array<string | null>
 // Variable: expertBySlugQuery
-// Query: *[_type=="expert" && slug.current == $slug][0]{    _id,    name,    slug,    image,    experience,    position,    education,    areasOfExpertise,       reviews->  }
+// Query: *[_type=="expert" && slug.current == $slug][0]{  _id,  name,  slug,  image,  experience,  position,  education,  areasOfExpertise,     reviews->}
 export type ExpertBySlugQueryResult = {
   _id: string
   name: string | null
@@ -406,7 +404,7 @@ export type ExpertBySlugQueryResult = {
 import "@sanity/client"
 declare module "@sanity/client" {
   interface SanityQueries {
-    '*[_type=="expert"].slug{current}': SlugsQueryResult
-    '*[_type=="expert" && slug.current == $slug][0]{\n    _id,\n    name,\n    slug,\n    image,\n    experience,\n    position,\n    education,\n    areasOfExpertise,   \n    reviews->\n  }': ExpertBySlugQueryResult
+    '*[_type=="expert"].slug.current': SlugsQueryResult
+    '*[_type=="expert" && slug.current == $slug][0]{\n  _id,\n  name,\n  slug,\n  image,\n  experience,\n  position,\n  education,\n  areasOfExpertise,   \n  reviews->\n}': ExpertBySlugQueryResult
   }
 }

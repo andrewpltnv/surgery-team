@@ -1,28 +1,13 @@
 import type { Metadata } from "next";
 import Profile from "./Profile";
 import Testimonials from "@/components/Testimonials";
-import { sanityFetch } from "@/sanity/lib/client";
-import type { Expert, Reviews } from "@root/sanity.types";
-import { expertBySlugQuery, slugsQuery } from "@/sanity/lib/queries";
+import type { Reviews } from "@root/sanity.types";
+import { getExpert, getExpertsSlugs } from "@/sanity/lib/api";
 // import Instagram from "./Instagram"
 
-const getExpert = async (slug: string) => {
-	const expert = await sanityFetch<Expert>({
-		query: expertBySlugQuery,
-		qParams: { slug },
-		tags: ["expert"],
-	});
-
-	return expert;
-};
-
 export async function generateStaticParams() {
-	const slugs = await sanityFetch<{ current: string }[]>({
-		query: slugsQuery,
-		tags: ["expert"],
-	});
-
-	return slugs.map(({ current: slug }) => ({ slug }));
+	const slugs = await getExpertsSlugs();
+	return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata(props: {
@@ -52,7 +37,6 @@ export async function generateMetadata(props: {
 		},
 	};
 }
-export const revalidate = 60;
 
 export default async function ExpertPage(props: {
 	params: Promise<{ slug: string }>;
