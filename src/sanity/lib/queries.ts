@@ -10,5 +10,6 @@ export const expertBySlugQuery = groq`*[_type=="expert" && slug.current == $slug
   position,
   education,
   areasOfExpertise,   
+  schemaMarkup,
   reviews->
 }`

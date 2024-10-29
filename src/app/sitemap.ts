@@ -1,24 +1,25 @@
 import { getExpertsSlugs } from "@/sanity/lib/api"
 import type { MetadataRoute } from "next"
+import { headers } from "next/headers"
 
 const expertsSlugs = await getExpertsSlugs()
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const site = `https://${process.env.VERCEL_URL ?? "localhost:3000"}`
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const headersList = await headers()
+  const host = headersList.get("host")
+  const lastModified = new Date()
 
-  const links: MetadataRoute.Sitemap = [
+  return [
     {
-      url: site,
-      lastModified: new Date().toISOString(),
+      url: `https://${host}`,
+      lastModified: lastModified,
       changeFrequency: "monthly",
       priority: 1,
     },
     ...expertsSlugs.map((slug) => ({
-      url: `${site}/experts/${slug}`,
-      lastModified: new Date().toISOString(),
+      url: `https://${host}/experts/${slug}`,
+      lastModified: lastModified,
       priority: 0.9,
     })),
   ]
-
-  return links
 }

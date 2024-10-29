@@ -1,6 +1,6 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { urlFor } from "@/sanity/lib/image"
-import { Expert } from "@root/sanity.types"
+import type { Expert } from "@root/sanity.types"
 import { Briefcase, Stethoscope, GraduationCap } from "lucide-react"
 import Image from "next/image"
 
@@ -48,7 +48,7 @@ export default function Profile({ expert }: { expert: Expert }) {
             <div>
               <ul className="prose max-w-none list-disc space-y-2 pl-5 prose-li:text-sm">
                 {areasOfExpertise.map((area, i) => (
-                  <li key={i}>{area.name}</li>
+                  <li key={area._key + i}>{area.name}</li>
                 ))}
               </ul>
             </div>
@@ -62,8 +62,8 @@ export default function Profile({ expert }: { expert: Expert }) {
             </CardHeader>
             <CardContent className="prose max-w-none prose-li:text-sm">
               <ul className="list-disc space-y-2 pl-5">
-                {education.map((edu, i) => (
-                  <li key={i}>{edu}</li>
+                {education.map((edu) => (
+                  <li key={edu}>{edu}</li>
                 ))}
               </ul>
             </CardContent>

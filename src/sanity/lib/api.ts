@@ -6,7 +6,6 @@ export const getExpert = async (slug: string) => {
   const expert = await sanityFetch<Expert>({
     query: expertBySlugQuery,
     qParams: { slug },
-    tags: ["expert"],
   })
 
   return expert
@@ -15,7 +14,6 @@ export const getExpert = async (slug: string) => {
 export const getExpertsSlugs = async () => {
   const slugs = await sanityFetch<string[]>({
     query: slugsQuery,
-    tags: ["expert"],
   })
 
   return slugs

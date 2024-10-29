@@ -13,14 +13,14 @@ export const client = createClient({
 export async function sanityFetch<QueryResponse>({
   query,
   qParams = {},
-  tags,
 }: {
   query: string
   qParams?: QueryParams
-  tags: string[]
 }): Promise<QueryResponse> {
   return client.fetch<QueryResponse>(query, qParams, {
     cache: process.env.NODE_ENV === "development" ? "no-store" : "force-cache",
-    next: { tags, revalidate: process.env.NODE_ENV === "development" ? false : 60 },
+    // next: {
+    //   revalidate: 60,
+    // },
   })
 }
