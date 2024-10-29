@@ -8,9 +8,9 @@ import { visionTool } from "@sanity/vision";
 import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
 
-import { apiVersion, dataset, projectId } from "@/sanity/env";
-import { schema } from "@/sanity/schemaTypes";
-import { structure } from "@/sanity/structure";
+import { apiVersion, dataset, projectId } from "./src/sanity/env";
+import { schema } from "./src/sanity/schemaTypes";
+import { structure } from "./src/sanity/structure";
 import { media } from "sanity-plugin-media";
 import { schemaMarkup } from "@operationnation/sanity-plugin-schema-markup";
 

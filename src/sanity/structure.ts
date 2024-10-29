@@ -1,15 +1,17 @@
-import type { StructureResolver } from "sanity/structure"
+import type { StructureResolver } from "sanity/structure";
 
 // https://www.sanity.io/docs/structure-builder-cheat-sheet
 export const structure: StructureResolver = (S) =>
-  S.list()
-    .title("Blog")
-    .items([
-      S.documentTypeListItem("post").title("Posts"),
-      S.documentTypeListItem("category").title("Categories"),
-      S.documentTypeListItem("expert").title("Experts"),
-      S.divider(),
-      ...S.documentTypeListItems().filter(
-        (item) => item.getId() && !["post", "category", "expert"].includes(item.getId()!)
-      ),
-    ])
+	S.list()
+		.title("Blog")
+		.items([
+			S.documentTypeListItem("procedureArticle").title("Articles"),
+			S.documentTypeListItem("category").title("Categories"),
+			S.documentTypeListItem("expert").title("Experts"),
+			S.divider(),
+			...S.documentTypeListItems().filter(
+				(item) =>
+					item.getId() &&
+					!["procedureArticle", "category", "expert"].includes(item.getId()!),
+			),
+		]);
