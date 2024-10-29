@@ -3,6 +3,9 @@ import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
+  experimental: {
+    webpackMemoryOptimizations: true,
+  },
   images: {
     remotePatterns: [{ hostname: "cdn.sanity.io" }],
     // loader: "custom",
