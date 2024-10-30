@@ -1147,7 +1147,7 @@ export declare const internalGroqTypeReferenceTo: unique symbol
 // Query: *[_type=="expert"].slug.current
 export type SlugsQueryResult = Array<string | null>
 // Variable: expertBySlugQuery
-// Query: *[_type=="expert" && slug.current == $slug][0]{  _id,  name,   slug,  image,  experience,  position,  education,  areasOfExpertise,     schemaMarkup,  reviews->}
+// Query: *[_type=="expert" && slug.current == $slug][0]{  _id,  name,   slug,  image,  experience,  position,  education,  areasOfExpertise,  schemaMarkup,  reviews->}
 export type ExpertBySlugQueryResult = {
   _id: string
   name: string | null
@@ -1246,6 +1246,6 @@ import "@sanity/client"
 declare module "@sanity/client" {
   interface SanityQueries {
     '*[_type=="expert"].slug.current': SlugsQueryResult
-    '*[_type=="expert" && slug.current == $slug][0]{\n  _id,\n  name, \n  slug,\n  image,\n  experience,\n  position,\n  education,\n  areasOfExpertise,   \n  schemaMarkup,\n  reviews->\n}': ExpertBySlugQueryResult
+    '*[_type=="expert" && slug.current == $slug][0]{\n  _id,\n  name, \n  slug,\n  image,\n  experience,\n  position,\n  education,\n  areasOfExpertise,\n  schemaMarkup,\n  reviews->\n}': ExpertBySlugQueryResult
   }
 }

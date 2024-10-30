@@ -46,7 +46,7 @@ export default async function ExpertPage(props: { params: Promise<{ slug: string
   const expert = await getExpert(slug)
 
   if (!expert || !expert.reviews) {
-    throw new Error("Image not found")
+    throw new Error("Expert not found")
   }
 
   const { schemaMarkup, ...rest } = expert
