@@ -1,24 +1,20 @@
-import type { Expert } from "@root/sanity.types"
-import { sanityFetch } from "./client"
-import { expertBySlugQuery, slugsQuery } from "./queries"
+import type { ExpertBySlugQueryResult } from "@root/sanity.types.ts";
+import { sanityFetch } from "./client";
+import { expertBySlugQuery, slugsQuery } from "./queries";
 
 export const getExpert = async (slug: string) => {
-  const expert = await sanityFetch<Expert>({
-    query: expertBySlugQuery,
-    qParams: { slug },
-  })
+	const expert = await sanityFetch<ExpertBySlugQueryResult>({
+		query: expertBySlugQuery,
+		qParams: { slug },
+	});
 
-  return expert
-}
+	return expert;
+};
 
 export const getExpertsSlugs = async () => {
-  const slugs = await sanityFetch<string[]>({
-    query: slugsQuery,
-  })
+	const slugs = await sanityFetch<string[]>({
+		query: slugsQuery,
+	});
 
-  return slugs
-}
-
-export const getCategories = async () => {}
-
-export const getArticles = async () => {}
+	return slugs;
+};

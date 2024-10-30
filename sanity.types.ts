@@ -71,12 +71,122 @@ export type Geopoint = {
 export type Area = {
   _type: "area"
   name?: string
-  relatedPost?: {
+  relatedArticle?: {
     _ref: string
     _type: "reference"
     _weak?: boolean
-    [internalGroqTypeReferenceTo]?: "post"
+    [internalGroqTypeReferenceTo]?: "procedureArticle"
   }
+}
+
+export type Reviews = {
+  _id: string
+  _type: "reviews"
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  expert?: {
+    _ref: string
+    _type: "reference"
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: "expert"
+  }
+  reviewsArray?: Array<
+    {
+      _key: string
+    } & Review
+  >
+}
+
+export type Expert = {
+  _id: string
+  _type: "expert"
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  name?: string
+  slug?: Slug
+  schemaMarkup?: Array<
+    | ({
+        _key: string
+      } & Article)
+    | ({
+        _key: string
+      } & BreadcrumbList)
+    | ({
+        _key: string
+      } & FaqPageType)
+    | ({
+        _key: string
+      } & HowToType)
+    | ({
+        _key: string
+      } & ImageObjectType)
+    | ({
+        _key: string
+      } & LocalBusiness)
+    | ({
+        _key: string
+      } & Organization)
+    | ({
+        _key: string
+      } & PersonType)
+    | ({
+        _key: string
+      } & ProductType)
+    | ({
+        _key: string
+      } & RecipeType)
+    | ({
+        _key: string
+      } & ReviewType)
+    | ({
+        _key: string
+      } & SocialMediaPosting)
+    | ({
+        _key: string
+      } & ServiceType)
+    | ({
+        _key: string
+      } & VideoObjectType)
+    | ({
+        _key: string
+      } & WebPageType)
+    | ({
+        _key: string
+      } & WebsiteType)
+  >
+  image?: {
+    asset?: {
+      _ref: string
+      _type: "reference"
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+    }
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: "image"
+  }
+  position?: string
+  experience?: Experience
+  areasOfExpertise?: Array<
+    {
+      _key: string
+    } & Area
+  >
+  education?: Array<string>
+  reviews?: {
+    _ref: string
+    _type: "reference"
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: "reviews"
+  }
+}
+
+export type Experience = {
+  _type: "experience"
+  start?: number
+  activity?: string
 }
 
 export type Review = {
@@ -87,40 +197,24 @@ export type Review = {
   source?: string
 }
 
-export type Post = {
+export type Tag = {
   _id: string
-  _type: "post"
+  _type: "tag"
   _createdAt: string
   _updatedAt: string
   _rev: string
   title?: string
   slug?: Slug
-  expert?: {
-    _ref: string
-    _type: "reference"
-    _weak?: boolean
-    [internalGroqTypeReferenceTo]?: "expert"
-  }
-  mainImage?: {
-    asset?: {
-      _ref: string
-      _type: "reference"
-      _weak?: boolean
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
-    }
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    alt?: string
-    _type: "image"
-  }
-  categories?: Array<{
-    _ref: string
-    _type: "reference"
-    _weak?: boolean
-    _key: string
-    [internalGroqTypeReferenceTo]?: "category"
-  }>
-  publishedAt?: string
+}
+
+export type ProcedureArticle = {
+  _id: string
+  _type: "procedureArticle"
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  slug?: Slug
   body?: Array<
     | {
         children?: Array<{
@@ -154,66 +248,13 @@ export type Post = {
         _key: string
       }
   >
-}
-
-export type Expert = {
-  _id: string
-  _type: "expert"
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
-  name?: string
-  slug?: Slug
-  image?: {
-    asset?: {
-      _ref: string
-      _type: "reference"
-      _weak?: boolean
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
-    }
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    _type: "image"
-  }
-  position?: string
-  experience?: Experience
-  areasOfExpertise?: Array<
-    {
-      _key: string
-    } & Area
-  >
-  education?: Array<string>
-  reviews?: {
+  tags?: Array<{
     _ref: string
     _type: "reference"
     _weak?: boolean
-    [internalGroqTypeReferenceTo]?: "reviews"
-  }
-}
-
-export type Reviews = {
-  _id: string
-  _type: "reviews"
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
-  expert?: {
-    _ref: string
-    _type: "reference"
-    _weak?: boolean
-    [internalGroqTypeReferenceTo]?: "expert"
-  }
-  reviewsArray?: Array<
-    {
-      _key: string
-    } & Review
-  >
-}
-
-export type Experience = {
-  _type: "experience"
-  start?: number
-  activity?: string
+    _key: string
+    [internalGroqTypeReferenceTo]?: "tag"
+  }>
 }
 
 export type Category = {
@@ -225,6 +266,22 @@ export type Category = {
   title?: string
   slug?: Slug
   description?: string
+  articles?: Array<{
+    _ref: string
+    _type: "reference"
+    _weak?: boolean
+    _key: string
+    [internalGroqTypeReferenceTo]?: "procedureArticle"
+  }>
+  experts?: Array<{
+    _ref: string
+    _type: "reference"
+    _weak?: boolean
+    _key: string
+    [internalGroqTypeReferenceTo]?: "expert"
+  }>
+  contacts?: Array<string>
+  accreditations?: Array<string>
 }
 
 export type BlockContent = Array<
@@ -259,6 +316,718 @@ export type BlockContent = Array<
       _type: "image"
       _key: string
     }
+>
+
+export type VideoObjectType = {
+  _type: "videoObjectType"
+  type?: string
+  name?: string
+  description?: string
+  thumbnailUrl?: Array<string>
+  uploadDate?: string
+  contentUrl?: string
+  embedUrl?: string
+  publisher?: {
+    type?: string
+    id?: string
+    name?: string
+    logo?: {
+      asset?: {
+        _ref: string
+        _type: "reference"
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+      }
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      _type: "image"
+    }
+  }
+  potentialAction?: {
+    type?: string
+    seekToActionTargetUrl?: string
+  }
+  id?: string
+}
+
+export type ImageObjectType = {
+  _type: "imageObjectType"
+  type?: string
+  name?: string
+  caption?: string
+  contentUrl?: string
+  contentLocation?: string
+  description?: string
+  datePublished?: string
+  author?: string
+  id?: string
+}
+
+export type WebPageType = {
+  _type: "webPageType"
+  type?: string
+  name?: string
+  description?: string
+  image?: {
+    asset?: {
+      _ref: string
+      _type: "reference"
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+    }
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: "image"
+  }
+  breadcrumb?: string
+  publisher?: {
+    type?: string
+    id?: string
+    name?: string
+  }
+  license?: string
+  id?: string
+}
+
+export type HowToType = {
+  _type: "howToType"
+  type?: string
+  name?: string
+  image?: {
+    asset?: {
+      _ref: string
+      _type: "reference"
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+    }
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: "image"
+  }
+  description?: string
+  totalTime?: string
+  estimatedCost?: {
+    type?: string
+    currency?: string
+    value?: string
+  }
+  supply?: Array<{
+    type?: string
+    name?: string
+    _type: "howToSupply"
+    _key: string
+  }>
+  tool?: Array<{
+    type?: string
+    name?: string
+    _type: "howToTool"
+    _key: string
+  }>
+  step?: Array<{
+    type?: string
+    name?: string
+    text?: string
+    url?: string
+    _type: "howToStep"
+    _key: string
+  }>
+  id?: string
+}
+
+export type RecipeType = {
+  _type: "recipeType"
+  type?: string
+  name?: string
+  image?: Array<{
+    asset?: {
+      _ref: string
+      _type: "reference"
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+    }
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: "image"
+    _key: string
+  }>
+  description?: string
+  keywords?: string
+  author?: {
+    type?: string
+    name?: string
+  }
+  datePublished?: string
+  prepTime?: string
+  cookTime?: string
+  totalTime?: string
+  recipeCategory?: string
+  recipeCuisine?: string
+  recipeYield?: string
+  nutrition?: {
+    type?: string
+    servingSize?: string
+    calories?: string
+    fatContent?: string
+  }
+  recipeIngredient?: Array<string>
+  recipeInstructions?: Array<{
+    type?: string
+    name?: string
+    text?: string
+    url?: string
+    image?: {
+      asset?: {
+        _ref: string
+        _type: "reference"
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+      }
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      _type: "image"
+    }
+    _type: "howToStep"
+    _key: string
+  }>
+  aggregateRating?: {
+    type?: string
+    bestRating?: string
+    worstRating?: string
+  }
+  review?: Array<{
+    type?: string
+    name?: string
+    reviewBody?: string
+    datePublished?: string
+    author?: {
+      type?: string
+      name?: string
+    }
+    reviewRating?: {
+      type?: string
+      ratingValue?: string
+    }
+    publisher?: {
+      type?: string
+      name?: string
+    }
+    id?: string
+    _type: "productReviewType"
+    _key: string
+  }>
+  video?: {
+    type?: string
+    name?: string
+    description?: string
+    thumbnailUrl?: Array<string>
+    uploadDate?: string
+    contentUrl?: string
+    embedUrl?: string
+  }
+  id?: string
+}
+
+export type FaqPageType = {
+  _type: "faqPageType"
+  type?: string
+  mainEntity?: Array<{
+    type?: string
+    name?: string
+    acceptedAnswer?: {
+      type?: string
+      text?: string
+    }
+    _type: "question"
+    _key: string
+  }>
+  id?: string
+}
+
+export type WebsiteType = {
+  _type: "websiteType"
+  type?: string
+  name?: string
+  url?: string
+  image?: {
+    asset?: {
+      _ref: string
+      _type: "reference"
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+    }
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: "image"
+  }
+  potentialAction?: {
+    type?: string
+    searchUrl?: string
+    optionalString?: string
+  }
+  description?: string
+  id?: string
+}
+
+export type ProductType = {
+  _type: "productType"
+  type?: string
+  name?: string
+  image?: {
+    asset?: {
+      _ref: string
+      _type: "reference"
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+    }
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: "image"
+  }
+  description?: string
+  brand?: {
+    type?: string
+    name?: string
+  }
+  sku?: string
+  gtin8?: string
+  gtin13?: string
+  gtin14?: string
+  mpn?: string
+  offers?: {
+    type?: string
+    priceCurrency?: string
+    price?: string
+    priceValidUntil?: string
+    availability?: string
+    itemCondition?: string
+  }
+  aggregateRating?: {
+    type?: string
+    bestRating?: string
+    worstRating?: string
+  }
+  review?: Array<{
+    type?: string
+    name?: string
+    reviewBody?: string
+    datePublished?: string
+    author?: {
+      type?: string
+      name?: string
+    }
+    reviewRating?: {
+      type?: string
+      ratingValue?: string
+    }
+    publisher?: {
+      type?: string
+      name?: string
+    }
+    id?: string
+    _type: "productReviewType"
+    _key: string
+  }>
+  id?: string
+}
+
+export type ServiceType = {
+  _type: "serviceType"
+  type?: string
+  serviceType?: string
+  slogan?: string
+  url?: string
+  logo?: {
+    asset?: {
+      _ref: string
+      _type: "reference"
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+    }
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: "image"
+  }
+  image?: {
+    asset?: {
+      _ref: string
+      _type: "reference"
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+    }
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: "image"
+  }
+  provider?: {
+    type?: string
+    name?: string
+  }
+  areaServed?: {
+    type?: string
+    name?: string
+  }
+  hasOfferCatalog?: {
+    type?: string
+    name?: string
+    itemListElement?: Array<{
+      type?: string
+      name?: string
+      itemListElement?: Array<{
+        type?: string
+        itemOffered?: {
+          type?: string
+          name?: string
+        }
+        _type: "offer"
+        _key: string
+      }>
+      _type: "offerCatalog"
+      _key: string
+    }>
+  }
+  id?: string
+}
+
+export type ReviewType = {
+  _type: "reviewType"
+  type?: string
+  name?: string
+  reviewBody?: string
+  datePublished?: string
+  author?: {
+    type?: string
+    name?: string
+  }
+  itemReviewed?: {
+    type?: string
+    name?: string
+  }
+  reviewRating?: {
+    type?: string
+    ratingValue?: string
+  }
+  publisher?: {
+    type?: string
+    name?: string
+  }
+  id?: string
+}
+
+export type PersonType = {
+  _type: "personType"
+  type?: string
+  name?: string
+  url?: string
+  image?: {
+    asset?: {
+      _ref: string
+      _type: "reference"
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+    }
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: "image"
+  }
+  jobTitle?: string
+  worksFor?: {
+    type?: string
+    name?: string
+  }
+  description?: string
+  email?: string
+  telephone?: string
+  gender?: string
+  spouse?: string
+  parent?: string
+  birthDate?: string
+  address?: {
+    type?: string
+    streetAddress?: string
+    addressLocality?: string
+    addressRegion?: string
+    postalCode?: string
+    addressCountry?: string
+  }
+  sameAs?: Array<string>
+  id?: string
+}
+
+export type SocialMediaPosting = {
+  _type: "socialMediaPosting"
+  type?: string
+  headline?: string
+  description?: string
+  image?: {
+    asset?: {
+      _ref: string
+      _type: "reference"
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+    }
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: "image"
+  }
+  author?: {
+    type?: "Person" | "Organization"
+    id?: string
+    name?: string
+    url?: string
+  }
+  publisher?: {
+    type?: string
+    id?: string
+    name?: string
+    logo?: {
+      asset?: {
+        _ref: string
+        _type: "reference"
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+      }
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      _type: "image"
+    }
+  }
+  datePublished?: string
+  dateModified?: string
+  sharedContent?: Array<{
+    type?: string
+    headline?: string
+    url?: string
+    author?: {
+      type?: "Person" | "Organization"
+      id?: string
+      name?: string
+    }
+    id?: string
+    _type: "webPage"
+    _key: string
+  }>
+  id?: string
+}
+
+export type BreadcrumbList = {
+  _type: "breadcrumbList"
+  type?: string
+  id?: string
+  itemListElement?: Array<{
+    type?: string
+    name?: string
+    item?: string
+    id?: string
+    _type: "listItem"
+    _key: string
+  }>
+}
+
+export type LocalBusiness = {
+  _type: "localBusiness"
+  type?: string
+  name?: string
+  url?: string
+  logo?: {
+    asset?: {
+      _ref: string
+      _type: "reference"
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+    }
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: "image"
+  }
+  image?: {
+    asset?: {
+      _ref: string
+      _type: "reference"
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+    }
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: "image"
+  }
+  priceRange?: string
+  telephone?: string
+  address?: {
+    type?: string
+    streetAddress?: string
+    addressLocality?: string
+    addressRegion?: string
+    postalCode?: string
+    addressCountry?: string
+  }
+  geo?: {
+    type?: string
+    latitude?: string
+    longitude?: string
+  }
+  hasMap?: string
+  openingHoursSpecification?: Array<{
+    type?: string
+    dayOfWeek?: Array<string>
+    opens?: string
+    closes?: string
+    _type: "openingHoursSpecification"
+    _key: string
+  }>
+  sameAs?: Array<string>
+  id?: string
+}
+
+export type Organization = {
+  _type: "organization"
+  type?: string
+  name?: string
+  alternateName?: string
+  url?: string
+  logo?: {
+    asset?: {
+      _ref: string
+      _type: "reference"
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+    }
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: "image"
+  }
+  contactPoint?: Array<{
+    type?: string
+    telephone?: string
+    contactType?:
+      | "customer service"
+      | "technical support"
+      | "billing support"
+      | "bill payment"
+      | "sales"
+      | "reservations"
+      | 'credit card support"'
+      | "emergency"
+      | "baggage tracking"
+      | "roadside assistance"
+    contactOption?: Array<string>
+    areaServed?: Array<string>
+    availableLanguage?: Array<string>
+    id?: string
+    _type: "contactPoint"
+    _key: string
+  }>
+  department?: Array<{
+    type?: string
+    name?: string
+    address?: {
+      type?: string
+      streetAddress?: string
+      addressLocality?: string
+      addressRegion?: string
+      postalCode?: string
+      addressCountry?: string
+    }
+    id?: string
+    _type: "department"
+    _key: string
+  }>
+  sameAs?: Array<string>
+  id?: string
+}
+
+export type Article = {
+  _type: "article"
+  type?: string
+  headline?: string
+  description?: string
+  image?: Array<{
+    asset?: {
+      _ref: string
+      _type: "reference"
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+    }
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: "image"
+    _key: string
+  }>
+  author?: {
+    type?: "Person" | "Organization"
+    id?: string
+    name?: string
+    url?: string
+  }
+  publisher?: {
+    type?: string
+    id?: string
+    name?: string
+    logo?: {
+      asset?: {
+        _ref: string
+        _type: "reference"
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+      }
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      _type: "image"
+    }
+  }
+  datePublished?: string
+  dateModified?: string
+  id?: string
+}
+
+export type SchemaMarkup = Array<
+  | ({
+      _key: string
+    } & Article)
+  | ({
+      _key: string
+    } & BreadcrumbList)
+  | ({
+      _key: string
+    } & FaqPageType)
+  | ({
+      _key: string
+    } & HowToType)
+  | ({
+      _key: string
+    } & ImageObjectType)
+  | ({
+      _key: string
+    } & LocalBusiness)
+  | ({
+      _key: string
+    } & Organization)
+  | ({
+      _key: string
+    } & PersonType)
+  | ({
+      _key: string
+    } & ProductType)
+  | ({
+      _key: string
+    } & RecipeType)
+  | ({
+      _key: string
+    } & ReviewType)
+  | ({
+      _key: string
+    } & SocialMediaPosting)
+  | ({
+      _key: string
+    } & ServiceType)
+  | ({
+      _key: string
+    } & VideoObjectType)
+  | ({
+      _key: string
+    } & WebPageType)
+  | ({
+      _key: string
+    } & WebsiteType)
 >
 
 export type SanityImageCrop = {
@@ -318,141 +1087,6 @@ export type SanityImageMetadata = {
   isOpaque?: boolean
 }
 
-export type SanityAssistInstructionTask = {
-  _type: "sanity.assist.instructionTask"
-  path?: string
-  instructionKey?: string
-  started?: string
-  updated?: string
-  info?: string
-}
-
-export type SanityAssistTaskStatus = {
-  _type: "sanity.assist.task.status"
-  tasks?: Array<
-    {
-      _key: string
-    } & SanityAssistInstructionTask
-  >
-}
-
-export type SanityAssistSchemaTypeAnnotations = {
-  _type: "sanity.assist.schemaType.annotations"
-  title?: string
-  fields?: Array<
-    {
-      _key: string
-    } & SanityAssistSchemaTypeField
-  >
-}
-
-export type SanityAssistOutputType = {
-  _type: "sanity.assist.output.type"
-  type?: string
-}
-
-export type SanityAssistOutputField = {
-  _type: "sanity.assist.output.field"
-  path?: string
-}
-
-export type SanityAssistInstructionContext = {
-  _type: "sanity.assist.instruction.context"
-  reference?: {
-    _ref: string
-    _type: "reference"
-    _weak?: boolean
-    [internalGroqTypeReferenceTo]?: "assist.instruction.context"
-  }
-}
-
-export type AssistInstructionContext = {
-  _id: string
-  _type: "assist.instruction.context"
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
-  title?: string
-  context?: Array<{
-    children?: Array<{
-      marks?: Array<string>
-      text?: string
-      _type: "span"
-      _key: string
-    }>
-    style?: "normal"
-    listItem?: never
-    markDefs?: null
-    level?: number
-    _type: "block"
-    _key: string
-  }>
-}
-
-export type SanityAssistInstructionUserInput = {
-  _type: "sanity.assist.instruction.userInput"
-  message?: string
-  description?: string
-}
-
-export type SanityAssistInstructionPrompt = Array<{
-  children?: Array<
-    | {
-        marks?: Array<string>
-        text?: string
-        _type: "span"
-        _key: string
-      }
-    | ({
-        _key: string
-      } & SanityAssistInstructionFieldRef)
-    | ({
-        _key: string
-      } & SanityAssistInstructionContext)
-    | ({
-        _key: string
-      } & SanityAssistInstructionUserInput)
-  >
-  style?: "normal"
-  listItem?: never
-  markDefs?: null
-  level?: number
-  _type: "block"
-  _key: string
-}>
-
-export type SanityAssistInstructionFieldRef = {
-  _type: "sanity.assist.instruction.fieldRef"
-  path?: string
-}
-
-export type SanityAssistInstruction = {
-  _type: "sanity.assist.instruction"
-  prompt?: SanityAssistInstructionPrompt
-  icon?: string
-  title?: string
-  userId?: string
-  createdById?: string
-  output?: Array<
-    | ({
-        _key: string
-      } & SanityAssistOutputField)
-    | ({
-        _key: string
-      } & SanityAssistOutputType)
-  >
-}
-
-export type SanityAssistSchemaTypeField = {
-  _type: "sanity.assist.schemaType.field"
-  path?: string
-  instructions?: Array<
-    {
-      _key: string
-    } & SanityAssistInstruction
-  >
-}
-
 export type MediaTag = {
   _id: string
   _type: "media.tag"
@@ -475,30 +1109,36 @@ export type AllSanitySchemaTypes =
   | SanityFileAsset
   | Geopoint
   | Area
-  | Review
-  | Post
-  | Expert
   | Reviews
+  | Expert
   | Experience
+  | Review
+  | Tag
+  | ProcedureArticle
   | Category
   | BlockContent
+  | VideoObjectType
+  | ImageObjectType
+  | WebPageType
+  | HowToType
+  | RecipeType
+  | FaqPageType
+  | WebsiteType
+  | ProductType
+  | ServiceType
+  | ReviewType
+  | PersonType
+  | SocialMediaPosting
+  | BreadcrumbList
+  | LocalBusiness
+  | Organization
+  | Article
+  | SchemaMarkup
   | SanityImageCrop
   | SanityImageHotspot
   | SanityImageAsset
   | SanityAssetSourceData
   | SanityImageMetadata
-  | SanityAssistInstructionTask
-  | SanityAssistTaskStatus
-  | SanityAssistSchemaTypeAnnotations
-  | SanityAssistOutputType
-  | SanityAssistOutputField
-  | SanityAssistInstructionContext
-  | AssistInstructionContext
-  | SanityAssistInstructionUserInput
-  | SanityAssistInstructionPrompt
-  | SanityAssistInstructionFieldRef
-  | SanityAssistInstruction
-  | SanityAssistSchemaTypeField
   | MediaTag
   | Slug
 export declare const internalGroqTypeReferenceTo: unique symbol
@@ -507,7 +1147,7 @@ export declare const internalGroqTypeReferenceTo: unique symbol
 // Query: *[_type=="expert"].slug.current
 export type SlugsQueryResult = Array<string | null>
 // Variable: expertBySlugQuery
-// Query: *[_type=="expert" && slug.current == $slug][0]{  _id,  name,  slug,  image,  experience,  position,  education,  areasOfExpertise,     schemaMarkup,  reviews->}
+// Query: *[_type=="expert" && slug.current == $slug][0]{  _id,  name,   slug,  image,  experience,  position,  education,  areasOfExpertise,     schemaMarkup,  reviews->}
 export type ExpertBySlugQueryResult = {
   _id: string
   name: string | null
@@ -531,7 +1171,56 @@ export type ExpertBySlugQueryResult = {
       _key: string
     } & Area
   > | null
-  schemaMarkup: null
+  schemaMarkup: Array<
+    | ({
+        _key: string
+      } & Article)
+    | ({
+        _key: string
+      } & BreadcrumbList)
+    | ({
+        _key: string
+      } & FaqPageType)
+    | ({
+        _key: string
+      } & HowToType)
+    | ({
+        _key: string
+      } & ImageObjectType)
+    | ({
+        _key: string
+      } & LocalBusiness)
+    | ({
+        _key: string
+      } & Organization)
+    | ({
+        _key: string
+      } & PersonType)
+    | ({
+        _key: string
+      } & ProductType)
+    | ({
+        _key: string
+      } & RecipeType)
+    | ({
+        _key: string
+      } & ReviewType)
+    | ({
+        _key: string
+      } & ServiceType)
+    | ({
+        _key: string
+      } & SocialMediaPosting)
+    | ({
+        _key: string
+      } & VideoObjectType)
+    | ({
+        _key: string
+      } & WebPageType)
+    | ({
+        _key: string
+      } & WebsiteType)
+  > | null
   reviews: {
     _id: string
     _type: "reviews"
@@ -557,6 +1246,6 @@ import "@sanity/client"
 declare module "@sanity/client" {
   interface SanityQueries {
     '*[_type=="expert"].slug.current': SlugsQueryResult
-    '*[_type=="expert" && slug.current == $slug][0]{\n  _id,\n  name,\n  slug,\n  image,\n  experience,\n  position,\n  education,\n  areasOfExpertise,   \n  schemaMarkup,\n  reviews->\n}': ExpertBySlugQueryResult
+    '*[_type=="expert" && slug.current == $slug][0]{\n  _id,\n  name, \n  slug,\n  image,\n  experience,\n  position,\n  education,\n  areasOfExpertise,   \n  schemaMarkup,\n  reviews->\n}': ExpertBySlugQueryResult
   }
 }

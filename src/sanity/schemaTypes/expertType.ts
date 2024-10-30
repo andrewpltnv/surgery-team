@@ -15,6 +15,7 @@ export const expertType = defineType({
 		defineField({
 			name: "name",
 			type: "string",
+			validation: (Rule) => Rule.required(),
 			group: "bio",
 		}),
 		defineField({

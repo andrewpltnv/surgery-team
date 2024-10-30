@@ -1,8 +1,10 @@
 import type { Metadata } from "next"
 import Profile from "./Profile"
 import Testimonials from "@/components/Testimonials"
-import type { Reviews } from "@root/sanity.types"
+import type { Expert, Reviews } from "@root/sanity.types"
 import { getExpert, getExpertsSlugs } from "@/sanity/lib/api"
+import SchemaMarkup from "@/sanity/lib/schemaMarkup"
+import type { Schema } from "@operationnation/sanity-plugin-schema-markup"
 // import Instagram from "./Instagram"
 
 export async function generateStaticParams() {
@@ -25,7 +27,7 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
     title: name,
     description: [name, position, experience?.activity].join(" | "),
     openGraph: {
-      title: name,
+      title: name ?? "",
       description: [name, position, experience?.activity].join(" | "),
       url: `/experts/${slug}`,
       images: [{ url: "api/og" }],
@@ -47,10 +49,12 @@ export default async function ExpertPage(props: { params: Promise<{ slug: string
     throw new Error("Image not found")
   }
 
+  const { schemaMarkup, ...rest } = expert
+
   return (
     <div className="flex-grow">
-      {/* {expert.schemaMarkup && <SchemaMarkup schema={expert.schemaMarkup} />} */}
-      <Profile expert={expert} />
+      {schemaMarkup !== null && <SchemaMarkup schema={schemaMarkup as Schema[]} />}
+      <Profile expert={rest as unknown as Expert} />
       <Testimonials reviews={expert.reviews as unknown as Reviews} />
       {/* <Instagram /> */}
     </div>

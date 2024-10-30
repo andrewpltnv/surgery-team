@@ -47,8 +47,8 @@ export default function Profile({ expert }: { expert: Expert }) {
             </h4>
             <div>
               <ul className="prose max-w-none list-disc space-y-2 pl-5 prose-li:text-sm">
-                {areasOfExpertise.map((area, i) => (
-                  <li key={area._key + i}>{area.name}</li>
+                {areasOfExpertise.map((area) => (
+                  <li key={area._key}>{area.name}</li>
                 ))}
               </ul>
             </div>

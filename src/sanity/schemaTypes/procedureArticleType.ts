@@ -30,7 +30,6 @@ export const procedureArticleType = defineType({
 		},
 		prepare(selection) {
 			const { tag1, tag2, tag3 } = selection;
-			console.log({ tag1, tag2, tag3 });
 
 			return {
 				...selection,
