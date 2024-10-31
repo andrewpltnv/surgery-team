@@ -13,6 +13,7 @@ import { schema } from "./src/sanity/schemaTypes";
 import { structure } from "./src/sanity/structure";
 import { media } from "sanity-plugin-media";
 import { schemaMarkup } from "@operationnation/sanity-plugin-schema-markup";
+import { inboxPlugin } from "@/sanity/plugins/inbox/plugin";
 
 export default defineConfig({
 	basePath: "/studio",
@@ -25,6 +26,7 @@ export default defineConfig({
 		visionTool({ defaultApiVersion: apiVersion }),
 		media(),
 		schemaMarkup(),
+		inboxPlugin(),
 	],
 	graphql: [
 		{
