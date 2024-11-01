@@ -6,4 +6,5 @@ export type Message = {
 	starred: boolean;
 	read: boolean;
 	fields: Array<{ name: string; value: string }>;
+	text: string;
 };

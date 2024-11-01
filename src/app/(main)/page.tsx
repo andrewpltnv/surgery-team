@@ -4,6 +4,7 @@ import { OurServicesLinks } from "@/components/OurServices"
 import ContactUs from "@/components/ContactUs"
 import AutoplayCarousel from "@/components/Carousel"
 import { heroSlides } from "@/components/Carousel/Slides"
+import SurgeonQuestionForm from "@/components/SurgeonQuestionForm"
 // import { client } from "@/sanity/lib/client"
 // import { TESTIMONIALS_Posohov, TESTIMONIALS_Zhovnirenko } from "@/components/Testimonials/testimonials"
 
@@ -15,6 +16,7 @@ export default function Home() {
         <Team />
         <OurServicesLinks />
         <WhyTeam />
+        <SurgeonQuestionForm />
         <ContactUs />
       </main>
     </div>

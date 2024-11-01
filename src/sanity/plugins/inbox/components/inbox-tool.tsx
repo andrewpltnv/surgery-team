@@ -17,6 +17,7 @@ export default function InboxTool() {
         _id: "",
         starred: false,
         read: false,
+        text: "",
         fields: [
           {
             name: "string",

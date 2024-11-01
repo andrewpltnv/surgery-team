@@ -43,12 +43,12 @@ function DialogHeading({ message }: { message: Message }) {
 }
 
 function DialogContent({ message }: { message: Message }) {
-  const { name, email, fields } = message
+  const { name, email, fields, text } = message
 
   return (
     <Flex
       direction="column"
-      gap={4}
+      gap={5}
       style={{
         paddingBottom: "26px",
         borderBottom: "1px solid #1b1d26",
@@ -56,18 +56,19 @@ function DialogContent({ message }: { message: Message }) {
     >
       <DialogItem name="Name" value={name} />
       <DialogItem name="Email" value={email} />
-      {fields.map((field) => (
-        <DialogItem key={field.name} name={field.name} value={field.value} />
-      ))}
+      {fields?.map((field) => <DialogItem key={field.name} name={field.name} value={field.value} />)}
+      <DialogItem name="Text" value={text} />
     </Flex>
   )
 }
 
 function DialogItem({ name, value }: { name: string; value: string }) {
   return (
-    <Flex justify={"flex-start"} gap={3}>
-      <Heading style={{ fontSize: "14px" }}>{name}:</Heading>
-      <Text style={{ marginTop: "-3.1px" }}>{value}</Text>
+    <Flex justify={"flex-start"} direction="column" gap={4}>
+      <Heading style={{ fontSize: "16px" }}>{name}: </Heading>
+      <Text style={{ marginTop: "" }} as="pre">
+        {value}
+      </Text>
     </Flex>
   )
 }

@@ -21,6 +21,11 @@ export const messageType = defineType({
 			title: "Subject",
 		}),
 		defineField({
+			type: "text",
+			name: "text",
+			title: "Message Text",
+		}),
+		defineField({
 			type: "array",
 			name: "fields",
 			title: "Fields",

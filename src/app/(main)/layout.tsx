@@ -6,6 +6,7 @@ import { GoogleTagManager } from "@next/third-parties/google"
 import { Analytics } from "@vercel/analytics/next"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
+import { Toaster } from "@/components/ui/toaster"
 
 const ogImage = [{ url: "/app/og", type: "image/png", width: 1200, height: 630 }]
 
@@ -23,26 +24,20 @@ export function generateMetadata(): Metadata {
   }
 }
 
-export default function RootLayout({
+export default function MainLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
   return (
-    <html lang="uk">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} flex min-h-screen flex-col justify-between scroll-smooth font-sans antialiased`}
-        suppressHydrationWarning
-        itemScope
-        itemType="http://schema.org/WebSite"
-      >
-        <Header />
-        {children}
-        <Footer />
-        <GoogleTagManager gtmId="GTM-WJ6VVHHV" />
-        <SpeedInsights />
-        <Analytics />
-      </body>
-    </html>
+    <>
+      <Header />
+      {children}
+      <Footer />
+      <Toaster />
+      <GoogleTagManager gtmId="GTM-WJ6VVHHV" />
+      <SpeedInsights />
+      <Analytics />
+    </>
   )
 }
