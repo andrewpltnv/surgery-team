@@ -16,8 +16,8 @@ export default function Home() {
         <Team />
         <OurServicesLinks />
         <WhyTeam />
-        <SurgeonQuestionForm />
         <ContactUs />
+        <SurgeonQuestionForm />
       </main>
     </div>
   )

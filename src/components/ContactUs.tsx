@@ -1,4 +1,5 @@
 import { Button } from "./ui/button"
+import Link from "next/link"
 
 export default function ContactUs() {
   return (
@@ -11,7 +12,9 @@ export default function ContactUs() {
               Our team is here to help you find the right care for your needs.
             </p>
           </div>
-          <Button size="lg">Contact Us</Button>
+          <Button size="lg" asChild>
+            <Link href="#contactForm">Contact Us</Link>
+          </Button>
         </div>
       </div>
     </section>

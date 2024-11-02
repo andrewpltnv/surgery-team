@@ -3,7 +3,7 @@ import MessageForm from "./Form"
 
 export default function SurgeonQuestionForm() {
   return (
-    <div className="mx-auto mt-8 max-w-2xl rounded-lg bg-white p-6 shadow-md">
+    <div id="contactForm" className="mx-auto my-8 max-w-2xl rounded-lg bg-white p-6 shadow-md">
       <h2 className="mb-6 text-center text-2xl font-bold">Ask Our Surgeons</h2>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <MessageForm />
