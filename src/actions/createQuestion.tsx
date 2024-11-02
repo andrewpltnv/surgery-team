@@ -3,10 +3,10 @@ import { client } from "@/sanity/lib/client"
 import { z } from "zod"
 
 const questionSchema = z.object({
-  name: z.string().max(100),
-  email: z.string().email(),
-  subject: z.string().max(100),
-  text: z.string().min(1).max(500),
+  name: z.string().trim().max(100),
+  email: z.string().trim().email(),
+  subject: z.string().trim().max(100),
+  text: z.string().trim().min(1).max(500),
   urgent: z.boolean().default(false),
 })
 

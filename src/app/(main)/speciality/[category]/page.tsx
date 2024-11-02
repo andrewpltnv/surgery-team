@@ -2,18 +2,16 @@ import CategoryBanner from "@/components/Category/CategoryBanner"
 import CategoryArticles from "@/components/Category/CategoryArticles"
 import { categories } from "@/app/(main)/speciality/[category]/constants"
 import Team from "@/components/Team"
-import { Metadata } from "next"
+import type { Metadata } from "next"
 
 export async function generateStaticParams() {
   return categories.map(({ slug }) => ({ category: slug }))
 }
 
 export async function generateMetadata(props: { params: Promise<{ category: string }> }): Promise<Metadata> {
-  const params = await props.params;
+  const params = await props.params
 
-  const {
-    category
-  } = params;
+  const { category } = params
 
   const categoryInfo = categories.find((categoryInfo) => categoryInfo.slug === category)
 
@@ -35,11 +33,9 @@ export async function generateMetadata(props: { params: Promise<{ category: stri
 }
 
 export default async function Page(props: { params: Promise<{ category: string }> }) {
-  const params = await props.params;
+  const params = await props.params
 
-  const {
-    category
-  } = params;
+  const { category } = params
 
   const categoryInfo = categories.find((categoryInfo) => categoryInfo.slug === category)
 

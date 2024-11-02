@@ -1143,9 +1143,9 @@ export type AllSanitySchemaTypes =
   | Slug
 export declare const internalGroqTypeReferenceTo: unique symbol
 // Source: ./src/sanity/lib/queries.ts
-// Variable: slugsQuery
+// Variable: expertsSlugsQuery
 // Query: *[_type=="expert"].slug.current
-export type SlugsQueryResult = Array<string | null>
+export type ExpertsSlugsQueryResult = Array<string | null>
 // Variable: expertBySlugQuery
 // Query: *[_type=="expert" && slug.current == $slug][0]{  _id,  name,   slug,  image,  experience,  position,  education,  areasOfExpertise,  schemaMarkup,  reviews->}
 export type ExpertBySlugQueryResult = {
@@ -1240,12 +1240,99 @@ export type ExpertBySlugQueryResult = {
     >
   } | null
 } | null
+// Variable: expertsQuery
+// Query: *[_type=="expert"][]
+export type ExpertsQueryResult = Array<{
+  _id: string
+  _type: "expert"
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  name?: string
+  slug?: Slug
+  schemaMarkup?: Array<
+    | ({
+        _key: string
+      } & Article)
+    | ({
+        _key: string
+      } & BreadcrumbList)
+    | ({
+        _key: string
+      } & FaqPageType)
+    | ({
+        _key: string
+      } & HowToType)
+    | ({
+        _key: string
+      } & ImageObjectType)
+    | ({
+        _key: string
+      } & LocalBusiness)
+    | ({
+        _key: string
+      } & Organization)
+    | ({
+        _key: string
+      } & PersonType)
+    | ({
+        _key: string
+      } & ProductType)
+    | ({
+        _key: string
+      } & RecipeType)
+    | ({
+        _key: string
+      } & ReviewType)
+    | ({
+        _key: string
+      } & ServiceType)
+    | ({
+        _key: string
+      } & SocialMediaPosting)
+    | ({
+        _key: string
+      } & VideoObjectType)
+    | ({
+        _key: string
+      } & WebPageType)
+    | ({
+        _key: string
+      } & WebsiteType)
+  >
+  image?: {
+    asset?: {
+      _ref: string
+      _type: "reference"
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+    }
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: "image"
+  }
+  position?: string
+  experience?: Experience
+  areasOfExpertise?: Array<
+    {
+      _key: string
+    } & Area
+  >
+  education?: Array<string>
+  reviews?: {
+    _ref: string
+    _type: "reference"
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: "reviews"
+  }
+}>
 
 // Query TypeMap
 import "@sanity/client"
 declare module "@sanity/client" {
   interface SanityQueries {
-    '*[_type=="expert"].slug.current': SlugsQueryResult
+    '*[_type=="expert"].slug.current': ExpertsSlugsQueryResult
     '*[_type=="expert" && slug.current == $slug][0]{\n  _id,\n  name, \n  slug,\n  image,\n  experience,\n  position,\n  education,\n  areasOfExpertise,\n  schemaMarkup,\n  reviews->\n}': ExpertBySlugQueryResult
+    '*[_type=="expert"][]': ExpertsQueryResult
   }
 }

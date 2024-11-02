@@ -16,7 +16,6 @@ export default function MessageForm() {
 
   const handleSendMessage = async (data: FormData) => {
     await action(data)
-    console.log({ data: data.entries().toArray(), formState })
 
     if (formState?.success && formRef.current) {
       formRef.current.reset()

@@ -11,6 +11,11 @@ const nextConfig: NextConfig = {
 		// your project has ESLint errors.
 		ignoreDuringBuilds: true,
 	},
+	logging: {
+		fetches: {
+			fullUrl: true,
+		},
+	},
 	images: {
 		remotePatterns: [{ hostname: "cdn.sanity.io" }],
 		// loader: "custom",
