@@ -3,14 +3,13 @@
 import { useChat } from "ai/react"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card"
 import { ScrollArea } from "../ui/scroll-area"
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
+import { Avatar } from "../ui/avatar"
 import { Input } from "../ui/input"
 import { Button } from "../ui/button"
-import { useScrollToBottom } from "@/hooks/use-scroll-to-bottom"
+import { Computer, User } from "lucide-react"
+import { useRef } from "react"
 
 export default function Chat() {
-  const [messagesContainerRef, messagesEndRef] = useScrollToBottom<HTMLDivElement>()
-
   const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
     api: "/api/chat",
     initialMessages: [
@@ -18,13 +17,15 @@ export default function Chat() {
         id: "welcome",
         role: "assistant",
         content:
-          "Вітаємо! Я ваш віртуальний помічник, готовий надати вам швидкі відповіді на ваші запитання. Однак, справжню турботу та професійну допомогу ви отримаєте від наших досвідчених хірургів: Посохова Дмитра Миколайовича та Жовніренка Дмитра Олександровича. Як я можу вам допомогти сьогодні?",
+          "Вітаємо! 👋 Я дружній медичний помічник, який допоможе вам краще зрозуміти ваші симптоми та підготуватися до консультації з лікарем. Я використовуватиму просту мову без складних медичних термінів та допоможу вам чітко описати ваш стан. Будь ласка, розкажіть, що вас турбує найбільше?",
       },
     ],
   })
+  const isInteracted = useRef(false)
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    isInteracted.current = true
     handleSubmit(e)
   }
 
@@ -34,43 +35,37 @@ export default function Chat() {
         <CardTitle>Віртуальний помічник</CardTitle>
       </CardHeader>
       <CardContent>
-        <ScrollArea className="h-[500px] pr-4">
+        <ScrollArea className="h-[500px] pr-4" isInteracted={isInteracted.current}>
           <div className="mb-4 flex items-start space-x-4">
             <Avatar>
-              <AvatarFallback>AI</AvatarFallback>
-              <AvatarImage src="/ai-avatar.png" alt="AI Assistant" />
+              <Computer className="m-auto h-6 w-6" />
             </Avatar>
             <div className="rounded-lg bg-secondary p-3">
               <p className="text-sm">{messages[0].content}</p>
             </div>
           </div>
-          <div ref={messagesContainerRef}>
-            {messages.slice(1).map((message) => (
+          {messages.slice(1).map((message) => (
+            <div
+              key={message.id}
+              className={`mb-4 flex items-start space-x-4 ${message.role === "user" ? "justify-end" : ""}`}
+            >
+              {message.role === "assistant" && (
+                <Avatar>
+                  <Computer className="m-auto h-6 w-6" />
+                </Avatar>
+              )}
               <div
-                key={message.id}
-                className={`mb-4 flex items-start space-x-4 ${message.role === "user" ? "justify-end" : ""}`}
+                className={`rounded-lg p-3 ${message.role === "user" ? "bg-primary text-primary-foreground" : "bg-secondary"}`}
               >
-                {message.role === "assistant" && (
-                  <Avatar>
-                    <AvatarFallback>AI</AvatarFallback>
-                    <AvatarImage src="/ai-avatar.png" alt="AI Assistant" />
-                  </Avatar>
-                )}
-                <div
-                  className={`rounded-lg p-3 ${message.role === "user" ? "bg-primary text-primary-foreground" : "bg-secondary"}`}
-                >
-                  <p className="text-sm">{message.content}</p>
-                </div>
-                {message.role === "user" && (
-                  <Avatar>
-                    <AvatarFallback>You</AvatarFallback>
-                    <AvatarImage src="/user-avatar.png" alt="User" />
-                  </Avatar>
-                )}
+                <p className="text-sm">{message.content}</p>
               </div>
-            ))}
-            <div ref={messagesEndRef} />
-          </div>
+              {message.role === "user" && (
+                <Avatar>
+                  <User className="m-auto h-6 w-6" />
+                </Avatar>
+              )}
+            </div>
+          ))}
         </ScrollArea>
       </CardContent>
       <CardFooter>
