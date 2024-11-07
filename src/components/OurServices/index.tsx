@@ -1,7 +1,7 @@
 import { Microscope, HeartPulse, UserCircle } from "lucide-react"
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card"
 import Link from "next/link"
-import { categories } from "../../app/(main)/speciality/[category]/constants"
+import { categories } from "../../app/(main)/[category]/constants"
 
 export default function OurServices() {
   return (
@@ -43,7 +43,7 @@ export function OurServicesLinks() {
         <h2 className="mb-12 text-center font-bold tracking-tighter ~text-2xl/4xl">Our Surgical Specialties</h2>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {categories.map((specialty) => (
-            <Link href={`/speciality/${specialty.slug}`} key={specialty.slug}>
+            <Link href={`/${specialty.slug}`} key={specialty.slug}>
               <Card className="flex h-full flex-col items-center font-sans transition-all hover:bg-accent">
                 <CardHeader>
                   <CardTitle className="flex items-center space-x-2 text-xl">

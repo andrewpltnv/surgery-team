@@ -1,6 +1,6 @@
 import CategoryBanner from "@/components/Category/CategoryBanner"
 import CategoryArticles from "@/components/Category/CategoryArticles"
-import { categories } from "@/app/(main)/speciality/[category]/constants"
+import { categories } from "@/app/(main)/[category]/constants"
 import Team from "@/components/Team"
 import type { Metadata } from "next"
 
@@ -27,7 +27,7 @@ export async function generateMetadata(props: { params: Promise<{ category: stri
     openGraph: {
       title: name,
       description: description,
-      url: `/speciality/${category}`,
+      url: `/${category}`,
     },
   }
 }

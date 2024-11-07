@@ -12,7 +12,7 @@ import {
 } from "../ui/navigation-menu"
 import type React from "react"
 import { cn } from "@/lib/utils"
-import { categories } from "../../app/(main)/speciality/[category]/constants"
+import { categories } from "../../app/(main)/[category]/constants"
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet"
 import { sanityFetch } from "@/sanity/lib/client"
 import { expertsQuery } from "@/sanity/lib/queries"
@@ -56,7 +56,7 @@ function NavMenu() {
           <NavigationMenuContent>
             <ul className="grid items-stretch gap-3 ~p-2/6 sm:grid-cols-[1fr_1fr] md:w-[400px] lg:w-[500px]">
               {categories.map(({ name, slug, icon: Icon }) => (
-                <ListItem key={slug} href={`/speciality/${slug}`}>
+                <ListItem key={slug} href={`/${slug}`}>
                   <Icon className="mr-2 h-6 w-6" />
                   {name}
                 </ListItem>

@@ -1,4 +1,4 @@
-import { categories } from "@/app/(main)/speciality/[category]/constants"
+import { categories } from "@/app/(main)/[category]/constants"
 import SurgeonQuestionForm from "@/components/SurgeonQuestionForm"
 import {
   Breadcrumb,
@@ -8,10 +8,11 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-// import { sanityFetch } from "@/sanity/lib/client";
-// import { defineQuery, PortableText, groq } from "next-sanity";
+import { PortableText } from "@portabletext/react"
+import { sanityFetch } from "@/sanity/lib/client"
+import { defineQuery, groq } from "next-sanity"
 import Link from "next/link"
-// import type { Post } from "@root/sanity.types";
+import type { ProcedureArticle } from "@root/sanity.types"
 
 export async function generateStaticParams() {
   return categories.flatMap((category) =>
@@ -22,17 +23,16 @@ export async function generateStaticParams() {
   )
 }
 
-// const data = await sanityFetch<Post>({
-// 	query: defineQuery(
-// 		groq`
-//     *[_type=="post"][0]{
-//       title,
-//       categories[0]->,
-//       body[]
-//     }`,
-// 	),
-// 	tags: ["post"],
-// });
+const data = await sanityFetch<ProcedureArticle>({
+  query: defineQuery(
+    groq`
+    *[_type=="post"][0]{
+      title,
+      categories[0]->,
+      body[]
+    }`
+  ),
+})
 
 export default async function Page(props: { params: Promise<{ category: string; article: string }> }) {
   const params = await props.params
@@ -59,7 +59,7 @@ export default async function Page(props: { params: Promise<{ category: string; 
             <BreadcrumbSeparator />
             <BreadcrumbItem itemType="https://schema.org/ListItem" itemProp="itemListElement" itemScope>
               <BreadcrumbLink asChild>
-                <Link href={`/speciality/${category}`} itemProp="item">
+                <Link href={`/${category}`} itemProp="item">
                   {categoryInfo?.name}
                 </Link>
               </BreadcrumbLink>
@@ -73,9 +73,7 @@ export default async function Page(props: { params: Promise<{ category: string; 
         <div className="prose">
           <Component />
         </div>
-        {/* <div className="prose">
-					{data.body && <PortableText value={data.body} />}
-				</div> */}
+        <div className="prose">{data.body && <PortableText value={data.body} />}</div>
       </div>
       <SurgeonQuestionForm />
     </>
