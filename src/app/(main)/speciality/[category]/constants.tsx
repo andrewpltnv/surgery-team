@@ -1,4 +1,4 @@
-import { Activity, Apple, LucideIcon, Microscope, Scissors, Stethoscope, Syringe } from "lucide-react"
+import { Activity, Apple, type LucideIcon, Microscope, Scissors, Stethoscope, Syringe } from "lucide-react"
 import { bariatricsArticles } from "./markdown/bariatrics"
 import { generalArticles } from "./markdown/general"
 import { proctologyArticles } from "./markdown/proctology"

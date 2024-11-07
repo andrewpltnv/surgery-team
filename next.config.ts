@@ -17,7 +17,10 @@ const nextConfig: NextConfig = {
 		},
 	},
 	images: {
-		remotePatterns: [{ hostname: "cdn.sanity.io" }],
+		remotePatterns: [
+			{ hostname: "cdn.sanity.io" },
+			{ hostname: "api.iconify.design" },
+		],
 		// loader: "custom",
 		// loaderFile: "./src/lib/imageLoader.ts",
 	},

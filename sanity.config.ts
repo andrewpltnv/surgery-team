@@ -14,6 +14,7 @@ import { structure } from "./src/sanity/structure";
 import { media } from "sanity-plugin-media";
 import { schemaMarkup } from "@operationnation/sanity-plugin-schema-markup";
 import { inboxPlugin } from "./src/sanity/plugins/inbox/plugin";
+import { IconManager } from "sanity-plugin-icon-manager";
 
 export default defineConfig({
 	basePath: "/studio",
@@ -27,6 +28,7 @@ export default defineConfig({
 		media(),
 		schemaMarkup(),
 		inboxPlugin(),
+		IconManager(),
 	],
 	graphql: [
 		{
