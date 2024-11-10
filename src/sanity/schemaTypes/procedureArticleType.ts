@@ -24,16 +24,18 @@ export const procedureArticleType = defineType({
   preview: {
     select: {
       title: "title",
+      tag0: "tags.0.title",
       tag1: "tags.1.title",
       tag2: "tags.2.title",
       tag3: "tags.3.title",
     },
     prepare(selection) {
-      const { tag1, tag2, tag3 } = selection
+      const { tag0, tag1, tag2, tag3 } = selection
 
       return {
         ...selection,
-        subtitle: tag1 || tag2 || tag3 ? `tags: ${[tag1, tag2, tag3].filter(Boolean).join(", ")}` : "No tags",
+        subtitle:
+          tag0 || tag1 || tag2 || tag3 ? `tags: ${[tag0, tag1, tag2, tag3].filter(Boolean).join(", ")}` : "No tags",
       }
     },
   },

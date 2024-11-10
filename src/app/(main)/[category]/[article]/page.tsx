@@ -30,11 +30,12 @@ export async function generateStaticParams() {
 
   return res
 }
+
 const components: PortableTextComponents = {
   marks: {
     link: ({ value, children }) => {
       return (
-        <Link href={value?.url} target={"_blank"} rel={"_blank"}>
+        <Link href={value?.url ?? value?.href} target={"_blank"} rel={"_blank"}>
           {children}
         </Link>
       )

@@ -41,7 +41,17 @@ export const blockContentType = defineType({
           { title: "Emphasis", value: "em" },
         ],
         // Annotations can be any object structure – e.g. a link or a footnote.
-        annotations: [{ name: "link", type: "object", title: "link", fields: [{ name: "url", type: "url" }] }],
+        annotations: [
+          {
+            name: "link",
+            type: "object",
+            title: "link",
+            fields: [
+              { name: "url", type: "url" },
+              { name: "href", type: "url" },
+            ],
+          },
+        ],
       },
     }),
     // You can add additional types here. Note that you can't use
