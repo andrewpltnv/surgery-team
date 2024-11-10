@@ -1,6 +1,5 @@
 import { defineType, defineArrayMember } from "sanity"
 import { ImageIcon } from "@sanity/icons"
-import { PictureInPictureIcon } from "lucide-react"
 
 /**
  * This is the schema type for block content used in the post document type
@@ -42,16 +41,7 @@ export const blockContentType = defineType({
           { title: "Emphasis", value: "em" },
         ],
         // Annotations can be any object structure – e.g. a link or a footnote.
-        annotations: [
-          { name: "link", type: "object", title: "link", fields: [{ name: "url", type: "url" }] },
-          {
-            name: "internalLink",
-            type: "object",
-            title: "Internal link",
-            icon: PictureInPictureIcon,
-            fields: [{ name: "reference", type: "reference", to: [{ type: "procedureArticle" }] }],
-          },
-        ],
+        annotations: [{ name: "link", type: "object", title: "link", fields: [{ name: "url", type: "url" }] }],
       },
     }),
     // You can add additional types here. Note that you can't use

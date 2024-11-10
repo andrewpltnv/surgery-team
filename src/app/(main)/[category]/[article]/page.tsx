@@ -7,10 +7,9 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { PortableText } from "@portabletext/react"
+import { PortableText, type PortableTextComponents } from "@portabletext/react"
 import { sanityFetch } from "@/sanity/lib/client"
 import Link from "next/link"
-// import type { ProcedureArticle } from "@root/sanity.types"
 import { categoriesQuery, procedureArticleQuery } from "@/sanity/lib/queries"
 import type { CategoriesQueryResult, ProcedureArticleQueryResult } from "@root/sanity.types"
 
@@ -30,6 +29,17 @@ export async function generateStaticParams() {
   }
 
   return res
+}
+const components: PortableTextComponents = {
+  marks: {
+    link: ({ value, children }) => {
+      return (
+        <Link href={value?.url} target={"_blank"} rel={"_blank"}>
+          {children}
+        </Link>
+      )
+    },
+  },
 }
 
 async function getArticle({ article }: { article: string }) {
@@ -71,7 +81,7 @@ export default async function Page(props: { params: Promise<{ category: string; 
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-        <div className="prose">{body && <PortableText value={body} />}</div>
+        <div className="prose">{body && <PortableText value={body} components={components} />}</div>
       </div>
       <SurgeonQuestionForm />
     </>
