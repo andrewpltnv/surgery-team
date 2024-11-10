@@ -1,31 +1,51 @@
 import CategoryBanner from "@/components/Category/CategoryBanner"
 import CategoryArticles from "@/components/Category/CategoryArticles"
-import { categories } from "@/app/(main)/[category]/constants"
 import Team from "@/components/Team"
 import type { Metadata } from "next"
+import { categoriesQuery, categoriesSlugsQuery } from "@/sanity/lib/queries"
+import { sanityFetch } from "@/sanity/lib/client"
+import type { Category, ProcedureArticle } from "@root/sanity.types"
+
+//TODO rework queries to get all the data in one query (?)
+// or more atomic aproach
+type CategoryWithArticles = Omit<Category, "articles"> & {
+  articles: Pick<ProcedureArticle, "title" | "slug">[]
+}
+
+async function getCategoryInfo(slug: string) {
+  const categoryInfo = await sanityFetch<CategoryWithArticles[]>({
+    query: categoriesQuery,
+    qParams: { slug },
+  })
+
+  const res = categoryInfo.find((c) => c.slug?.current === slug)
+  if (!res) {
+    throw new Error("Category not found")
+  }
+  return res
+}
 
 export async function generateStaticParams() {
-  return categories.map(({ slug }) => ({ category: slug }))
+  const slugs = await sanityFetch<string[]>({ query: categoriesSlugsQuery })
+  return slugs.map((slug) => ({ category: slug }))
 }
 
 export async function generateMetadata(props: { params: Promise<{ category: string }> }): Promise<Metadata> {
-  const params = await props.params
+  const { category } = await props.params
 
-  const { category } = params
+  const categoryInfo = await getCategoryInfo(category)
+  console.log({ categoryInfo })
+  const { title, description } = categoryInfo ?? {}
 
-  const categoryInfo = categories.find((categoryInfo) => categoryInfo.slug === category)
-
-  if (!categoryInfo) {
+  if (!title || !description) {
     throw new Error("Category not found")
   }
 
-  const { name, description } = categoryInfo
-
   return {
-    title: name,
+    title: title,
     description: description,
     openGraph: {
-      title: name,
+      title: title,
       description: description,
       url: `/${category}`,
     },
@@ -33,23 +53,21 @@ export async function generateMetadata(props: { params: Promise<{ category: stri
 }
 
 export default async function Page(props: { params: Promise<{ category: string }> }) {
-  const params = await props.params
+  const { category } = await props.params
 
-  const { category } = params
+  const { title, articles, slug, description } = await getCategoryInfo(category)
 
-  const categoryInfo = categories.find((categoryInfo) => categoryInfo.slug === category)
-
-  if (!categoryInfo) {
+  console.log({ title, slug, description })
+  if (!title || !slug?.current || !description) {
+    console.log({ title, slug, description })
     throw new Error("Category not found")
   }
-
-  const { name, procedures, slug, description } = categoryInfo
 
   return (
     <div className="flex min-h-screen flex-col">
       <main className="flex-1">
-        <CategoryBanner title={name} description={description} />
-        <CategoryArticles category={[slug, name]} procedures={procedures} />
+        <CategoryBanner title={title} description={description} />
+        <CategoryArticles category={[slug.current, title]} articles={articles} />
         <Team />
       </main>
     </div>

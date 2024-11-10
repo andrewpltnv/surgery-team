@@ -39,6 +39,7 @@ export const categoryType = defineType({
           to: [{ type: "procedureArticle" }],
         }),
       ],
+      initialValue: [],
     }),
     defineField({
       type: "array",

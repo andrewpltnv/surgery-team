@@ -12,13 +12,13 @@ import {
 } from "../ui/navigation-menu"
 import type React from "react"
 import { cn } from "@/lib/utils"
-import { categories } from "../../app/(main)/[category]/constants"
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet"
 import { sanityFetch } from "@/sanity/lib/client"
-import { expertsQuery } from "@/sanity/lib/queries"
-import type { Expert } from "@root/sanity.types"
+import { categoriesQuery, expertsQuery } from "@/sanity/lib/queries"
+import type { Category, Expert } from "@root/sanity.types"
 
 const experts = await sanityFetch<Expert[]>({ query: expertsQuery })
+const categories = await sanityFetch<Category[]>({ query: categoriesQuery })
 
 export default function Header() {
   return (
@@ -55,10 +55,9 @@ function NavMenu() {
           <NavigationMenuTrigger>Напрями</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid items-stretch gap-3 ~p-2/6 sm:grid-cols-[1fr_1fr] md:w-[400px] lg:w-[500px]">
-              {categories.map(({ name, slug, icon: Icon }) => (
-                <ListItem key={slug} href={`/${slug}`}>
-                  <Icon className="mr-2 h-6 w-6" />
-                  {name}
+              {categories.map(({ title, slug }) => (
+                <ListItem key={slug?.current} href={`/${slug?.current}`}>
+                  {title}
                 </ListItem>
               ))}
             </ul>

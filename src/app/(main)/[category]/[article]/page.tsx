@@ -5,13 +5,13 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
-  BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { PortableText } from "@portabletext/react"
+// import { PortableText } from "@portabletext/react"
 import { sanityFetch } from "@/sanity/lib/client"
-import { defineQuery, groq } from "next-sanity"
 import Link from "next/link"
+// import type { ProcedureArticle } from "@root/sanity.types"
+import { procedureArticleQuery } from "@/sanity/lib/queries"
 import type { ProcedureArticle } from "@root/sanity.types"
 
 export async function generateStaticParams() {
@@ -23,29 +23,22 @@ export async function generateStaticParams() {
   )
 }
 
-const data = await sanityFetch<ProcedureArticle>({
-  query: defineQuery(
-    groq`
-    *[_type=="post"][0]{
-      title,
-      categories[0]->,
-      body[]
-    }`
-  ),
-})
+async function getArticle({ article }: { article: string }) {
+  const data = await sanityFetch<ProcedureArticle>({
+    query: procedureArticleQuery,
+    qParams: { article },
+  })
+
+  console.log({ article, data })
+
+  return data
+}
 
 export default async function Page(props: { params: Promise<{ category: string; article: string }> }) {
-  const params = await props.params
+  const { category, article } = await props.params
 
-  const { category, article } = params
-
-  const categoryInfo = categories.find((categoryInfo) => categoryInfo.slug === category)
-  const procedure = categoryInfo?.procedures[article]
-  const Component = procedure?.page
-
-  if (!Component) {
-    throw new Error("Component not found")
-  }
+  const { title, body } = await getArticle({ article })
+  console.log({ title, body })
 
   return (
     <>
@@ -60,20 +53,17 @@ export default async function Page(props: { params: Promise<{ category: string; 
             <BreadcrumbItem itemType="https://schema.org/ListItem" itemProp="itemListElement" itemScope>
               <BreadcrumbLink asChild>
                 <Link href={`/${category}`} itemProp="item">
-                  {categoryInfo?.name}
+                  {title}
                 </Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem className="overflow-x-hidden">
-              <BreadcrumbPage className="truncate">{procedure.title}</BreadcrumbPage>
+              {/* <BreadcrumbPage className="truncate">{procedure.title}</BreadcrumbPage> */}
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-        <div className="prose">
-          <Component />
-        </div>
-        <div className="prose">{data.body && <PortableText value={data.body} />}</div>
+        {/* <div className="prose">{data.body && <PortableText value={data.body} />}</div> */}
       </div>
       <SurgeonQuestionForm />
     </>

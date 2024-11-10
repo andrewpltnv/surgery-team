@@ -1326,6 +1326,62 @@ export type ExpertsQueryResult = Array<{
     [internalGroqTypeReferenceTo]?: "reviews"
   }
 }>
+// Variable: categoriesSlugsQuery
+// Query: *[_type=="category"].slug.current
+export type CategoriesSlugsQueryResult = Array<string | null>
+// Variable: categoriesQuery
+// Query: *[_type=="category"][]{  _id,  "title": coalesce(title, name),  slug,  icon,  "description": coalesce(description, ""),  articles[]->{    _id,    title,    slug,  }}
+export type CategoriesQueryResult = Array<{
+  _id: string
+  title: string | null
+  slug: Slug | null
+  icon: null
+  description: string | ""
+  articles: Array<{
+    _id: string
+    title: string | null
+    slug: Slug | null
+  }> | null
+}>
+// Variable: procedureArticleQuery
+// Query: *[_type=="procedureArticle" && slug.current == $article][0]{  _type,  title,  body[],}
+export type ProcedureArticleQueryResult = {
+  _type: "procedureArticle"
+  title: string | null
+  body: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>
+          text?: string
+          _type: "span"
+          _key: string
+        }>
+        style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal"
+        listItem?: "bullet"
+        markDefs?: Array<{
+          href?: string
+          _type: "link"
+          _key: string
+        }>
+        level?: number
+        _type: "block"
+        _key: string
+      }
+    | {
+        asset?: {
+          _ref: string
+          _type: "reference"
+          _weak?: boolean
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+        }
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: string
+        _type: "image"
+        _key: string
+      }
+  > | null
+} | null
 
 // Query TypeMap
 import "@sanity/client"
@@ -1334,5 +1390,8 @@ declare module "@sanity/client" {
     '*[_type=="expert"].slug.current': ExpertsSlugsQueryResult
     '*[_type=="expert" && slug.current == $slug][0]{\n  _id,\n  name, \n  slug,\n  image,\n  experience,\n  position,\n  education,\n  areasOfExpertise,\n  schemaMarkup,\n  reviews->\n}': ExpertBySlugQueryResult
     '*[_type=="expert"][]': ExpertsQueryResult
+    '*[_type=="category"].slug.current': CategoriesSlugsQueryResult
+    '*[_type=="category"][]{\n  _id,\n  "title": coalesce(title, name),\n  slug,\n  icon,\n  "description": coalesce(description, ""),\n  articles[]->{\n    _id,\n    title,\n    slug,\n  }\n}': CategoriesQueryResult
+    '*[_type=="procedureArticle" && slug.current == $article][0]{\n  _type,\n  title,\n  body[],\n}': ProcedureArticleQueryResult
   }
 }

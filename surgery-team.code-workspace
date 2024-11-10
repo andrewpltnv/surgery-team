@@ -5,6 +5,50 @@
 		}
 	],
 	"settings": {
-		"typescript.tsdk": "node_modules/typescript/lib"
+		"typescript.tsdk": "node_modules/typescript/lib",
+		"folder-color.pathColors": [
+			{
+				"folderPath": "surgery-team/src/app/(main)/experts/",
+				"badge": "😷"
+			},
+			{
+				"folderPath": "surgery-team/src/app/(main)/[category]/",
+				"badge": "📚"
+			},
+			{
+				"folderPath": "surgery-team/src/",
+				"color": "foldercolorizer.SandyTan"
+			},
+			{
+				"folderPath": "surgery-team/src/actions/",
+				"color": "foldercolorizer.DarkGreen"
+			},
+			{
+				"folderPath": "surgery-team/src/components/",
+				"color": "foldercolorizer.RosyBrown"
+			},
+			{
+				"folderPath": "surgery-team/src/fonts/",
+				"color": "foldercolorizer.GrayishSilver"
+			},
+			{
+				"folderPath": "surgery-team/src/lib/",
+				"color": "foldercolorizer.LightMaroon"
+			},
+			{
+				"folderPath": "surgery-team/src/app/",
+				"color": "foldercolorizer.Tangerine"
+			},
+			{
+				"folderPath": "surgery-team/src/sanity/",
+				"color": "foldercolorizer.Tomato"
+			},
+			{
+				"folderPath": "surgery-team/src/app/(main)/"
+			},
+			{
+				"folderPath": "surgery-team/"
+			}
+		]
 	}
 }
