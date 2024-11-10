@@ -1344,10 +1344,15 @@ export type CategoriesQueryResult = Array<{
   }> | null
 }>
 // Variable: procedureArticleQuery
-// Query: *[_type=="procedureArticle" && slug.current == $article][0]{  _type,  title,  body[],}
+// Query: *[_type=="procedureArticle" && slug.current == $article][0]{  _type,  title,  slug,  "category": *[_type=="category" && references(^._id)][0]{    slug,    title  },  body[]}
 export type ProcedureArticleQueryResult = {
   _type: "procedureArticle"
   title: string | null
+  slug: Slug | null
+  category: {
+    slug: Slug | null
+    title: string | null
+  } | null
   body: Array<
     | {
         children?: Array<{
@@ -1392,6 +1397,6 @@ declare module "@sanity/client" {
     '*[_type=="expert"][]': ExpertsQueryResult
     '*[_type=="category"].slug.current': CategoriesSlugsQueryResult
     '*[_type=="category"][]{\n  _id,\n  "title": coalesce(title, name),\n  slug,\n  icon,\n  "description": coalesce(description, ""),\n  articles[]->{\n    _id,\n    title,\n    slug,\n  }\n}': CategoriesQueryResult
-    '*[_type=="procedureArticle" && slug.current == $article][0]{\n  _type,\n  title,\n  body[],\n}': ProcedureArticleQueryResult
+    '*[_type=="procedureArticle" && slug.current == $article][0]{\n  _type,\n  title,\n  slug,\n  "category": *[_type=="category" && references(^._id)][0]{\n    slug,\n    title\n  },\n  body[]\n}': ProcedureArticleQueryResult
   }
 }

@@ -1,44 +1,52 @@
-import { categories } from "@/app/(main)/[category]/constants"
 import SurgeonQuestionForm from "@/components/SurgeonQuestionForm"
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
+  BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-// import { PortableText } from "@portabletext/react"
+import { PortableText } from "@portabletext/react"
 import { sanityFetch } from "@/sanity/lib/client"
 import Link from "next/link"
 // import type { ProcedureArticle } from "@root/sanity.types"
-import { procedureArticleQuery } from "@/sanity/lib/queries"
-import type { ProcedureArticle } from "@root/sanity.types"
+import { categoriesQuery, procedureArticleQuery } from "@/sanity/lib/queries"
+import type { CategoriesQueryResult, ProcedureArticleQueryResult } from "@root/sanity.types"
 
 export async function generateStaticParams() {
-  return categories.flatMap((category) =>
-    Object.keys(category.procedures).map((article) => ({
-      category: category.slug,
-      article,
-    }))
-  )
+  const categories = await sanityFetch<CategoriesQueryResult>({
+    query: categoriesQuery,
+  })
+
+  if (!categories) return []
+  const res: { category: string; article: string }[] = []
+
+  for (const category of categories) {
+    if (!category.articles) continue
+    for (const article of category.articles) {
+      res.push({ category: category.slug?.current ?? "", article: article.slug?.current ?? "" })
+    }
+  }
+
+  return res
 }
 
 async function getArticle({ article }: { article: string }) {
-  const data = await sanityFetch<ProcedureArticle>({
+  const data = await sanityFetch<ProcedureArticleQueryResult>({
     query: procedureArticleQuery,
     qParams: { article },
   })
-
-  console.log({ article, data })
 
   return data
 }
 
 export default async function Page(props: { params: Promise<{ category: string; article: string }> }) {
-  const { category, article } = await props.params
+  const { article } = await props.params
 
-  const { title, body } = await getArticle({ article })
-  console.log({ title, body })
+  const data = await getArticle({ article })
+  if (!data) return null
+  const { title, body, category: categoryData } = data
 
   return (
     <>
@@ -52,18 +60,18 @@ export default async function Page(props: { params: Promise<{ category: string; 
             <BreadcrumbSeparator />
             <BreadcrumbItem itemType="https://schema.org/ListItem" itemProp="itemListElement" itemScope>
               <BreadcrumbLink asChild>
-                <Link href={`/${category}`} itemProp="item">
-                  {title}
+                <Link href={`/${categoryData?.slug?.current}`} itemProp="item">
+                  {categoryData?.title}
                 </Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem className="overflow-x-hidden">
-              {/* <BreadcrumbPage className="truncate">{procedure.title}</BreadcrumbPage> */}
+              <BreadcrumbPage className="truncate">{title}</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-        {/* <div className="prose">{data.body && <PortableText value={data.body} />}</div> */}
+        <div className="prose">{body && <PortableText value={body} />}</div>
       </div>
       <SurgeonQuestionForm />
     </>

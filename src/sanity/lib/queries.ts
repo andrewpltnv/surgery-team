@@ -34,5 +34,10 @@ export const categoriesQuery = groq`*[_type=="category"][]{
 export const procedureArticleQuery = groq`*[_type=="procedureArticle" && slug.current == $article][0]{
   _type,
   title,
-  body[],
+  slug,
+  "category": *[_type=="category" && references(^._id)][0]{
+    slug,
+    title
+  },
+  body[]
 }`

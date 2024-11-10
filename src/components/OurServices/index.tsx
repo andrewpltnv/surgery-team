@@ -51,8 +51,6 @@ export async function OurServicesLinks() {
         <h2 className="mb-12 text-center font-bold tracking-tighter ~text-2xl/4xl">Our Surgical Specialties</h2>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {categories.map(({ title, slug, icon, description }) => {
-            console.log({ title, slug, icon, description })
-
             return (
               <Link href={`/${slug?.current}`} key={slug?.current}>
                 <Card className="flex h-full flex-col items-center font-sans transition-all hover:bg-accent">

@@ -1,16 +1,16 @@
-import { openai } from "@ai-sdk/openai";
-import { streamText } from "ai";
+import { openai } from "@ai-sdk/openai"
+import { streamText, type Message } from "ai"
 
 // Allow streaming responses up to 30 seconds
-export const maxDuration = 30;
+export const maxDuration = 30
 
 export async function POST(req: Request) {
-	const { messages } = await req.json();
+  const { messages } = (await req.json()) as { messages: Message[] }
 
-	const result = await streamText({
-		model: openai("gpt-4o-2024-05-13"),
-		messages,
-		system: `Ви - дружній медичний помічник, який допомагає пацієнтам краще зрозуміти їхні симптоми та підготуватися до консультації з лікарем. Ваша мета - зібрати важливу інформацію та допомогти пацієнту чітко описати свій стан.
+  const result = await streamText({
+    model: openai("gpt-4o-2024-05-13"),
+    messages,
+    system: `Ви - дружній медичний помічник, який допомагає пацієнтам краще зрозуміти їхні симптоми та підготуватися до консультації з лікарем. Ваша мета - зібрати важливу інформацію та допомогти пацієнту чітко описати свій стан.
 
 # Підхід до спілкування:
 - Використовуйте просту, зрозумілу мову без медичних термінів
@@ -45,10 +45,10 @@ export async function POST(req: Request) {
 - При згадці тривожних симптомів рекомендуйте негайно звернутися до лікаря
 - Не рекомендуйте ліки чи методи лікування
 - Зберігайте конфіденційність інформації`,
-		temperature: 0.7,
-	});
+    temperature: 0.7,
+  })
 
-	return result.toDataStreamResponse();
+  return result.toDataStreamResponse()
 }
 
 // const highLevelPrompt = `Надайте детальну та точну медичну консультацію для використання професійними хірургами. Ваші відповіді повинні включати відповідні медичні знання, найкращі практики та будь-які міркування щодо конкретного хірургічного процесу, про який йдеться.

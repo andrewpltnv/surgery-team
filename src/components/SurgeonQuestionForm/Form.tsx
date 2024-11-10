@@ -19,7 +19,6 @@ export default function MessageForm() {
 
     if (formState?.success && formRef.current) {
       formRef.current.reset()
-      console.log({ formState })
     }
 
     toast({

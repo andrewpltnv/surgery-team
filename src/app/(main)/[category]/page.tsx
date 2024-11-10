@@ -4,16 +4,13 @@ import Team from "@/components/Team"
 import type { Metadata } from "next"
 import { categoriesQuery, categoriesSlugsQuery } from "@/sanity/lib/queries"
 import { sanityFetch } from "@/sanity/lib/client"
-import type { Category, ProcedureArticle } from "@root/sanity.types"
+import type { CategoriesQueryResult } from "@root/sanity.types"
 
 //TODO rework queries to get all the data in one query (?)
 // or more atomic aproach
-type CategoryWithArticles = Omit<Category, "articles"> & {
-  articles: Pick<ProcedureArticle, "title" | "slug">[]
-}
 
 async function getCategoryInfo(slug: string) {
-  const categoryInfo = await sanityFetch<CategoryWithArticles[]>({
+  const categoryInfo = await sanityFetch<CategoriesQueryResult>({
     query: categoriesQuery,
     qParams: { slug },
   })
@@ -34,7 +31,6 @@ export async function generateMetadata(props: { params: Promise<{ category: stri
   const { category } = await props.params
 
   const categoryInfo = await getCategoryInfo(category)
-  console.log({ categoryInfo })
   const { title, description } = categoryInfo ?? {}
 
   if (!title || !description) {
@@ -57,9 +53,7 @@ export default async function Page(props: { params: Promise<{ category: string }
 
   const { title, articles, slug, description } = await getCategoryInfo(category)
 
-  console.log({ title, slug, description })
   if (!title || !slug?.current || !description) {
-    console.log({ title, slug, description })
     throw new Error("Category not found")
   }
 
