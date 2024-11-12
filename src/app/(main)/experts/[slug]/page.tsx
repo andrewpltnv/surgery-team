@@ -3,8 +3,6 @@ import Profile from "./Profile"
 import Testimonials from "@/components/Testimonials"
 import type { Expert, Reviews } from "@root/sanity.types"
 import { getExpert, getExpertsSlugs } from "@/sanity/lib/api"
-import SchemaMarkup from "@/sanity/lib/schemaMarkup"
-import type { Schema } from "@operationnation/sanity-plugin-schema-markup"
 // import Instagram from "./Instagram"
 
 export async function generateStaticParams() {
@@ -13,15 +11,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-  const params = await props.params
-  const { slug } = params
-  const expert = await getExpert(slug)
-
-  if (!expert) {
-    throw new Error("Image not found")
-  }
-
-  const { name, experience, position } = expert
+  const { slug } = await props.params
+  const { name, experience, position } = await getExpert(slug)
 
   return {
     title: name,
@@ -49,12 +40,9 @@ export default async function ExpertPage(props: { params: Promise<{ slug: string
     throw new Error("Expert not found")
   }
 
-  const { schemaMarkup, ...rest } = expert
-
   return (
     <div className="flex-grow">
-      {schemaMarkup !== null && <SchemaMarkup schema={schemaMarkup as Schema[]} />}
-      <Profile expert={rest as unknown as Expert} />
+      <Profile expert={expert as unknown as Expert} />
       <Testimonials reviews={expert.reviews as unknown as Reviews} />
       {/* <Instagram /> */}
     </div>

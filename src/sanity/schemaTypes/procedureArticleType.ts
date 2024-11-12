@@ -14,6 +14,12 @@ export const procedureArticleType = defineType({
     }),
     defineField({ type: "blockContent", name: "body" }),
     defineField({
+      name: "schemaMarkup",
+      type: "schemaMarkup",
+      description: "Mainly for FAQ parts!",
+      title: "Schema Markup",
+    }),
+    defineField({
       type: "array",
       name: "tags",
       title: "Tags",
