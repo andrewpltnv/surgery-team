@@ -1147,7 +1147,7 @@ export declare const internalGroqTypeReferenceTo: unique symbol
 // Query: *[_type=="expert"].slug.current
 export type ExpertsSlugsQueryResult = Array<string | null>
 // Variable: expertBySlugQuery
-// Query: *[_type=="expert" && slug.current == $slug][0]{  _id,  name,   slug,  image,  experience,  position,  education,  areasOfExpertise,  schemaMarkup,  reviews->}
+// Query: *[_type=="expert" && slug.current == $slug][0]{  _id,  name,   slug,  image,  experience,  position,  education,  areasOfExpertise,  reviews->}
 export type ExpertBySlugQueryResult = {
   _id: string
   name: string | null
@@ -1170,56 +1170,6 @@ export type ExpertBySlugQueryResult = {
     {
       _key: string
     } & Area
-  > | null
-  schemaMarkup: Array<
-    | ({
-        _key: string
-      } & Article)
-    | ({
-        _key: string
-      } & BreadcrumbList)
-    | ({
-        _key: string
-      } & FaqPageType)
-    | ({
-        _key: string
-      } & HowToType)
-    | ({
-        _key: string
-      } & ImageObjectType)
-    | ({
-        _key: string
-      } & LocalBusiness)
-    | ({
-        _key: string
-      } & Organization)
-    | ({
-        _key: string
-      } & PersonType)
-    | ({
-        _key: string
-      } & ProductType)
-    | ({
-        _key: string
-      } & RecipeType)
-    | ({
-        _key: string
-      } & ReviewType)
-    | ({
-        _key: string
-      } & ServiceType)
-    | ({
-        _key: string
-      } & SocialMediaPosting)
-    | ({
-        _key: string
-      } & VideoObjectType)
-    | ({
-        _key: string
-      } & WebPageType)
-    | ({
-        _key: string
-      } & WebsiteType)
   > | null
   reviews: {
     _id: string
@@ -1388,15 +1338,21 @@ export type ProcedureArticleQueryResult = {
   > | null
 } | null
 
+// Source: ./src/app/(main)/[category]/[article]/page.tsx
+// Variable: faqQ
+// Query: *[_type == "procedureArticle" && defined(schemaMarkup)].schemaMarkup
+export type FaqQResult = Array<null>
+
 // Query TypeMap
 import "@sanity/client"
 declare module "@sanity/client" {
   interface SanityQueries {
     '*[_type=="expert"].slug.current': ExpertsSlugsQueryResult
-    '*[_type=="expert" && slug.current == $slug][0]{\n  _id,\n  name, \n  slug,\n  image,\n  experience,\n  position,\n  education,\n  areasOfExpertise,\n  schemaMarkup,\n  reviews->\n}': ExpertBySlugQueryResult
+    '*[_type=="expert" && slug.current == $slug][0]{\n  _id,\n  name, \n  slug,\n  image,\n  experience,\n  position,\n  education,\n  areasOfExpertise,\n  reviews->\n}': ExpertBySlugQueryResult
     '*[_type=="expert"][]': ExpertsQueryResult
     '*[_type=="category"].slug.current': CategoriesSlugsQueryResult
     '*[_type=="category"][]{\n  _id,\n  "title": coalesce(title, name),\n  slug,\n  icon,\n  "description": coalesce(description, ""),\n  articles[]->{\n    _id,\n    title,\n    slug,\n  }\n}': CategoriesQueryResult
     '*[_type=="procedureArticle" && slug.current == $article][0]{\n  _type,\n  title,\n  slug,\n  "category": *[_type=="category" && references(^._id)][0]{\n    slug,\n    title\n  },\n  body[]\n}': ProcedureArticleQueryResult
+    '*[_type == "procedureArticle" && defined(schemaMarkup)].schemaMarkup': FaqQResult
   }
 }

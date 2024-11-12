@@ -1,6 +1,5 @@
 import type { Metadata } from "next"
 import "../globals.css"
-import { geistSans, geistMono } from "../../fonts"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { GoogleTagManager } from "@next/third-parties/google"
 import { Analytics } from "@vercel/analytics/next"

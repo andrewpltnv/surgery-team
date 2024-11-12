@@ -1,3 +1,4 @@
+import CustomPortableText from "@/components/PortableText"
 import SurgeonQuestionForm from "@/components/SurgeonQuestionForm"
 import {
   Breadcrumb,
@@ -7,11 +8,12 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { PortableText, type PortableTextComponents } from "@portabletext/react"
 import { sanityFetch } from "@/sanity/lib/client"
-import Link from "next/link"
 import { categoriesQuery, procedureArticleQuery } from "@/sanity/lib/queries"
-import type { CategoriesQueryResult, ProcedureArticleQueryResult } from "@root/sanity.types"
+import type { CategoriesQueryResult, FaqQResult, ProcedureArticleQueryResult } from "@root/sanity.types"
+import { groq } from "next-sanity"
+// import { FAQPageJsonLd } from "next-seo"
+import Link from "next/link"
 
 export async function generateStaticParams() {
   const categories = await sanityFetch<CategoriesQueryResult>({
@@ -31,33 +33,28 @@ export async function generateStaticParams() {
   return res
 }
 
-const components: PortableTextComponents = {
-  marks: {
-    link: ({ value, children }) => {
-      return (
-        <Link href={value?.url ?? value?.href} target={"_blank"} rel={"_blank"}>
-          {children}
-        </Link>
-      )
-    },
-  },
-}
-
 async function getArticle({ article }: { article: string }) {
   const data = await sanityFetch<ProcedureArticleQueryResult>({
     query: procedureArticleQuery,
     qParams: { article },
   })
 
+  if (!data) throw new Error("There is no article")
+
   return data
 }
+
+const faqQ = groq`*[_type == "procedureArticle" && defined(schemaMarkup)].schemaMarkup`
+const faq = await sanityFetch<FaqQResult>({ query: faqQ })
+
+console.dir(faq)
 
 export default async function Page(props: { params: Promise<{ category: string; article: string }> }) {
   const { article } = await props.params
 
-  const data = await getArticle({ article })
-  if (!data) return null
-  const { title, body, category: categoryData } = data
+  const { title, body, category: categoryData } = await getArticle({ article })
+
+  if (!title || !body || !categoryData) return null
 
   return (
     <>
@@ -82,7 +79,9 @@ export default async function Page(props: { params: Promise<{ category: string; 
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-        <div className="prose">{body && <PortableText value={body} components={components} />}</div>
+        <div className="prose">
+          <CustomPortableText value={body} />
+        </div>
       </div>
       <SurgeonQuestionForm />
     </>
