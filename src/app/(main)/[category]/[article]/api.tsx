@@ -16,7 +16,8 @@ export const procedureArticleQuery = groq`
       "slug":slug.current,
       title
     },
-    body[]
+    body[],
+		"schemaMarkup": coalesce(schemaMarkup[], [])	
   }`;
 
 export async function getArticle({ article }: { article: string }) {
