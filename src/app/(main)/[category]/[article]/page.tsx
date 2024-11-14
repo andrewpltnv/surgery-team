@@ -56,7 +56,7 @@ export default async function Page(props: {
 					>
 						<BreadcrumbSeparator />
 						<BreadcrumbItem>
-							<BreadcrumbLink asChild itemProp="item">
+							<BreadcrumbLink asChild>
 								<Link href={`/${categoryData?.slug}`} itemProp="name">
 									{categoryData?.title}
 								</Link>
@@ -64,7 +64,7 @@ export default async function Page(props: {
 							<meta itemProp="position" content="1" />
 						</BreadcrumbItem>
 						<BreadcrumbSeparator />
-						<BreadcrumbItem itemProp="item" className="overflow-x-hidden">
+						<BreadcrumbItem className="overflow-x-hidden">
 							<BreadcrumbPage className="truncate" itemProp="name">
 								{title}
 							</BreadcrumbPage>
