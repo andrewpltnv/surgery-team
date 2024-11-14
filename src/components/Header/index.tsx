@@ -14,7 +14,8 @@ import type React from "react"
 import { cn } from "@/lib/utils"
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet"
 import { sanityFetch } from "@/sanity/lib/client"
-import { categoriesQuery, expertsQuery } from "@/sanity/lib/queries"
+import { categoriesQuery } from "@/app/(main)/[category]/api"
+import { expertsQuery } from "@/app/(main)/experts/api"
 import type { Category, Expert } from "@root/sanity.types"
 
 const experts = await sanityFetch<Expert[]>({ query: expertsQuery })

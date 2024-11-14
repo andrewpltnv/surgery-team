@@ -1,89 +1,81 @@
-import CustomPortableText from "@/components/PortableText"
-import SurgeonQuestionForm from "@/components/SurgeonQuestionForm"
+import CustomPortableText from "@/components/PortableText";
 import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
-import { sanityFetch } from "@/sanity/lib/client"
-import { categoriesQuery, procedureArticleQuery } from "@/sanity/lib/queries"
-import type { CategoriesQueryResult, FaqQResult, ProcedureArticleQueryResult } from "@root/sanity.types"
-import { groq } from "next-sanity"
-// import { FAQPageJsonLd } from "next-seo"
-import Link from "next/link"
+	Breadcrumb,
+	BreadcrumbItem,
+	BreadcrumbLink,
+	BreadcrumbList,
+	BreadcrumbPage,
+	BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { getArticle } from "./api";
+import Link from "next/link";
+import Script from "next/script";
 
-export async function generateStaticParams() {
-  const categories = await sanityFetch<CategoriesQueryResult>({
-    query: categoriesQuery,
-  })
+export default async function Page(props: {
+	params: Promise<{ category: string; article: string }>;
+}) {
+	const { category, article } = await props.params;
+	if (!category || !article) return null;
 
-  if (!categories) return []
-  const res: { category: string; article: string }[] = []
+	const { title, body, category: categoryData } = await getArticle({ article });
+	if (!title || !body) return null;
 
-  for (const category of categories) {
-    if (!category.articles) continue
-    for (const article of category.articles) {
-      res.push({ category: category.slug?.current ?? "", article: article.slug?.current ?? "" })
-    }
-  }
+	return (
+		<>
+			<Script type="application/ld+json" id="FAQPage">
+				{JSON.stringify({
+					"@context": "https://schema.org",
+					"@type": "FAQPage",
+					mainEntity: [
+						{
+							"@type": "Question",
+							name: "How to find an apprenticeship?",
+							acceptedAnswer: {
+								"@type": "Answer",
+								text: "<p>We provide an official service to search through available apprenticeships. To get started, create an account here, specify the desired region, and your preferences. You will be able to search through all officially registered open apprenticeships.</p>",
+							},
+						},
+						{
+							"@type": "Question",
+							name: "Whom to contact?",
+							acceptedAnswer: {
+								"@type": "Answer",
+								text: "You can contact the apprenticeship office through our official phone hotline above, or with the web-form below. We generally respond to written requests within 7-10 days.",
+							},
+						},
+					],
+				})}
+			</Script>
 
-  return res
-}
-
-async function getArticle({ article }: { article: string }) {
-  const data = await sanityFetch<ProcedureArticleQueryResult>({
-    query: procedureArticleQuery,
-    qParams: { article },
-  })
-
-  if (!data) throw new Error("There is no article")
-
-  return data
-}
-
-const faqQ = groq`*[_type == "procedureArticle" && defined(schemaMarkup)].schemaMarkup`
-const faq = await sanityFetch<FaqQResult>({ query: faqQ })
-
-console.dir(faq)
-
-export default async function Page(props: { params: Promise<{ category: string; article: string }> }) {
-  const { article } = await props.params
-
-  const { title, body, category: categoryData } = await getArticle({ article })
-
-  if (!title || !body || !categoryData) return null
-
-  return (
-    <>
-      <div className="container mx-auto flex max-w-prose flex-auto flex-col p-4">
-        <Breadcrumb className="my-2 pb-2 text-lg">
-          <BreadcrumbList
-            className="flex-nowrap overflow-x-hidden"
-            itemType="https://schema.org/BreadcrumbList"
-            itemScope
-          >
-            <BreadcrumbSeparator />
-            <BreadcrumbItem itemType="https://schema.org/ListItem" itemProp="itemListElement" itemScope>
-              <BreadcrumbLink asChild>
-                <Link href={`/${categoryData?.slug?.current}`} itemProp="item">
-                  {categoryData?.title}
-                </Link>
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem className="overflow-x-hidden">
-              <BreadcrumbPage className="truncate">{title}</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
-        <div className="prose">
-          <CustomPortableText value={body} />
-        </div>
-      </div>
-      <SurgeonQuestionForm />
-    </>
-  )
+			<div className="container mx-auto flex max-w-prose flex-auto flex-col p-4">
+				<Breadcrumb className="my-2 pb-2 text-lg">
+					<BreadcrumbList
+						className="flex-nowrap overflow-x-hidden"
+						itemType="https://schema.org/BreadcrumbList"
+						itemScope
+					>
+						<BreadcrumbSeparator />
+						<BreadcrumbItem>
+							<BreadcrumbLink asChild itemProp="item">
+								<Link href={`/${categoryData?.slug}`} itemProp="name">
+									{categoryData?.title}
+								</Link>
+							</BreadcrumbLink>
+							<meta itemProp="position" content="1" />
+						</BreadcrumbItem>
+						<BreadcrumbSeparator />
+						<BreadcrumbItem itemProp="item" className="overflow-x-hidden">
+							<BreadcrumbPage className="truncate" itemProp="name">
+								{title}
+							</BreadcrumbPage>
+							<meta itemProp="position" content="2" />
+						</BreadcrumbItem>
+					</BreadcrumbList>
+				</Breadcrumb>
+				<div className="prose">
+					<CustomPortableText value={body} />
+				</div>
+			</div>
+		</>
+	);
 }

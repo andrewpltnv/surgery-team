@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import Profile from "./Profile"
 import Testimonials from "@/components/Testimonials"
 import type { Expert, Reviews } from "@root/sanity.types"
-import { getExpert, getExpertsSlugs } from "@/sanity/lib/api"
+import { getExpert, getExpertsSlugs } from "../api"
 // import Instagram from "./Instagram"
 
 export async function generateStaticParams() {

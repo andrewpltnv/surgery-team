@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "dep": "npx sanity preview",
-    "predev": "npm run typegen",
+    "predev": "yarn typegen",
     "typegen": "sanity schema extract --path=src/sanity/extract.json && sanity typegen generate"
   },
   "dependencies": {

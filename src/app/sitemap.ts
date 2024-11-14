@@ -1,6 +1,6 @@
-import { getExpertsSlugs } from "@/sanity/lib/api"
 import type { MetadataRoute } from "next"
 import { headers } from "next/headers"
+import { getExpertsSlugs } from "./(main)/experts/api"
 
 const expertsSlugs = await getExpertsSlugs()
 

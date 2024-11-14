@@ -1142,54 +1142,34 @@ export type AllSanitySchemaTypes =
   | MediaTag
   | Slug
 export declare const internalGroqTypeReferenceTo: unique symbol
-// Source: ./src/sanity/lib/queries.ts
+// Source: ./src/app/(main)/[category]/api.tsx
+// Variable: categoriesSlugsQuery
+// Query: *[_type=="category"].slug.current
+export type CategoriesSlugsQueryResult = Array<string | null>
+// Variable: categoriesQuery
+// Query: *[_type=="category"][]{  _id,  "title": coalesce(title, name),  slug,  icon,  "description": coalesce(description, ""),  articles[]->{    _id,    title,    slug,  }}
+export type CategoriesQueryResult = Array<{
+  _id: string
+  title: string | null
+  slug: Slug | null
+  icon: null
+  description: string | ""
+  articles: Array<{
+    _id: string
+    title: string | null
+    slug: Slug | null
+  }> | null
+}>
+// Variable: procedureArticlesSlugsByCategorySlug
+// Query: *[_type=="category" && slug.current == $category][0].articles[]->{    "slug": slug.current  }
+export type ProcedureArticlesSlugsByCategorySlugResult = Array<{
+  slug: string | null
+}> | null
+
+// Source: ./src/app/(main)/experts/api.tsx
 // Variable: expertsSlugsQuery
 // Query: *[_type=="expert"].slug.current
 export type ExpertsSlugsQueryResult = Array<string | null>
-// Variable: expertBySlugQuery
-// Query: *[_type=="expert" && slug.current == $slug][0]{  _id,  name,   slug,  image,  experience,  position,  education,  areasOfExpertise,  reviews->}
-export type ExpertBySlugQueryResult = {
-  _id: string
-  name: string | null
-  slug: Slug | null
-  image: {
-    asset?: {
-      _ref: string
-      _type: "reference"
-      _weak?: boolean
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
-    }
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    _type: "image"
-  } | null
-  experience: Experience | null
-  position: string | null
-  education: Array<string> | null
-  areasOfExpertise: Array<
-    {
-      _key: string
-    } & Area
-  > | null
-  reviews: {
-    _id: string
-    _type: "reviews"
-    _createdAt: string
-    _updatedAt: string
-    _rev: string
-    expert?: {
-      _ref: string
-      _type: "reference"
-      _weak?: boolean
-      [internalGroqTypeReferenceTo]?: "expert"
-    }
-    reviewsArray?: Array<
-      {
-        _key: string
-      } & Review
-    >
-  } | null
-} | null
 // Variable: expertsQuery
 // Query: *[_type=="expert"][]
 export type ExpertsQueryResult = Array<{
@@ -1276,31 +1256,61 @@ export type ExpertsQueryResult = Array<{
     [internalGroqTypeReferenceTo]?: "reviews"
   }
 }>
-// Variable: categoriesSlugsQuery
-// Query: *[_type=="category"].slug.current
-export type CategoriesSlugsQueryResult = Array<string | null>
-// Variable: categoriesQuery
-// Query: *[_type=="category"][]{  _id,  "title": coalesce(title, name),  slug,  icon,  "description": coalesce(description, ""),  articles[]->{    _id,    title,    slug,  }}
-export type CategoriesQueryResult = Array<{
+// Variable: expertBySlugQuery
+// Query: *[_type=="expert" && slug.current == $slug][0]{  _id,  name,   slug,  image,  experience,  position,  education,  areasOfExpertise,  reviews->}
+export type ExpertBySlugQueryResult = {
   _id: string
-  title: string | null
+  name: string | null
   slug: Slug | null
-  icon: null
-  description: string | ""
-  articles: Array<{
+  image: {
+    asset?: {
+      _ref: string
+      _type: "reference"
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+    }
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: "image"
+  } | null
+  experience: Experience | null
+  position: string | null
+  education: Array<string> | null
+  areasOfExpertise: Array<
+    {
+      _key: string
+    } & Area
+  > | null
+  reviews: {
     _id: string
-    title: string | null
-    slug: Slug | null
-  }> | null
-}>
+    _type: "reviews"
+    _createdAt: string
+    _updatedAt: string
+    _rev: string
+    expert?: {
+      _ref: string
+      _type: "reference"
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: "expert"
+    }
+    reviewsArray?: Array<
+      {
+        _key: string
+      } & Review
+    >
+  } | null
+} | null
+
+// Source: ./src/app/(main)/[category]/[article]/api.tsx
 // Variable: procedureArticleQuery
-// Query: *[_type=="procedureArticle" && slug.current == $article][0]{  _type,  title,  slug,  "category": *[_type=="category" && references(^._id)][0]{    slug,    title  },  body[]}
+// Query: *[_type=="procedureArticle" && slug.current == $article][0]{    _id,    _type,    title,    slug,    "category": *[_type=="category" && references(^._id)][0]{      "slug":slug.current,      title    },    body[]  }
 export type ProcedureArticleQueryResult = {
+  _id: string
   _type: "procedureArticle"
   title: string | null
   slug: Slug | null
   category: {
-    slug: Slug | null
+    slug: string | null
     title: string | null
   } | null
   body: Array<
@@ -1338,21 +1348,16 @@ export type ProcedureArticleQueryResult = {
   > | null
 } | null
 
-// Source: ./src/app/(main)/[category]/[article]/page.tsx
-// Variable: faqQ
-// Query: *[_type == "procedureArticle" && defined(schemaMarkup)].schemaMarkup
-export type FaqQResult = Array<null>
-
 // Query TypeMap
 import "@sanity/client"
 declare module "@sanity/client" {
   interface SanityQueries {
-    '*[_type=="expert"].slug.current': ExpertsSlugsQueryResult
-    '*[_type=="expert" && slug.current == $slug][0]{\n  _id,\n  name, \n  slug,\n  image,\n  experience,\n  position,\n  education,\n  areasOfExpertise,\n  reviews->\n}': ExpertBySlugQueryResult
-    '*[_type=="expert"][]': ExpertsQueryResult
     '*[_type=="category"].slug.current': CategoriesSlugsQueryResult
     '*[_type=="category"][]{\n  _id,\n  "title": coalesce(title, name),\n  slug,\n  icon,\n  "description": coalesce(description, ""),\n  articles[]->{\n    _id,\n    title,\n    slug,\n  }\n}': CategoriesQueryResult
-    '*[_type=="procedureArticle" && slug.current == $article][0]{\n  _type,\n  title,\n  slug,\n  "category": *[_type=="category" && references(^._id)][0]{\n    slug,\n    title\n  },\n  body[]\n}': ProcedureArticleQueryResult
-    '*[_type == "procedureArticle" && defined(schemaMarkup)].schemaMarkup': FaqQResult
+    '\n  *[_type=="category" && slug.current == $category][0].articles[]->{\n    "slug": slug.current\n  }\n': ProcedureArticlesSlugsByCategorySlugResult
+    '*[_type=="expert"].slug.current': ExpertsSlugsQueryResult
+    '*[_type=="expert"][]': ExpertsQueryResult
+    '*[_type=="expert" && slug.current == $slug][0]{\n  _id,\n  name, \n  slug,\n  image,\n  experience,\n  position,\n  education,\n  areasOfExpertise,\n  reviews->\n}': ExpertBySlugQueryResult
+    '\n  *[_type=="procedureArticle" && slug.current == $article][0]{\n    _id,\n    _type,\n    title,\n    slug,\n    "category": *[_type=="category" && references(^._id)][0]{\n      "slug":slug.current,\n      title\n    },\n    body[]\n  }': ProcedureArticleQueryResult
   }
 }

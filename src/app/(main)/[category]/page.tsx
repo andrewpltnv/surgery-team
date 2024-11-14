@@ -1,69 +1,30 @@
-import CategoryBanner from "@/components/Category/CategoryBanner"
-import CategoryArticles from "@/components/Category/CategoryArticles"
-import Team from "@/components/Team"
-import type { Metadata } from "next"
-import { categoriesQuery, categoriesSlugsQuery } from "@/sanity/lib/queries"
-import { sanityFetch } from "@/sanity/lib/client"
-import type { CategoriesQueryResult } from "@root/sanity.types"
+import CategoryBanner from "@/components/Category/CategoryBanner";
+import CategoryArticles from "@/components/Category/CategoryArticles";
+import Team from "@/components/Team";
+import { getCategoryInfo } from "./api";
 
-//TODO rework queries to get all the data in one query (?)
-// or more atomic aproach
+export default async function Page(props: {
+	params: Promise<{ category: string }>;
+}) {
+	const { category } = await props.params;
 
-async function getCategoryInfo(slug: string) {
-  const categoryInfo = await sanityFetch<CategoriesQueryResult>({
-    query: categoriesQuery,
-    qParams: { slug },
-  })
+	const { title, articles, slug, description } =
+		await getCategoryInfo(category);
 
-  const res = categoryInfo.find((c) => c.slug?.current === slug)
-  if (!res) {
-    throw new Error("Category not found")
-  }
-  return res
-}
+	if (!title || !slug?.current || !description) {
+		throw new Error("Category not found");
+	}
 
-export async function generateStaticParams() {
-  const slugs = await sanityFetch<string[]>({ query: categoriesSlugsQuery })
-  return slugs.map((slug) => ({ category: slug }))
-}
-
-export async function generateMetadata(props: { params: Promise<{ category: string }> }): Promise<Metadata> {
-  const { category } = await props.params
-
-  const categoryInfo = await getCategoryInfo(category)
-  const { title, description } = categoryInfo ?? {}
-
-  if (!title || !description) {
-    throw new Error("Category not found")
-  }
-
-  return {
-    title: title,
-    description: description,
-    openGraph: {
-      title: title,
-      description: description,
-      url: `/${category}`,
-    },
-  }
-}
-
-export default async function Page(props: { params: Promise<{ category: string }> }) {
-  const { category } = await props.params
-
-  const { title, articles, slug, description } = await getCategoryInfo(category)
-
-  if (!title || !slug?.current || !description) {
-    throw new Error("Category not found")
-  }
-
-  return (
-    <div className="flex min-h-screen flex-col">
-      <main className="flex-1">
-        <CategoryBanner title={title} description={description} />
-        <CategoryArticles category={[slug.current, title]} articles={articles} />
-        <Team />
-      </main>
-    </div>
-  )
+	return (
+		<div className="flex min-h-screen flex-col">
+			<main className="flex-1">
+				<CategoryBanner title={title} description={description} />
+				<CategoryArticles
+					category={[slug.current, title]}
+					articles={articles}
+				/>
+				<Team />
+			</main>
+		</div>
+	);
 }
