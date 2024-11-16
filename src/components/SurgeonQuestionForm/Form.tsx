@@ -31,15 +31,15 @@ export default function MessageForm() {
     <Form action={handleSendMessage} className="space-y-4" ref={formRef}>
       <div>
         <Label htmlFor="name">Name</Label>
-        <Input name="name" className="w-full" />
+        <Input id="name" name="name" className="w-full" />
       </div>
       <div>
         <Label htmlFor="email">Email</Label>
-        <Input type="email" name="email" required className="w-full" />
+        <Input id="email" type="email" name="email" required className="w-full" />
       </div>
       <div>
         <Label htmlFor="subject">Subject</Label>
-        <Input name="subject" className="w-full" />
+        <Input id="subject" name="subject" className="w-full" />
       </div>
       <div>
         <Label htmlFor="message">Message</Label>
