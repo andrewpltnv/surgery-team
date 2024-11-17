@@ -1,4 +1,4 @@
-import CustomPortableText from "@/components/PortableText"
+import CustomPortableText from "@/components/PortableText";
 import {
 	Breadcrumb,
 	BreadcrumbItem,
@@ -6,30 +6,39 @@ import {
 	BreadcrumbList,
 	BreadcrumbPage,
 	BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
-import { getArticle } from "./api"
-import Link from "next/link"
-import Script from "next/script"
-import toJson from "@/lib/toJson"
-import type { FaqPageType } from "@root/sanity.types"
+} from "@/components/ui/breadcrumb";
+import { getArticle } from "./api";
+import Link from "next/link";
+import Script from "next/script";
+import toJson from "@/lib/toJson";
+import type { FaqPageType } from "@root/sanity.types";
 
-export default async function Page(props: { params: Promise<{ category: string; article: string }> }) {
-	const { category, article } = await props.params
-	if (!category || !article) return null
+export default async function Page(props: {
+	params: Promise<{ category: string; article: string }>;
+}) {
+	const { category, article } = await props.params;
+	if (!category || !article) return null;
 
-	const { title, body, category: categoryData, schemaMarkup } = await getArticle({ article })
+	const {
+		title,
+		body,
+		category: categoryData,
+		schemaMarkup,
+	} = await getArticle({ article });
 
-	const schemas = schemaMarkup?.map((schema: FaqPageType, index) => (
-		<Script
-			type="application/ld+json"
-			id="FAQPage"
-			key={index}
-			// biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
-			dangerouslySetInnerHTML={toJson(schema.type ?? "FAQPage", schema)}
-		/>
-	))
+	const schemas = schemaMarkup?.map(
+		(schema: FaqPageType & { _key: string }) => (
+			<Script
+				type="application/ld+json"
+				id="FAQPage"
+				key={schema?._key}
+				// biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+				dangerouslySetInnerHTML={toJson(schema.type ?? "FAQPage", schema)}
+			/>
+		),
+	);
 
-	if (!title || !body) return null
+	if (!title || !body) return null;
 
 	return (
 		<>
@@ -64,5 +73,5 @@ export default async function Page(props: { params: Promise<{ category: string; 
 				</div>
 			</div>
 		</>
-	)
+	);
 }

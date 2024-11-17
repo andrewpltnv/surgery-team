@@ -15,7 +15,7 @@ export const createQuestion = async (_: unknown, formData: FormData) => {
 		name: formData.get("name"),
 		email: formData.get("email"),
 		subject: formData.get("subject"),
-		text: formData.get("text"),
+		text: formData.get("message"),
 		urgent: Boolean(formData.get("urgent")),
 	});
 

@@ -9,7 +9,8 @@ export default function MessageInput() {
   return (
     <>
       <Textarea
-        name="text"
+        id="message"
+        name="message"
         maxLength={500}
         onChange={(e) => setMessage(e.target.value)}
         required
