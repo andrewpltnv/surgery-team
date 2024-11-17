@@ -12,20 +12,20 @@ import Link from "next/link";
 import Script from "next/script";
 import toJson from "@/lib/toJson";
 import type { FaqPageType } from "@root/sanity.types";
+import { notFound } from "next/navigation";
 
 export default async function Page(props: {
 	params: Promise<{ category: string; article: string }>;
 }) {
 	const { category, article } = await props.params;
-	if (!category || !article) return null;
+	if (!category || !article) notFound();
 
-	const {
-		title,
-		body,
-		category: categoryData,
-		schemaMarkup,
-	} = await getArticle({ article });
+	const articleData = await getArticle({ article });
+	if (!articleData) notFound();
 
+	const { title, body, category: categoryData, schemaMarkup } = articleData;
+
+	// TODO: place it in a separate function
 	const schemas = schemaMarkup?.map(
 		(schema: FaqPageType & { _key: string }) => (
 			<Script
@@ -37,8 +37,6 @@ export default async function Page(props: {
 			/>
 		),
 	);
-
-	if (!title || !body) return null;
 
 	return (
 		<>
@@ -69,7 +67,7 @@ export default async function Page(props: {
 					</BreadcrumbList>
 				</Breadcrumb>
 				<div className="prose">
-					<CustomPortableText value={body} />
+					<CustomPortableText value={body ?? []} />
 				</div>
 			</div>
 		</>

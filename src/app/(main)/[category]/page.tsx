@@ -2,18 +2,18 @@ import CategoryBanner from "@/components/Category/CategoryBanner";
 import CategoryArticles from "@/components/Category/CategoryArticles";
 import Team from "@/components/Team";
 import { getCategoryInfo } from "./api";
+import { notFound } from "next/navigation";
 
 export default async function Page(props: {
 	params: Promise<{ category: string }>;
 }) {
 	const { category } = await props.params;
 
-	const { title, articles, slug, description } =
-		await getCategoryInfo(category);
+	const categoryInfo = await getCategoryInfo(category);
+	if (!categoryInfo) notFound();
 
-	if (!title || !slug?.current || !description) {
-		throw new Error("Category not found");
-	}
+	const { title, articles, slug, description } = categoryInfo;
+	if (!title || !slug?.current || !description) notFound();
 
 	return (
 		<div className="flex min-h-screen flex-col">

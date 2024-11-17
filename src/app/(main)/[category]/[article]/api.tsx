@@ -26,8 +26,6 @@ export async function getArticle({ article }: { article: string }) {
 		qParams: { article },
 	});
 
-	if (!data) throw new Error("There is no article");
-
 	return data;
 }
 

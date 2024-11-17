@@ -1,6 +1,7 @@
 import { sanityFetch } from "@/sanity/lib/client";
 import { categoriesSlugsQuery, getCategoryInfo } from "./api";
 import type { Metadata } from "next/types";
+import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
 	const slugs = await sanityFetch<string[]>({ query: categoriesSlugsQuery });
@@ -13,17 +14,15 @@ export async function generateMetadata(props: {
 	const { category } = await props.params;
 
 	const categoryInfo = await getCategoryInfo(category);
-	const { title, description } = categoryInfo ?? {};
+	if (!categoryInfo) notFound();
 
-	if (!title || !description) {
-		throw new Error("Category not found");
-	}
+	const { title, description } = categoryInfo;
 
 	return {
 		title: title,
 		description: description,
 		openGraph: {
-			title: title,
+			title: title ?? "",
 			description: description,
 			url: `/${category}`,
 		},

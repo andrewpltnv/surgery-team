@@ -30,8 +30,6 @@ export async function getCategoryInfo(slug: string) {
 	});
 
 	const res = categoryInfo.find((c) => c.slug?.current === slug);
-	if (!res) {
-		throw new Error("Category not found");
-	}
+
 	return res;
 }
