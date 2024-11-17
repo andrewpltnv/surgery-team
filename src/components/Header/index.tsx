@@ -17,6 +17,7 @@ import { sanityFetch } from "@/sanity/lib/client";
 import { categoriesQuery } from "@/app/(main)/[category]/api";
 import { expertsQuery } from "@/app/(main)/experts/api";
 import type { Category, Expert } from "@root/sanity.types";
+import type { Route } from "next";
 
 const experts = await sanityFetch<Expert[]>({ query: expertsQuery });
 const categories = await sanityFetch<Category[]>({ query: categoriesQuery });
@@ -90,11 +91,11 @@ function NavMenu() {
 	);
 }
 
-function ListItem({
+function ListItem<T extends string>({
 	className,
 	children,
 	href,
-}: { className?: string; href: string; children: React.ReactNode }) {
+}: { className?: string; href: Route<T>; children: React.ReactNode }) {
 	return (
 		<li>
 			<Link
